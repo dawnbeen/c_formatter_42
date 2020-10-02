@@ -17,6 +17,10 @@ import sys
 import shutil
 import argparse
 
+# TODO Fix regex
+# function return type and variable type can contain spaces (e.g `unsigned int a;`)
+# variable names can be followed by `[]`
+# types can contain parenthesis (for function pointer or array of pointers)
 
 def align(content: str, scope: str) -> str:
     """ Align content
@@ -28,10 +32,10 @@ def align(content: str, scope: str) -> str:
     lines = content.split("\n")
     aligned = []
     if scope == "local":
-        regex = "^\t(?P<kind>\w+)\s+(?P<rest>\w+;)$"
+        regex = "^\t(?P<kind>\w+)\s+(?P<rest>\**\w+;)$"
     elif scope == "global":
         regex = (r"^(?P<kind>\w+)\s+"
-                 r"(?P<rest>\w+\((\w+ \w+)*\);?)$")
+                 r"(?P<rest>\**\w+\((\w+ \**\w+)*\);?)$")
     else:
         raise RuntimeError("scope should be 'global' or 'local'")
 
@@ -40,9 +44,7 @@ def align(content: str, scope: str) -> str:
                for i, (line, match) in enumerate(zip(lines, matches))
                if match is not None]
 
-    min_alignment = 1
-    for _, kind, rest in aligned:
-        min_alignment = max(len(kind) // 4 + 1, min_alignment)
+    min_alignment = max([len(kind) // 4 + 1 for _, kind, _ in aligned], default=1)
 
     for i, kind, rest in aligned:
         alignment = len(kind) // 4
@@ -73,11 +75,6 @@ def main():
         help="Ask confirmation before overwritting any file"
     )
     arg_parser.add_argument(
-        "-n", "--no-backup",
-        action="store_true",
-        help="Do not backup the non aligned file"
-    )
-    arg_parser.add_argument(
         "filepaths",
         metavar="FILE",
         nargs="*",
@@ -90,17 +87,18 @@ def main():
         print(align_all(content))
     else:
         for filepath in args.filepaths:
-            if not args.no_backup:
-                shutil.copyfile(filepath, filepath + ".orig")
-            with open(filepath, "r") as file:
-                content = file.read()
-            if args.confirm:
-                result = input("Are you sure you want to overwrite {}?[y/N]".format(filepath))
-                if result != "y":
-                    continue
-            print("Writting to {}".format(filepath))
-            with open(filepath, "w") as file:
-                file.write(align_all(content))
+            try:
+                with open(filepath, "r") as file:
+                    content = file.read()
+                if args.confirm:
+                    result = input("Are you sure you want to overwrite {}?[y/N]".format(filepath))
+                    if result != "y":
+                        continue
+                print("Writting to {}".format(filepath))
+                with open(filepath, "w") as file:
+                    file.write(align_all(content))
+            except OSError as e:
+                print("Error: {}: {}".format(e.filename, e.strerror))
 
 
 if __name__ == "__main__":
