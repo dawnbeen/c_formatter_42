@@ -19,8 +19,8 @@ $ brew install clang-format
 - Or You can just copy this in your `.vscode/settings.json` file.
 ```
 "editor.defaultFormatter": "xaver.clang-format",
-"editor.formatOnPaste": true,
-"editor.formatOnSave": true,
+"editor.formatOnPaste": false,
+"editor.formatOnSave": false,
 ```
 
 4. Execute code formatting
