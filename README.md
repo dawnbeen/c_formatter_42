@@ -40,6 +40,6 @@ std::string ccc = 23;
 ```
 
 
-Recommanded to set in `Workspace Preference`
+Recommended to set in `Workspace Preference`
 
 Feel free to report issues or contribute. :)
