@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 
-# Align the functions prototypes of C files
-
-# Take the code on stdin and output the aligned version on stdout
-# ./global-scope-align < main.c
-
 import re
 import sys
 import shutil
+import argparse
 
 
 def align(content: str) -> str:
@@ -34,14 +30,41 @@ def align(content: str) -> str:
 
 
 def main():
-    if len(sys.argv) == 1:
+    arg_parser = argparse.ArgumentParser(
+        description="Align C source according to the norm"
+    )
+    arg_parser.add_argument(
+        "-i", "--confirm",
+        action="store_true",
+        help="Ask confirmation before overwritting any file"
+    )
+    arg_parser.add_argument(
+        "-n", "--no-backup",
+        action="store_true",
+        help="Do not backup the non aligned file"
+    )
+    arg_parser.add_argument(
+        "filepaths",
+        metavar="FILE",
+        nargs="*",
+        help="File to align, if no file is provided read STDIN"
+    )
+    args = arg_parser.parse_args()
+
+    if len(args.filepaths) == 0:
         content = sys.stdin.read()
         print(align(content))
     else:
-        for filepath in sys.argv[1:]:
-            shutil.copyfile(filepath, filepath + ".orig")
+        for filepath in args.filepaths:
+            if not args.no_backup:
+                shutil.copyfile(filepath, filepath + ".orig")
             with open(filepath, "r") as file:
                 content = file.read()
+            if args.confirm:
+                result = input("Are you sure you want to overwrite {}?[y/N]".format(filepath))
+                if result != "y":
+                    continue
+            print("Writting to {}".format(filepath))
             with open(filepath, "w") as file:
                 file.write(align(content))
 
