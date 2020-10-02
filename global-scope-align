@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+
+# Align the functions prototypes of C files
+
+# Take the code on stdin and output the aligned version on stdout
+# ./global-scope-align < main.c
+
+import re
+import sys
+import shutil
+
+
+def align(content: str) -> str:
+    lines = content.split("\n")
+    prototypes = []
+    for i, line in enumerate(lines):
+        m = re.match(
+            r"^(?P<return_type>\w+)\s+"
+            r"(?P<rest>\w+\((\w+ \w+)*\);?)$",
+            line
+        )
+        if m is not None:
+            prototypes.append((i, m.group("return_type"), m.group("rest")))
+
+    min_alignment = 1
+    for _, return_type, rest in prototypes:
+        min_alignment = max(len(return_type) // 4 + 1, min_alignment)
+
+
+    for i, return_type, rest in prototypes:
+        alignment = len(return_type) // 4
+        lines[i] = return_type + "\t" * (min_alignment - alignment) + rest
+    return "\n".join(lines)
+
+
+def main():
+    if len(sys.argv) == 1:
+        content = sys.stdin.read()
+        print(align(content))
+    else:
+        for filepath in sys.argv[1:]:
+            shutil.copyfile(filepath, filepath + ".orig")
+            with open(filepath, "r") as file:
+                content = file.read()
+            with open(filepath, "w") as file:
+                file.write(align(content))
+
+
+if __name__ == "__main__":
+    main()
