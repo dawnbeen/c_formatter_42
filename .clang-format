@@ -1,0 +1,178 @@
+---
+# BasedOnStyle: LLVM
+---
+
+# Language (LanguageKind)
+# Language, this format style is targeted at.
+#	LK_Cpp (in configuration: Cpp) Should be used for C, C++, ObjectiveC, ObjectiveC++.
+Language: Cpp
+
+
+# TabWidth (unsigned)
+# The number of columns used for tab stops.
+TabWidth: 4
+
+
+# IndentWidth (unsigned)
+# The number of columns to use for indentation.
+IndentWidth: 4
+
+
+# TODO: If it can be enabled with tabs instead of spaces, it can fit 42 norm.
+# AlignConsecutiveDeclarations (bool)
+# If true, aligns consecutive declarations.
+# Ex)
+# int         aaaa = 12;
+# float       b = 23;
+# std::string ccc = 23;
+# AlignConsecutiveDeclarations: false
+
+
+# UseTab (UseTabStyle)
+# The way to use tab characters in the resulting file.
+# UT_ForContinuationAndIndentation (in configuration: ForContinuationAndIndentation) Use tabs only for line continuation and indentation.
+# UT_Always (in configuration: Always) Use tabs whenever we need to fill whitespace that spans at least from one tab stop to the next one.
+UseTab: ForContinuationAndIndentation
+
+
+# SpaceBeforeParens (SpaceBeforeParensOptions)
+# Defines in which cases to put a space before opening parentheses.
+# SBPO_ControlStatements (in configuration: ControlStatements) Put a space before opening parentheses only after control statement keywords (for/if/while...).
+SpaceBeforeParens: ControlStatements
+
+
+# AllowShortFunctionsOnASingleLine (ShortFunctionStyle)
+# Dependent on the value, int f() { return 0; } can be put on a single line.
+# SFS_None (in configuration: None) Never merge functions into a single line.
+AllowShortFunctionsOnASingleLine: None
+
+
+# Options for aligning backslashes in escaped newlines.
+# ENAS_Left (in configuration: Left) Align escaped newlines as far left as possible.
+AlignEscapedNewlines: Left
+
+
+# Dependent on the value, while (true) { continue; } can be put on a single line.
+# SBS_Never (in configuration: Never) Never merge blocks into a single line.
+AllowShortBlocksOnASingleLine: Never
+
+
+# Dependent on the value, int f() { return 0; } can be put on a single line.
+# SFS_None (in configuration: None) Never merge functions into a single line.
+AllowShortFunctionsOnASingleLine: None
+
+
+# If true, if (a) return; can be put on a single line.
+# SIS_Never (in configuration: Never) Never put short ifs on the same line.
+AllowShortIfStatementsOnASingleLine: Never
+
+# AlwaysBreakAfterDefinitionReturnType (DefinitionReturnTypeBreakingStyle)
+# The function definition return type breaking style to use. This option is deprecated and is retained for backwards compatibility.
+# DRTBS_None (in configuration: None) Break after return type automatically. PenaltyReturnTypeOnItsOwnLine is taken into account.
+AlwaysBreakAfterReturnType: None
+
+# AlwaysBreakBeforeMultilineStrings (bool)
+# If true, always break before multiline string literals.
+AlwaysBreakBeforeMultilineStrings: false
+
+
+# BinPackArguments (bool)
+# If false, a function call’s arguments will either be all on the same line or will have one line each.
+BinPackArguments: true
+
+
+# BinPackParameters (bool)
+# If false, a function declaration’s or function definition’s parameters will either all be on the same line or will have one line each.
+BinPackParameters: true
+
+# BreakBeforeBraces (BraceBreakingStyle)
+# The brace breaking style to use.
+# BS_Allman (in configuration: Allman) Always break before braces.
+BreakBeforeBraces: Allman
+
+# BreakBeforeTernaryOperators (bool)
+# If true, ternary operators will be placed after line breaks.
+BreakBeforeTernaryOperators: true
+
+
+# ColumnLimit (unsigned)
+# The column limit.
+ColumnLimit: 80
+
+
+# FixNamespaceComments (bool)
+# If true, clang-format adds missing namespace end comments and fixes invalid existing ones.
+# FixNamespaceComments: false
+
+
+# IncludeBlocks (IncludeBlocksStyle)
+# Dependent on the value, multiple #include blocks can be sorted as one and divided based on category.
+# IBS_Merge (in configuration: Merge) Merge multiple #include blocks together and sort as one.
+# IncludeBlocks: Merge ***********************************
+
+
+# KeepEmptyLinesAtTheStartOfBlocks (bool)
+# If true, the empty line at the start of blocks is kept.
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+
+# MaxEmptyLinesToKeep (unsigned)
+# The maximum number of consecutive empty lines to keep.
+MaxEmptyLinesToKeep: 1
+
+
+# PointerAlignment (PointerAlignmentStyle)
+# Pointer and reference alignment style.
+# PAS_Right (in configuration: Right) Align pointer to the right.
+PointerAlignment: Right
+
+
+# PenaltyBreakBeforeFirstCallParameter (unsigned)
+# The penalty for breaking a function call after call(.
+PenaltyBreakBeforeFirstCallParameter: 1
+
+
+# PenaltyBreakString (unsigned)
+# The penalty for each line break introduced inside a string literal.
+PenaltyBreakString: 1
+
+
+# PenaltyExcessCharacter (unsigned)
+# The penalty for each character outside of the column limit.
+PenaltyExcessCharacter: 0
+
+
+# SpaceAfterCStyleCast (bool)
+# If true, a space is inserted after C style casts.
+SpaceAfterCStyleCast: false
+
+# SpaceBeforeAssignmentOperators (bool)
+# If false, spaces will be removed before assignment operators.
+SpaceBeforeAssignmentOperators: true
+
+
+# SpaceBeforeSquareBrackets (bool)
+# If true, spaces will be before [. Lambdas will not be affected. Only the first [ will get a space added.
+SpaceBeforeSquareBrackets: false
+
+
+# SpaceInEmptyParentheses (bool)
+# If true, spaces may be inserted into ().
+SpaceInEmptyParentheses: false
+
+
+# SpacesInCStyleCastParentheses (bool)
+# If true, spaces may be inserted into C style casts.
+SpacesInCStyleCastParentheses: false
+
+
+# SpacesInParentheses (bool)
+# If true, spaces will be inserted after ( and before ).
+SpacesInParentheses: false
+
+
+# SpacesInSquareBrackets (bool)
+# If true, spaces will be inserted after [ and before ]. Lambdas without arguments or unspecified size array declarations will not be affected.
+SpacesInSquareBrackets: false
+
+
