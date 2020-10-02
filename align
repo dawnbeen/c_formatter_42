@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+
+# ############################################################################ #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    align                                              :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/10/02 15:23:10 by cacharle          #+#    #+#              #
+#    Updated: 2020/10/02 15:24:14 by cacharle         ###   ########.fr        #
+#                                                                              #
+# ############################################################################ #
+
+import re
+import sys
+import shutil
+import argparse
+
+
+def align(content: str, scope: str) -> str:
+    """ Align content
+        scope can be either local or global
+          local:  for variable declarations in function
+          global: for function prototypes
+    """
+
+    lines = content.split("\n")
+    aligned = []
+    if scope == "local":
+        regex = "^\t(?P<kind>\w+)\s+(?P<rest>\w+;)$"
+    elif scope == "global":
+        regex = (r"^(?P<kind>\w+)\s+"
+                 r"(?P<rest>\w+\((\w+ \w+)*\);?)$")
+    else:
+        raise RuntimeError("scope should be 'global' or 'local'")
+
+    matches = [re.match(regex, line) for line in lines]
+    aligned = [(i, match.group("kind"), match.group("rest"))
+               for i, (line, match) in enumerate(zip(lines, matches))
+               if match is not None]
+
+    min_alignment = 1
+    for _, kind, rest in aligned:
+        min_alignment = max(len(kind) // 4 + 1, min_alignment)
+
+    for i, kind, rest in aligned:
+        alignment = len(kind) // 4
+        lines[i] = kind + "\t" * (min_alignment - alignment) + rest
+        if scope == "local":
+            lines[i] = "\t" + lines[i]
+    return "\n".join(lines)
+
+
+def align_all(content: str) -> str:
+    """ Align the content in global and local scopes """
+    content = align(content, scope="global")
+    return re.sub(
+        "\n\{\n(.*?)\n\}\n",
+        lambda match: align(match.group(), scope="local"),
+        content,
+        flags=re.DOTALL
+    )
+
+
+def main():
+    arg_parser = argparse.ArgumentParser(
+        description="Align C source according to the norm"
+    )
+    arg_parser.add_argument(
+        "-i", "--confirm",
+        action="store_true",
+        help="Ask confirmation before overwritting any file"
+    )
+    arg_parser.add_argument(
+        "-n", "--no-backup",
+        action="store_true",
+        help="Do not backup the non aligned file"
+    )
+    arg_parser.add_argument(
+        "filepaths",
+        metavar="FILE",
+        nargs="*",
+        help="File to align, if no file is provided read STDIN"
+    )
+    args = arg_parser.parse_args()
+
+    if len(args.filepaths) == 0:
+        content = sys.stdin.read()
+        print(align_all(content))
+    else:
+        for filepath in args.filepaths:
+            if not args.no_backup:
+                shutil.copyfile(filepath, filepath + ".orig")
+            with open(filepath, "r") as file:
+                content = file.read()
+            if args.confirm:
+                result = input("Are you sure you want to overwrite {}?[y/N]".format(filepath))
+                if result != "y":
+                    continue
+            print("Writting to {}".format(filepath))
+            with open(filepath, "w") as file:
+                file.write(align_all(content))
+
+
+if __name__ == "__main__":
+    main()
