@@ -32,7 +32,13 @@ $ brew install clang-format
 It's not perfect.
 **You should format these rules MANUALLY after auto-formatting.**
 - `global aligned`
-- `declarations aligned`.
+- `declarations aligned`
+```
+int         aaaa = 12;
+float       b = 23;
+std::string ccc = 23;
+```
+
 
 Recommanded to set in `Workspace Preference`
 
