@@ -33,6 +33,8 @@ It's not perfect.
 **You should format these rules MANUALLY after auto-formatting.**
 - `global aligned`
 - `declarations aligned`
+- `declarations must be followed by one empty line`
+- `Empty line`
 ```
 int         aaaa = 12;
 float       b = 23;
