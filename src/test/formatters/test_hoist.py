@@ -6,14 +6,12 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 14:13:03 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 14:25:15 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 
-from textwrap import dedent
-
-from formatters.hoist import *
+from formatters.hoist import hoist
 
 
 def scoped(s):

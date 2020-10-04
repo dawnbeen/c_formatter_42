@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 14:05:37 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 14:39:01 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -34,8 +34,8 @@ def align_scope(content: str, scope: str) -> str:
     if scope == "local":
         align_regex = (
             "^\t"
-             r"(?P<type>{t})\s+"
-             r"(?P<rest>{d};)$"
+            r"(?P<type>{t})\s+"
+            r"(?P<rest>{d};)$"
         )
     elif scope == "global":
         align_regex = (
@@ -71,3 +71,4 @@ def align(content: str) -> str:
     """ Align the content in global and local scopes """
     content = align_scope(content, scope="global")
     content = align_local(content)
+    return content

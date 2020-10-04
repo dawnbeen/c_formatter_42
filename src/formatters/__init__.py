@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 10:19:07 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 10:56:53 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 14:22:51 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -16,9 +16,11 @@ import glob
 
 FORMATTERS = {}
 
+
 def formatter(func):
     FORMATTERS[func.__name__] = func
     return func
+
 
 modules = glob.glob(os.path.join(os.path.dirname(__file__), "*.py"))
 __all__ = [os.path.basename(f)[:-3]

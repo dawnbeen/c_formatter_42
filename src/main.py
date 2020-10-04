@@ -17,7 +17,7 @@ import sys
 import argparse
 
 import formatters
-from  formatters import *
+from formatters import *
 
 
 def run_formatters(content: str) -> str:
@@ -66,7 +66,6 @@ The available formatters are:
     # clang_format_config_path = os.path.join(os.environ["HOME"], ".clang-format")
     # if not os.path.exists(clang_format_config_path):
     #     shutil.copyfile(".clang-format", clang_format_config_path)
-
 
     if len(args.filepaths) == 0:
         content = sys.stdin.read()
