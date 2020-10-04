@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 10:31:37 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 12:20:09 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -14,6 +14,7 @@
 import re
 
 from formatters import formatter
+import formatters.helper as helper
 
 # TODO
 # align global variable in c files
@@ -32,8 +33,8 @@ def align_scope(content: str, scope: str) -> str:
     lines = content.split("\n")
     aligned = []
     if scope == "local":
-        regex = ("^\t(?P<type_>{t})\s+"
-                 "(?P<rest>\(?{n}(\[\w+\])*(\)\(.*\))?;)$")
+        regex = ("^\t" r"(?P<type_>{t})\s+"
+                 r"(?P<rest>\(?{n}(\[\w+\])*(\)\(.*\))?;)$")
     elif scope == "global":
         regex = (r"^(?P<type_>{t})\s+"
                  r"(?P<rest>{n}\(.*\);?)$")
@@ -56,13 +57,13 @@ def align_scope(content: str, scope: str) -> str:
     return "\n".join(lines)
 
 
+@helper.local_scope
+def align_local(content: str) -> str:
+    return align_scope(content, scope="local")
+
+
 @formatter
 def align(content: str) -> str:
     """ Align the content in global and local scopes """
     content = align_scope(content, scope="global")
-    return re.sub(
-        "\n\{\n(.*?)\n\}\n",
-        lambda match: align_scope(match.group(), scope="local"),
-        content,
-        flags=re.DOTALL
-    )
+    content = align_local(content)
