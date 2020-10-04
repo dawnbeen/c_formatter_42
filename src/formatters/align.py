@@ -1,21 +1,19 @@
-#!/usr/bin/env python3
-
 # ############################################################################ #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    align                                              :+:      :+:    :+:    #
+#    align.py                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/10/02 15:23:10 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/02 15:24:14 by cacharle         ###   ########.fr        #
+#    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
+#    Updated: 2020/10/04 10:31:37 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
+
 import re
-import sys
-import shutil
-import argparse
+
+from formatters import formatter
 
 # TODO
 # align global variable in c files
@@ -24,7 +22,7 @@ import argparse
 TYPE_REGEX = r"([a-z]+\s+)*[a-zA-Z]\w*"
 NAME_REGEX = r"\**[a-zA-Z]\w*"
 
-def align(content: str, scope: str) -> str:
+def align_scope(content: str, scope: str) -> str:
     """ Align content
         scope can be either local or global
           local:  for variable declarations in function
@@ -58,52 +56,13 @@ def align(content: str, scope: str) -> str:
     return "\n".join(lines)
 
 
-def align_all(content: str) -> str:
+@formatter
+def align(content: str) -> str:
     """ Align the content in global and local scopes """
-    content = align(content, scope="global")
+    content = align_scope(content, scope="global")
     return re.sub(
         "\n\{\n(.*?)\n\}\n",
-        lambda match: align(match.group(), scope="local"),
+        lambda match: align_scope(match.group(), scope="local"),
         content,
         flags=re.DOTALL
     )
-
-
-def main():
-    arg_parser = argparse.ArgumentParser(
-        description="Align C source according to the norm"
-    )
-    arg_parser.add_argument(
-        "-i", "--confirm",
-        action="store_true",
-        help="Ask confirmation before overwritting any file"
-    )
-    arg_parser.add_argument(
-        "filepaths",
-        metavar="FILE",
-        nargs="*",
-        help="File to align, if no file is provided read STDIN"
-    )
-    args = arg_parser.parse_args()
-
-    if len(args.filepaths) == 0:
-        content = sys.stdin.read()
-        print(align_all(content), end="")
-    else:
-        for filepath in args.filepaths:
-            try:
-                with open(filepath, "r") as file:
-                    content = file.read()
-                if args.confirm:
-                    result = input("Are you sure you want to overwrite {}?[y/N]".format(filepath))
-                    if result != "y":
-                        continue
-                print("Writting to {}".format(filepath))
-                with open(filepath, "w") as file:
-                    file.write(align_all(content))
-            except OSError as e:
-                print("Error: {}: {}".format(e.filename, e.strerror))
-
-
-if __name__ == "__main__":
-    main()

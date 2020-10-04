@@ -1,3 +1,0 @@
-#!/bin/sh
-
-clang-format | ./align | sed 's/return \(.*\);/return (\1)/'
