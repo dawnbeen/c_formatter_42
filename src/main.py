@@ -13,7 +13,9 @@
 # ############################################################################ #
 
 import re
+import os
 import sys
+import shutil
 import argparse
 
 from formatters.clang_format import clang_format
@@ -51,9 +53,11 @@ def main():
     )
     args = arg_parser.parse_args()
 
-    # clang_format_config_path = os.path.join(os.environ["HOME"], ".clang-format")
-    # if not os.path.exists(clang_format_config_path):
-    #     shutil.copyfile(".clang-format", clang_format_config_path)
+    # Copy .clang-format in user's home directory
+    clang_format_config_path = os.path.join(os.environ["HOME"], ".clang-format")
+    if not os.path.exists(clang_format_config_path):
+        src_dir = os.path.dirname(os.path.realpath(__file__))
+        shutil.copyfile(os.path.join(src_dir, "..", ".clang-format"), clang_format_config_path)
 
     if len(args.filepaths) == 0:
         content = sys.stdin.read()
