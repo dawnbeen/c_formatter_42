@@ -6,14 +6,13 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 14:39:01 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 15:22:56 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 
 import re
 
-from formatters import formatter
 import formatters.helper as helper
 import formatters.regex as regex
 
@@ -66,7 +65,6 @@ def align_local(content: str) -> str:
     return align_scope(content, scope="local")
 
 
-@formatter
 def align(content: str) -> str:
     """ Align the content in global and local scopes """
     content = align_scope(content, scope="global")

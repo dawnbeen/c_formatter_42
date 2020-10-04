@@ -12,29 +12,30 @@
 #                                                                              #
 # ############################################################################ #
 
-
+import re
 import sys
 import argparse
 
-import formatters
-from formatters import *
+from formatters.clang_format import clang_format
+from formatters.hoist import hoist
+from formatters.align import align
 
 
 def run_formatters(content: str) -> str:
-    runned = [
-        # formatters.FORMATTERS["clang_format"],
-        formatters.FORMATTERS["hoist"],
-        formatters.FORMATTERS["align"]
-    ]
-    for formatter in runned:
-        content = formatter(content)
+    content = clang_format(content)
+    content = re.sub(
+        "return (?P<value>[^(].*);",
+        lambda match: "return ({});".format(match.group("value")),
+        content
+    )
+    content = hoist(content)
+    content = align(content)
     return content
 
 
 def main():
-    formatters_names = formatters.FORMATTERS.keys()
     arg_parser = argparse.ArgumentParser(
-        description="Align C source according to the norm",
+        description="Format C source according to the norm",
         formatter_class=argparse.RawTextHelpFormatter
     )
     arg_parser.add_argument(
@@ -43,25 +44,12 @@ def main():
         help="Ask confirmation before overwritting any file"
     )
     arg_parser.add_argument(
-        "-f", "--formatter",
-        help="""\
-Formatter to use, by default use all formatters
-The available formatters are:
-""" + " - " + "\n - ".join(formatters_names),
-        choices=formatters_names
-    )
-    arg_parser.add_argument(
         "filepaths",
         metavar="FILE",
         nargs="*",
-        help="File to align, if no file is provided read STDIN"
+        help="File to format, if no file is provided read STDIN"
     )
     args = arg_parser.parse_args()
-
-    # if args.formatter is not None:
-    #     if args.formatter not in [x[0] for x in formatters.FORMATTERS]
-
-    # print(formatters.FORMATTERS)
 
     # clang_format_config_path = os.path.join(os.environ["HOME"], ".clang-format")
     # if not os.path.exists(clang_format_config_path):

@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 14:25:15 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 15:29:23 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -39,3 +39,5 @@ def test_hoist():
 
 def test_remove_empty_line():
     pass
+
+# def test_hoist_return_edge_case

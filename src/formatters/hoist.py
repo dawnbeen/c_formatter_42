@@ -6,18 +6,16 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:16:28 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 14:24:03 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 15:23:04 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 import re
 
-from formatters import formatter
 import formatters.helper as helper
 import formatters.regex as regex
 
 
-@formatter
 @helper.local_scope
 def hoist(content: str) -> str:
     input_lines = content.split("\n")
