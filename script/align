@@ -17,10 +17,9 @@ import sys
 import shutil
 import argparse
 
-# TODO Fix regex
-# function return type and variable type can contain spaces (e.g `unsigned int a;`)
-# variable names can be followed by `[]`
-# types can contain parenthesis (for function pointer or array of pointers)
+
+TYPE_REGEX = r"([a-z]+\s+)*[a-zA-Z]\w*"
+NAME_REGEX = r"\**[a-zA-Z]\w*"
 
 def align(content: str, scope: str) -> str:
     """ Align content
@@ -32,23 +31,25 @@ def align(content: str, scope: str) -> str:
     lines = content.split("\n")
     aligned = []
     if scope == "local":
-        regex = "^\t(?P<kind>\w+)\s+(?P<rest>\**\w+;)$"
+        regex = ("^\t(?P<type_>{t})\s+"
+                 "(?P<rest>\(?{n}(\[\w+\])*(\)\(.*\))?;)$")
     elif scope == "global":
-        regex = (r"^(?P<kind>\w+)\s+"
-                 r"(?P<rest>\**\w+\((\w+ \**\w+)*\);?)$")
+        regex = (r"^(?P<type_>{t})\s+"
+                 r"(?P<rest>{n}\(.*\);?)$")
     else:
         raise RuntimeError("scope should be 'global' or 'local'")
+    regex = regex.format(t=TYPE_REGEX, n=NAME_REGEX)
 
     matches = [re.match(regex, line) for line in lines]
-    aligned = [(i, match.group("kind"), match.group("rest"))
+    aligned = [(i, match.group("type_"), match.group("rest"))
                for i, (line, match) in enumerate(zip(lines, matches))
                if match is not None]
 
-    min_alignment = max([len(kind) // 4 + 1 for _, kind, _ in aligned], default=1)
+    min_alignment = max([len(type_) // 4 + 1 for _, type_, _ in aligned], default=1)
 
-    for i, kind, rest in aligned:
-        alignment = len(kind) // 4
-        lines[i] = kind + "\t" * (min_alignment - alignment) + rest
+    for i, type_, rest in aligned:
+        alignment = len(type_) // 4
+        lines[i] = type_ + "\t" * (min_alignment - alignment) + rest
         if scope == "local":
             lines[i] = "\t" + lines[i]
     return "\n".join(lines)
@@ -84,7 +85,7 @@ def main():
 
     if len(args.filepaths) == 0:
         content = sys.stdin.read()
-        print(align_all(content))
+        print(align_all(content), end="")
     else:
         for filepath in args.filepaths:
             try:

@@ -4,14 +4,15 @@ This is C language formatter that fits 42 norminette.
 I know you are already a good Human norm.
 It's just for convenience.
 
-### How to use
+## How to use
+
 1. Install clang-format.
 - MacOS
 ```
 $ brew install clang-format
 ```
 
-2. Copy `.clang-foramt` in your Workspace directory.
+2. Copy `.clang-format` in your Workspace directory.
 
 3. VSCode Settings
 - Set Default Formatter as clang-format.
@@ -28,7 +29,8 @@ $ brew install clang-format
 - On Mac: Shift + Option + F
 - On Linux: Ctrl + Shift + I
 
-### Caution
+## Caution
+
 It's not perfect.
 **You should format these rules MANUALLY after auto-formatting.**
 - `global aligned`
