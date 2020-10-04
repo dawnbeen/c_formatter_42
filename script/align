@@ -17,6 +17,9 @@ import sys
 import shutil
 import argparse
 
+# TODO
+# align global variable in c files
+# align function prototype and type declaration in header file
 
 TYPE_REGEX = r"([a-z]+\s+)*[a-zA-Z]\w*"
 NAME_REGEX = r"\**[a-zA-Z]\w*"
