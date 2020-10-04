@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 12:20:09 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 14:05:37 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -15,13 +15,12 @@ import re
 
 from formatters import formatter
 import formatters.helper as helper
+import formatters.regex as regex
 
 # TODO
 # align global variable in c files
 # align function prototype and type declaration in header file
 
-TYPE_REGEX = r"([a-z]+\s+)*[a-zA-Z]\w*"
-NAME_REGEX = r"\**[a-zA-Z]\w*"
 
 def align_scope(content: str, scope: str) -> str:
     """ Align content
@@ -33,17 +32,22 @@ def align_scope(content: str, scope: str) -> str:
     lines = content.split("\n")
     aligned = []
     if scope == "local":
-        regex = ("^\t" r"(?P<type_>{t})\s+"
-                 r"(?P<rest>\(?{n}(\[\w+\])*(\)\(.*\))?;)$")
+        align_regex = (
+            "^\t"
+             r"(?P<type>{t})\s+"
+             r"(?P<rest>{d};)$"
+        )
     elif scope == "global":
-        regex = (r"^(?P<type_>{t})\s+"
-                 r"(?P<rest>{n}\(.*\);?)$")
+        align_regex = (
+            r"^(?P<type>{t})\s+"
+            r"(?P<rest>{n}\(.*\);?)$"
+        )
     else:
         raise RuntimeError("scope should be 'global' or 'local'")
-    regex = regex.format(t=TYPE_REGEX, n=NAME_REGEX)
+    align_regex = align_regex.format(t=regex.TYPE, n=regex.NAME, d=regex.DECL_NAME)
 
-    matches = [re.match(regex, line) for line in lines]
-    aligned = [(i, match.group("type_"), match.group("rest"))
+    matches = [re.match(align_regex, line) for line in lines]
+    aligned = [(i, match.group("type"), match.group("rest"))
                for i, (line, match) in enumerate(zip(lines, matches))
                if match is not None]
 
