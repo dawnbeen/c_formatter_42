@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:16:28 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 14:06:04 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 14:20:53 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -28,9 +28,9 @@ def hoist(content: str) -> str:
         m = re.match(
             r"^(?P<indent>\s+)"
             r"(?P<type>{t})\s+"
-            r"(?P<name>{n})\s+=\s+"
+            r"(?P<name>{d})\s+=\s+"
             r"(?P<value>.+);$"
-                .format(t=regex.TYPE, n=regex.NAME),
+                .format(t=regex.TYPE, d=regex.DECL_NAME),
             line
         )
         if m is not None:
@@ -48,8 +48,11 @@ def hoist(content: str) -> str:
 
 
     # hoist declarations
+    decl_regex = r"^\s*{t}\s+{d};$".format(t=regex.TYPE, d=regex.DECL_NAME)
     declarations = [line for line in lines
-                    if re.match(r"^\s*[a-z]*\s+[a-z]*;$", line) is not None]
-    lines = declarations + [line for line in lines if line not in declarations]
+                    if re.match(decl_regex, line) is not None]
+    lines = (declarations + [""] +
+        [line for line in lines
+         if line not in declarations and line != ""])
 
     return "\n".join(lines)

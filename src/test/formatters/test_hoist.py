@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 13:54:52 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/04 14:13:03 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -21,7 +21,7 @@ def scoped(s):
 
 
 def test_assignment_splitting():
-    output = scoped("\tint\ta;\n\ta = 1;")
+    output = scoped("\tint\ta;\n\n\ta = 1;")
 
     assert output == hoist(scoped("\tint a = 1;"))
     assert output == hoist(scoped("\tint a                = 1;"))
@@ -33,7 +33,11 @@ def test_assignment_splitting():
 
 
 def test_hoist():
-    output = scoped("int a;\nfoo();\nbar();")
+    output = scoped("int a;\n\nfoo();\nbar();")
 
     assert output == hoist(scoped("foo();\nbar();\nint a;"))
     assert output == hoist(scoped("foo();\nint a;\nbar();"))
+
+
+def test_remove_empty_line():
+    pass
