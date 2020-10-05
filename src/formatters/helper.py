@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:38:00 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 08:10:01 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/05 09:42:11 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -21,7 +21,7 @@ REGEX_NAME      = r"\**[a-zA-Z]\w*"
 REGEX_DECL_NAME = r"\(?{n}(\[\w+\])*(\)\(.*\))?".format(n=REGEX_NAME)
 
 
-def local_scope(func):
+def locally_scoped(func):
     """ Apply the formatter on every local scopes of the content """
 
     def wrapper(content: str) -> str:
@@ -34,3 +34,5 @@ def local_scope(func):
             flags=re.DOTALL
         )
     return wrapper
+
+# def type_scope(func):

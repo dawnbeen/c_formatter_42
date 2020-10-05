@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:16:28 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 08:22:46 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/05 09:17:35 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -15,7 +15,7 @@ import re
 import formatters.helper as helper
 
 
-@helper.local_scope
+@helper.locally_scoped
 def hoist(content: str) -> str:
     r""" Hoist local variable and split assigned declaration
 
