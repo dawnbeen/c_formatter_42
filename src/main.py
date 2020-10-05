@@ -27,14 +27,20 @@ from formatters.align import align
 def append_to_path(home_dir, repo_dir, rc_file):
     """ Append the repo directory to a rc_file path variable """
     try:
-        with open(os.path.join(home_dir, rc_file), "a") as f:
-            f.write(textwrap.dedent("""
-                # Added by c_formatter_42
-                export PATH="$PATH:{}"
-                """.format(repo_dir)
-            ))
+        rc_path = os.path.join(home_dir, rc_file)
+        already_installed = False
+        with open(rc_path, "r") as file:
+            if file.read().find("Added by c_formatter_42") != -1:
+                already_installed = True
+        if not already_installed:
+            with open(rc_path, "a") as file:
+                file.write(textwrap.dedent("""
+                    # Added by c_formatter_42
+                    export PATH="$PATH:{}"
+                    """.format(repo_dir)
+                ))
     except OSError as e:
-        print("Error: {}: {}".format(e.filename, e.strerror))
+        print("Error: Couldn't append to PATH: {}: {}".format(e.filename, e.strerror))
 
 
 def run_formatters(content: str) -> str:
@@ -80,10 +86,10 @@ def main():
         if home_dir is None:
             print("HOME environment variable not set")
             sys.exit(1)
-        repo_dir = os.path.join(
+        repo_dir = os.path.realpath(os.path.join(
             os.path.dirname(os.path.realpath(__file__)),
             ".."
-        )
+        ))
         append_to_path(home_dir, repo_dir, ".zshrc")
         append_to_path(home_dir, repo_dir, ".bashrc")
         # Copy .clang-format in user's home directory
