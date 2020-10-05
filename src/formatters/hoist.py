@@ -6,18 +6,42 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:16:28 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 15:23:04 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/05 08:22:46 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 import re
 
 import formatters.helper as helper
-import formatters.regex as regex
 
 
 @helper.local_scope
 def hoist(content: str) -> str:
+    r""" Hoist local variable and split assigned declaration
+
+    Assignment splitting:
+    {                   {
+        int a = 1;  =>      int a;
+                            a = 1;
+    }                   }
+
+    Variable hoisting:
+    {                         {
+        puts("bonjour");          int a;
+        int a;            =>      char b;
+        char b;                   puts("bonjour");
+    }                         }
+
+    Only one empty line after declarations
+    {                         {
+                                  int a;
+        int a;                    char b;
+        puts("bonjour");  ->
+                                  puts("bonjour");
+        char b;               }
+    }
+    """
+
     input_lines = content.split("\n")
 
     lines = []
@@ -28,7 +52,7 @@ def hoist(content: str) -> str:
             r"(?P<type>{t})\s+"
             r"(?P<name>{d})\s+=\s+"
             r"(?P<value>.+);$"
-            .format(t=regex.TYPE, d=regex.DECL_NAME),
+            .format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
             line
         )
         if m is not None:
@@ -44,15 +68,15 @@ def hoist(content: str) -> str:
         else:
             lines.append(line)
 
-    # hoist declarations
-    decl_regex = r"^\s*{t}\s+{d};$".format(t=regex.TYPE, d=regex.DECL_NAME)
+    # hoist declarations and filter empty lines
+    decl_regex = r"^\s*{t}\s+{d};$".format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME)
     declarations = [line for line in lines
                     if re.match(decl_regex, line) is not None]
-    lines = (
-        declarations
-        + [""]
-        + [line for line in lines
-           if line not in declarations and line != ""]
-    )
+    body = [line for line in lines
+            if line not in declarations and line != ""]
+    lines = declarations
+    if len(declarations) != 0:
+        lines.append("")
+    lines.extend(body)
 
     return "\n".join(lines)

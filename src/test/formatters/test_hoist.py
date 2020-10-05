@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 15:29:23 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/05 08:01:51 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -20,7 +20,6 @@ def scoped(s):
 
 def test_assignment_splitting():
     output = scoped("\tint\ta;\n\n\ta = 1;")
-
     assert output == hoist(scoped("\tint a = 1;"))
     assert output == hoist(scoped("\tint a                = 1;"))
     assert output == hoist(scoped("\tint a =                1;"))
@@ -32,12 +31,61 @@ def test_assignment_splitting():
 
 def test_hoist():
     output = scoped("int a;\n\nfoo();\nbar();")
-
     assert output == hoist(scoped("foo();\nbar();\nint a;"))
     assert output == hoist(scoped("foo();\nint a;\nbar();"))
 
 
 def test_remove_empty_line():
-    pass
+    input = """
+{
+\tint\ta;
 
-# def test_hoist_return_edge_case
+\ta = 1;
+
+\tputs("bonjour");
+
+}
+"""
+    output = """
+{
+\tint\ta;
+
+\ta = 1;
+\tputs("bonjour");
+}
+"""
+    assert output == hoist(input)
+
+    input = """
+{
+
+\tputs("bonjour");
+
+}
+"""
+    output = """
+{
+\tputs("bonjour");
+}
+"""
+    assert output == hoist(input)
+
+    input = """
+{
+\tint a = 1;
+
+\tputs("bonjour");
+
+}
+"""
+    output = """
+{
+\tint\ta;
+
+\ta = 1;
+\tputs("bonjour");
+}
+"""
+    assert output == hoist(input)
+
+# TODO test on weird types

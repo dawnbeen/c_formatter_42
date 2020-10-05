@@ -17,13 +17,28 @@ import os
 import sys
 import shutil
 import argparse
+import textwrap
 
 from formatters.clang_format import clang_format
 from formatters.hoist import hoist
 from formatters.align import align
 
 
+def append_to_path(home_dir, repo_dir, rc_file):
+    """ Append the repo directory to a rc_file path variable """
+    try:
+        with open(os.path.join(home_dir, rc_file), "a") as f:
+            f.write(textwrap.dedent("""
+                # Added by c_formatter_42
+                export PATH="$PATH:{}"
+                """.format(repo_dir)
+            ))
+    except OSError as e:
+        print("Error: {}: {}".format(e.filename, e.strerror))
+
+
 def run_formatters(content: str) -> str:
+    """ Run all formatters """
     content = clang_format(content)
     content = re.sub(
         "return (?P<value>[^(].*);",
@@ -41,9 +56,16 @@ def main():
         formatter_class=argparse.RawTextHelpFormatter
     )
     arg_parser.add_argument(
-        "-i", "--confirm",
+        "-c", "--confirm",
         action="store_true",
         help="Ask confirmation before overwritting any file"
+    )
+    arg_parser.add_argument(
+        "-i", "--install",
+        action="store_true",
+        help=textwrap.dedent("""\
+            Copy the .clang-format in your home (required by clang-format).
+            Add c_formatter_42 to your PATH in your .zshrc and .bashrc""")
     )
     arg_parser.add_argument(
         "filepaths",
@@ -53,11 +75,22 @@ def main():
     )
     args = arg_parser.parse_args()
 
-    # Copy .clang-format in user's home directory
-    clang_format_config_path = os.path.join(os.environ["HOME"], ".clang-format")
-    if not os.path.exists(clang_format_config_path):
-        src_dir = os.path.dirname(os.path.realpath(__file__))
-        shutil.copyfile(os.path.join(src_dir, "..", ".clang-format"), clang_format_config_path)
+    if args.install:
+        home_dir = os.environ.get("HOME")
+        if home_dir is None:
+            print("HOME environment variable not set")
+            sys.exit(1)
+        repo_dir = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            ".."
+        )
+        append_to_path(home_dir, repo_dir, ".zshrc")
+        append_to_path(home_dir, repo_dir, ".bashrc")
+        # Copy .clang-format in user's home directory
+        home_clang_file = os.path.join(home_dir, ".clang-format")
+        if not os.path.exists(home_clang_file):
+            shutil.copyfile(os.path.join(repo_dir, ".clang-format"), home_clang_file)
+        sys.exit(0)
 
     if len(args.filepaths) == 0:
         content = sys.stdin.read()

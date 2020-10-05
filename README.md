@@ -48,10 +48,13 @@ Recommended to set in `Workspace Preference`
 
 Feel free to report issues or contribute. :)
 
+## Vim
+
+Checkout [c\_formatter\_42.vim](https://github.com/cacharle/c_formatter_42.vim)
+
 ## TODO
 
 - [ ] Header file and global variable alignement
-
 - [ ] A VSCode extension
-- [ ] A vim  plugin
-- [ ] Atom/sublime text/emacs?
+- [ ] Atom extension 
+- [ ] Sublim text extension 

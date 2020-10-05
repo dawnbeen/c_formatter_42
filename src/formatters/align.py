@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/04 15:22:56 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/05 08:26:17 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -14,7 +14,6 @@
 import re
 
 import formatters.helper as helper
-import formatters.regex as regex
 
 # TODO
 # align global variable in c files
@@ -30,6 +29,7 @@ def align_scope(content: str, scope: str) -> str:
 
     lines = content.split("\n")
     aligned = []
+    # select regex according to scope
     if scope == "local":
         align_regex = (
             "^\t"
@@ -43,13 +43,17 @@ def align_scope(content: str, scope: str) -> str:
         )
     else:
         raise RuntimeError("scope should be 'global' or 'local'")
-    align_regex = align_regex.format(t=regex.TYPE, n=regex.NAME, d=regex.DECL_NAME)
-
+    align_regex = align_regex.format(
+        t=helper.REGEX_TYPE,
+        n=helper.REGEX_NAME,
+        d=helper.REGEX_DECL_NAME
+    )
+    # get the lines to be aligned
     matches = [re.match(align_regex, line) for line in lines]
     aligned = [(i, match.group("type"), match.group("rest"))
                for i, (line, match) in enumerate(zip(lines, matches))
                if match is not None]
-
+    # get the minimum alignment required for each line
     min_alignment = max([len(type_) // 4 + 1 for _, type_, _ in aligned], default=1)
 
     for i, type_, rest in aligned:
@@ -62,6 +66,7 @@ def align_scope(content: str, scope: str) -> str:
 
 @helper.local_scope
 def align_local(content: str) -> str:
+    """ Wrapper for align_scope to use local_scope decorator """
     return align_scope(content, scope="local")
 
 
