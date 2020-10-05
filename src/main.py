@@ -49,7 +49,8 @@ def run_formatters(content: str) -> str:
     content = re.sub(
         "return (?P<value>[^(].*);",
         lambda match: "return ({});".format(match.group("value")),
-        content
+        content,
+        re.DOTALL
     )
     content = hoist(content)
     content = align(content)

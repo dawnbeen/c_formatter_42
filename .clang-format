@@ -108,7 +108,7 @@ ColumnLimit: 80
 # IncludeBlocks (IncludeBlocksStyle)
 # Dependent on the value, multiple #include blocks can be sorted as one and divided based on category.
 # IBS_Merge (in configuration: Merge) Merge multiple #include blocks together and sort as one.
-IncludeBlocks: Merge 
+IncludeBlocks: Merge
 
 
 # KeepEmptyLinesAtTheStartOfBlocks (bool)
@@ -139,7 +139,7 @@ PenaltyBreakString: 1
 
 # PenaltyExcessCharacter (unsigned)
 # The penalty for each character outside of the column limit.
-PenaltyExcessCharacter: 0
+PenaltyExcessCharacter: 100
 
 
 # SpaceAfterCStyleCast (bool)

@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 07:37:20 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 07:43:20 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/05 17:57:57 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -25,3 +25,29 @@ def test_clang_format_gibberish():
 
 def test_clang_format_empty():
     assert clang_format("") == ""
+
+
+def test_clang_format_dont_join_lines():
+    input = """
+if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+\t|| bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+\t|| cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
+"""
+    output = """
+if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
+\tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
+\tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
+"""
+    assert clang_format(input) == output
+
+    input = """
+if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
+\tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
+\tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
+"""
+    output = """
+if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
+\tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
+\tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
+"""
+    assert clang_format(input) == output
