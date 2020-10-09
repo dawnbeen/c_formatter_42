@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:16:28 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 09:17:35 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/09 18:07:08 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -62,7 +62,7 @@ def hoist(content: str) -> str:
             )
             lines.append("{}{} = {};".format(
                 m.group("indent"),
-                m.group("name"),
+                m.group("name").replace("*", ""),
                 m.group("value"))
             )
         else:

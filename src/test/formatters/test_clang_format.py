@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 07:37:20 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 17:57:57 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/09 18:19:57 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -49,5 +49,36 @@ if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
 if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
 \tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
 \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
+"""
+    assert clang_format(input) == output
+
+
+
+def test_clang_format_non_array_assignment_packing():
+    input = """
+static char *g_sep_str_lookup[] = {
+\t[TAG_END] = ";",
+\t[TAG_OR] = "||",
+\t[TAG_REDIR_IN] = "<",
+\t[TAG_REDIR_APPEND] = ">>",
+\t[TAG_PARENT_CLOSE] = ")",
+\t[TAG_AND] = "&&",
+\t[TAG_PIPE] = "|",
+\t[TAG_REDIR_OUT] = ">",
+\t[TAG_PARENT_OPEN] = "(",
+};
+"""
+    output = """
+static char *g_sep_str_lookup[] = {
+\t[TAG_END] = ";",
+\t[TAG_OR] = "||",
+\t[TAG_REDIR_IN] = "<",
+\t[TAG_REDIR_APPEND] = ">>",
+\t[TAG_PARENT_CLOSE] = ")",
+\t[TAG_AND] = "&&",
+\t[TAG_PIPE] = "|",
+\t[TAG_REDIR_OUT] = ">",
+\t[TAG_PARENT_OPEN] = "(",
+};
 """
     assert clang_format(input) == output

@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 10:10:51 by cacharle         ###   ########.fr        #
+#    Updated: 2020/10/05 10:11:55 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -63,31 +63,31 @@ def align_scope(content: str, scope: str) -> str:
                for i, (line, match) in enumerate(zip(lines, matches))
                if match is not None]
 
-    # if scope == "global":
-    #     typedecl_regex       = (r"^(?P<prefix>\s*(typedef\s+)?(struct|enum|union))"
-    #                             r"\s+(?P<suffix>[a-zA-Z]\w+)$")
-    #     typedecl_close_regex = r"^(?P<prefix>})\s+(?P<suffix>[a-zA-Z]\w+;)$"
-    #     in_type_scope = False
-    #     for i, line in enumerate(lines):
-    #         m = re.match(typedecl_regex, line)
-    #         if m is not None:
-    #             in_type_scope = True
-    #             aligned.append((i, m.group("prefix"), m.group("suffix")))
-    #             continue
-    #         m = re.match(typedecl_close_regex, line)
-    #         if m is not None:
-    #             in_type_scope = False
-    #             aligned.append((i, m.group("prefix"), m.group("suffix")))
-    #             continue
-    #         if in_type_scope:
-    #             m = re.match(
-    #                 r"^(?P<prefix>\s+{t})\s+"
-    #                 r"(?P<suffix>{d};)$"
-    #                 .format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
-    #                 line
-    #             )
-    #             if m is not None:
-    #                 aligned.append((i, m.group("prefix"), m.group("suffix")))
+    if scope == "global":
+        typedecl_regex       = (r"^(?P<prefix>\s*(typedef\s+)?(struct|enum|union))"
+                                r"\s+(?P<suffix>[a-zA-Z]\w+)$")
+        typedecl_close_regex = r"^(?P<prefix>})\s+(?P<suffix>[a-zA-Z]\w+;)$"
+        in_type_scope = False
+        for i, line in enumerate(lines):
+            m = re.match(typedecl_regex, line)
+            if m is not None:
+                in_type_scope = True
+                aligned.append((i, m.group("prefix"), m.group("suffix")))
+                continue
+            m = re.match(typedecl_close_regex, line)
+            if m is not None:
+                in_type_scope = False
+                aligned.append((i, m.group("prefix"), m.group("suffix")))
+                continue
+            if in_type_scope:
+                m = re.match(
+                    r"^(?P<prefix>\s+{t})\s+"
+                    r"(?P<suffix>{d};)$"
+                    .format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
+                    line
+                )
+                if m is not None:
+                    aligned.append((i, m.group("prefix"), m.group("suffix")))
 
     # get the minimum alignment required for each line
     min_alignment = max(

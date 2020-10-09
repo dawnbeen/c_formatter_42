@@ -139,7 +139,7 @@ PenaltyBreakString: 1
 
 # PenaltyExcessCharacter (unsigned)
 # The penalty for each character outside of the column limit.
-PenaltyExcessCharacter: 100
+PenaltyExcessCharacter: 1
 
 
 # SpaceAfterCStyleCast (bool)
@@ -175,4 +175,10 @@ SpacesInParentheses: false
 # If true, spaces will be inserted after [ and before ]. Lambdas without arguments or unspecified size array declarations will not be affected.
 SpacesInSquareBrackets: false
 
+AlignOperands: false
 
+Cpp11BracedListStyle: false
+
+BinPackArguments: false
+
+BinPackParameters: false

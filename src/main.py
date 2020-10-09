@@ -19,9 +19,7 @@ import shutil
 import argparse
 import textwrap
 
-from formatters.clang_format import clang_format
-from formatters.hoist import hoist
-from formatters.align import align
+from run import run_all
 
 
 def append_to_path(home_dir, repo_dir, rc_file):
@@ -39,22 +37,10 @@ def append_to_path(home_dir, repo_dir, rc_file):
                     export PATH="$PATH:{}"
                     """.format(repo_dir)
                 ))
+                print("Added c_formatter_42 to your PATH in your {}".format(rc_file))
     except OSError as e:
         print("Error: Couldn't append to PATH: {}: {}".format(e.filename, e.strerror))
 
-
-def run_formatters(content: str) -> str:
-    """ Run all formatters """
-    content = clang_format(content)
-    content = re.sub(
-        "return (?P<value>[^(].*);",
-        lambda match: "return ({});".format(match.group("value")),
-        content,
-        re.DOTALL
-    )
-    content = hoist(content)
-    content = align(content)
-    return content
 
 
 def main():
@@ -95,13 +81,13 @@ def main():
         append_to_path(home_dir, repo_dir, ".bashrc")
         # Copy .clang-format in user's home directory
         home_clang_file = os.path.join(home_dir, ".clang-format")
-        if not os.path.exists(home_clang_file):
-            shutil.copyfile(os.path.join(repo_dir, ".clang-format"), home_clang_file)
+        shutil.copyfile(os.path.join(repo_dir, ".clang-format"), home_clang_file)
+        print("Copied .clang-format in {}".format(home_clang_file))
         sys.exit(0)
 
     if len(args.filepaths) == 0:
         content = sys.stdin.read()
-        print(run_formatters(content), end="")
+        print(run_all(content), end="")
     else:
         for filepath in args.filepaths:
             try:
@@ -114,7 +100,7 @@ def main():
                         continue
                 print("Writting to {}".format(filepath))
                 with open(filepath, "w") as file:
-                    file.write(run_formatters(content))
+                    file.write(run_all(content))
             except OSError as e:
                 print("Error: {}: {}".format(e.filename, e.strerror))
 
