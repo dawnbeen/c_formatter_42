@@ -4,13 +4,19 @@ This is C language formatter that fits 42 norminette.
 I know you are already a good Human norm.
 It's just for convenience.
 
-## How to use
+## Vim
+
+Checkout [c\_formatter\_42.vim](https://github.com/cacharle/c_formatter_42.vim)
+
+
+## VSCode
 
 1. Install clang-format.
 - MacOS
 ```
 $ brew install clang-format
 ```
+or you can install vscode extension `Clang-Format`
 
 2. Copy `.clang-format` in your Workspace directory.
 
@@ -29,7 +35,7 @@ $ brew install clang-format
 - On Mac: Shift + Option + F
 - On Linux: Ctrl + Shift + I
 
-## Caution
+#### Caution(VSCode)
 
 It's not perfect.
 **You should format these rules MANUALLY after auto-formatting.**
@@ -47,10 +53,6 @@ std::string ccc = 23;
 Recommended to set in `Workspace Preference`
 
 Feel free to report issues or contribute. :)
-
-## Vim
-
-Checkout [c\_formatter\_42.vim](https://github.com/cacharle/c_formatter_42.vim)
 
 ## TODO
 
