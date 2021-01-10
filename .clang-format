@@ -139,7 +139,7 @@ PenaltyBreakString: 1
 
 # PenaltyExcessCharacter (unsigned)
 # The penalty for each character outside of the column limit.
-PenaltyExcessCharacter: 1
+PenaltyExcessCharacter: 10
 
 
 # SpaceAfterCStyleCast (bool)
