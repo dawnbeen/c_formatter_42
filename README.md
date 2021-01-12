@@ -14,6 +14,7 @@ Checkout [c\_formatter\_42.vim](https://github.com/cacharle/c_formatter_42.vim)
 ## VSCode
 
 1. Install clang-format.
+
 - MacOS
 ```
 $ brew install clang-format
@@ -33,7 +34,10 @@ $ brew install clang-format
 "editor.formatOnPaste": false,
 "editor.formatOnSave": false,
 ```
-
+(🚨 **CAUTION**
+Check your **clang-format version**.
+If version is lower than 10, `SpaceBeforeSquareBrackets: false` and `AllowShortBlocksOnASingleLine: Never` can't work well.
+So you should comment them out!)
 
 4. Execute code formatting
 - On Windows: Shift + Alt + F
@@ -56,7 +60,7 @@ std::string ccc = 23;
 ```
 
 
-Recommended to set in `Workspace Preference`
+Recommended to set in `Workspace Preference`.
 
 Feel free to report issues or contribute. :)
 
