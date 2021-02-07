@@ -63,11 +63,3 @@ std::string ccc = 23;
 Recommended to set in `Workspace Preference`.
 
 Feel free to report issues or contribute. :)
-
-
-## TODO
-
-- [ ] Header file and global variable alignement
-- [ ] A VSCode extension
-- [ ] Atom extension 
-- [ ] Sublim text extension 
