@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 15:47:55 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 20:13:41 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -15,20 +15,6 @@ import re
 from enum import Enum
 
 import formatters.helper as helper
-
-
-# def align_lines(prefixes, suffixes) -> [str]:
-#     # individual alignments
-#     alignments = [
-#         len(prefix.replace("\t", " " * 4) // 4
-#         for prefix in prefixes
-#     ]
-#     max_alignment = max(alignments, default=1)
-#     # align according to greatest individual alignment
-#     return [
-#         prefix + "\t" * (max_alignment - alignment) + suffix)
-#         for (prefix, suffix), alignment in zip(aligned, alignments)
-#     ]
 
 
 class Scope(Enum):
@@ -68,21 +54,24 @@ def align_scope(content: str, scope: Scope) -> str:
                for i, match in enumerate(matches)
                if match is not None]
 
+    # global type declaration (struct/union/enum)
     if scope is Scope.GLOBAL:
-        typedecl_regex       = (r"^(?P<prefix>\s*(typedef\s+)?(struct|enum|union))"
-                                r"\s+(?P<suffix>[a-zA-Z]\w+)$")
-        typedecl_close_regex = r"^(?P<prefix>})\s+(?P<suffix>[a-zA-Z]\w+;)$"
+        typedecl_open_regex  = (r"^(?P<prefix>\s*(typedef\s+)?(struct|enum|union))"
+                                r"\s*(?P<suffix>[a-zA-Z_]\w+)?$")
+        typedecl_close_regex = r"^(?P<prefix>\})\s*(?P<suffix>([a-zA-Z_]\w+)?;)$"
         in_type_scope = False
         for i, line in enumerate(lines):
-            m = re.match(typedecl_regex, line)
+            m = re.match(typedecl_open_regex, line)
             if m is not None:
                 in_type_scope = True
-                aligned.append((i, m.group("prefix"), m.group("suffix")))
+                if m.group("suffix") is not None:
+                    aligned.append((i, m.group("prefix"), m.group("suffix")))
                 continue
             m = re.match(typedecl_close_regex, line)
             if m is not None:
                 in_type_scope = False
-                aligned.append((i, m.group("prefix"), m.group("suffix")))
+                if line != "};":
+                    aligned.append((i, m.group("prefix"), m.group("suffix")))
                 continue
             if in_type_scope:
                 m = re.match(
@@ -100,7 +89,7 @@ def align_scope(content: str, scope: Scope) -> str:
         default=1
     )
     for i, prefix, suffix in aligned:
-        alignment = len(prefix) // 4
+        alignment = len(prefix.replace("\t", " " * 4)) // 4
         lines[i] = prefix + "\t" * (min_alignment - alignment) + suffix
         if scope is Scope.LOCAL:
             lines[i] = "\t" + lines[i]

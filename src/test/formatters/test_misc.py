@@ -6,17 +6,17 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 14:53:05 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 14:55:15 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 17:43:08 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 import pytest
 
-from formatters.misc import (
-    parenthesize_return,
-    space_before_semi_colon,
-    remove_multiline_condition_space
-)
+# from formatters.misc import (
+#     parenthesize_return,
+#     space_before_semi_colon,
+#     remove_multiline_condition_space
+# )
 
 
 @pytest.mark.skip()

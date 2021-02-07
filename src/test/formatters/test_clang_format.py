@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 07:37:20 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 17:33:44 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 19:51:44 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -38,7 +38,7 @@ if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
 \tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
 \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
 """
-    assert clang_format(input) == output
+    assert output == clang_format(input)
 
     input = """
 if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
@@ -50,7 +50,7 @@ if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
 \tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
 \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
 """
-    assert clang_format(input) == output
+    assert output == clang_format(input)
 
 
 def test_clang_format_non_array_assignment_packing():
@@ -86,13 +86,8 @@ static char *g_sep_str_lookup[] = {
 def test_clang_long_function_declaration():
     input = """
 static void st_merge_fields_in_curr(
-		char *strs[3], t_tok_lst **curr, t_tok_lst *fields)
-
+\t\tchar *strs[3], t_tok_lst **curr, t_tok_lst *fields)
 """
-
-# static void
-# st_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst *fields)
-
     output = """
 static void st_merge_fields_in_curr(char *strs[3],
 \t\t\t\t\t\t\t\t\tt_tok_lst **curr,

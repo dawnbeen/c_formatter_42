@@ -6,7 +6,7 @@
 #    By: charles <me@cacharle.xyz>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/07 15:52:25 by charles           #+#    #+#              #
-#    Updated: 2021/02/07 16:20:43 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 19:52:04 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -24,7 +24,7 @@ def test_preprocessor_directive_ifdef():
 # define foo 1
 #endif
 """
-    assert preprocessor_directive(input) == output
+    assert output == preprocessor_directive(input)
 
 
 def test_preprocessor_directive_ifndef():
@@ -38,7 +38,7 @@ def test_preprocessor_directive_ifndef():
 # define foo 1
 #endif
 """
-    assert preprocessor_directive(input) == output
+    assert output == preprocessor_directive(input)
 
 
 def test_preprocessor_directive_if():
@@ -52,7 +52,7 @@ def test_preprocessor_directive_if():
 # define foo 1
 #endif
 """
-    assert preprocessor_directive(input) == output
+    assert output == preprocessor_directive(input)
 
 
 def test_preprocessor_directive_if_else():
@@ -70,7 +70,8 @@ def test_preprocessor_directive_if_else():
 # define foo 2
 #endif
 """
-    assert preprocessor_directive(input) == output
+    assert output == preprocessor_directive(input)
+
 
 def test_preprocessor_directive_if_elif_else():
     input = """
@@ -99,7 +100,7 @@ def test_preprocessor_directive_if_elif_else():
 # define foo 5
 #endif
 """
-    assert preprocessor_directive(input) == output
+    assert output == preprocessor_directive(input)
 
 
 def test_preprocessor_directive_random_indent():
@@ -129,7 +130,7 @@ def test_preprocessor_directive_random_indent():
 # define foo 5
 #endif
 """
-    assert preprocessor_directive(input) == output
+    assert output == preprocessor_directive(input)
 
 
 def test_preprocessor_directive_nested():
@@ -165,8 +166,7 @@ def test_preprocessor_directive_nested():
 # define f 6
 #endif
 """
-    assert preprocessor_directive(input) == output
-
+    assert output == preprocessor_directive(input)
 
 
 def test_preprocessor_directive_nested_10():
@@ -216,4 +216,4 @@ def test_preprocessor_directive_nested_10():
 # endif
 #endif
 """
-    assert preprocessor_directive(input) == output
+    assert output == preprocessor_directive(input)
