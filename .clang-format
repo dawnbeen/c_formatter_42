@@ -177,8 +177,12 @@ SpacesInSquareBrackets: false
 
 AlignOperands: false
 
-Cpp11BracedListStyle: false
+Cpp11BracedListStyle: true
 
 BinPackArguments: false
 
 BinPackParameters: false
+
+InsertTrailingCommas: Wrapped
+
+# vim:ft=yaml

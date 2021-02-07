@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 07:37:20 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 14:08:39 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 16:43:55 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -80,4 +80,4 @@ static char *g_sep_str_lookup[] = {
 \t[TAG_PARENT_OPEN] = "(",
 };
 """
-    assert clang_format(input) == output
+    assert output == clang_format(input)
