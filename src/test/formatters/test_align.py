@@ -6,9 +6,11 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 20:12:23 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 20:59:28 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
+
+import pytest
 
 from formatters.align import align, align_scope, align_local, Scope
 
@@ -274,6 +276,11 @@ int qq()
 \tstatic short short int foo[1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3];
 \tregister long long int foo[10000000000000000000000000000000000000000];
 \tvolatile short short int foo[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA];
+\tvolatile short short int foo[TEST + 1];
+\tvolatile short short int foo[TEST - 1];
+\tvolatile short short int foo[TEST * 1];
+\tvolatile short short int foo[TEST / 1];
+\tvolatile short short int foo[TEST == 0 ? 1 : 0];
 }
 """
     output = """
@@ -288,6 +295,11 @@ int\tqq()
 \tstatic short short int\t\tfoo[1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3];
 \tregister long long int\t\tfoo[10000000000000000000000000000000000000000];
 \tvolatile short short int\tfoo[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA];
+\tvolatile short short int\tfoo[TEST + 1];
+\tvolatile short short int\tfoo[TEST - 1];
+\tvolatile short short int\tfoo[TEST * 1];
+\tvolatile short short int\tfoo[TEST / 1];
+\tvolatile short short int\tfoo[TEST == 0 ? 1 : 0];
 }
 """
     assert output == align(input)
@@ -325,7 +337,7 @@ def test_align_function_ptr():
     input = """
 int qa()
 {
-\tint (*func)(int a, int b);
+\tint *(*func)(int a, int b);
 \tint (*func2)(int, int);
 \tvoid (*func2)(int, int);
 \tunsigned long long int (*func2)();
@@ -336,7 +348,7 @@ int qa()
     output = """
 int\tqa()
 {
-\tint\t\t\t\t\t\t(*func)(int a, int b);
+\tint\t\t\t\t\t\t*(*func)(int a, int b);
 \tint\t\t\t\t\t\t(*func2)(int, int);
 \tvoid\t\t\t\t\t(*func2)(int, int);
 \tunsigned long long int\t(*func2)();
@@ -351,7 +363,7 @@ def test_align_function_ptr_array():
     input = """
 int qa()
 {
-\tint (*func[2])(int a, int b);
+\tint *(*func[2])(int a, int b);
 \tint (*func2[A])(int, int);
 \tvoid (*func2[11111111111110000000000000000000])(int, int);
 \tunsigned long long int (*func2[aaaaaaaaaaaaaaaaaaaaaaaaaa])();
@@ -360,7 +372,7 @@ int qa()
     output = """
 int\tqa()
 {
-\tint\t\t\t\t\t\t(*func[2])(int a, int b);
+\tint\t\t\t\t\t\t*(*func[2])(int a, int b);
 \tint\t\t\t\t\t\t(*func2[A])(int, int);
 \tvoid\t\t\t\t\t(*func2[11111111111110000000000000000000])(int, int);
 \tunsigned long long int\t(*func2[aaaaaaaaaaaaaaaaaaaaaaaaaa])();
@@ -435,7 +447,6 @@ struct\t\ts_bonjour
 };
 int\t\t\tf();
 """
-    print(align(input))
     assert output == align(input)
 
 
@@ -587,5 +598,66 @@ int\t\t\tf();
     assert output == align(input)
 
 
-def test_align_nested():
+@pytest.mark.skip()
+def test_align_nested_typedecl():
     pass
+
+
+def test_align_struct_field_array():
+    input = """
+struct s_bonjour
+{
+\tint a[1];
+\tchar b[0][1][2][ASDF + 1];
+};
+int f();
+"""
+    output = """
+struct\t\ts_bonjour
+{
+\tint\t\ta[1];
+\tchar\tb[0][1][2][ASDF + 1];
+};
+int\t\t\tf();
+"""
+    assert output == align(input)
+
+
+def test_align_struct_field_func_ptr():
+    input = """
+struct s_bonjour
+{
+\tint *(*a[1])(int);
+\tchar (*b[0][1][2][ASDF])(int a, char buf[2048], t_type);
+};
+int f();
+"""
+    output = """
+struct\t\ts_bonjour
+{
+\tint\t\t*(*a[1])(int);
+\tchar\t(*b[0][1][2][ASDF])(int a, char buf[2048], t_type);
+};
+int\t\t\tf();
+"""
+    assert output == align(input)
+
+
+def test_align_struct_field_array_func_ptr():
+    input = """
+struct s_bonjour
+{
+\tint *(*a[1])(int);
+\tchar (*b[0][1][2][ASDF])(int a, char buf[2048], t_type);
+};
+int f();
+"""
+    output = """
+struct\t\ts_bonjour
+{
+\tint\t\t*(*a[1])(int);
+\tchar\t(*b[0][1][2][ASDF])(int a, char buf[2048], t_type);
+};
+int\t\t\tf();
+"""
+    assert output == align(input)

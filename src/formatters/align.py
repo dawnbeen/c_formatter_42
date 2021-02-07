@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 20:13:41 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 20:54:36 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -36,7 +36,7 @@ def align_scope(content: str, scope: Scope) -> str:
         align_regex = (
             "^\t"
             r"(?P<prefix>{type})\s+"
-            r"(?P<suffix>{decl};)$"
+            r"(?P<suffix>\**{decl};)$"
         )
     elif scope is Scope.GLOBAL:
         align_regex = (
@@ -75,9 +75,9 @@ def align_scope(content: str, scope: Scope) -> str:
                 continue
             if in_type_scope:
                 m = re.match(
-                    r"^(?P<prefix>\s+{t})\s+"
-                    r"(?P<suffix>{d};)$"
-                    .format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
+                    r"^(?P<prefix>\s+{type})\s+"
+                    r"(?P<suffix>\**{decl};)$"
+                    .format(type=helper.REGEX_TYPE, decl=helper.REGEX_DECL_NAME),
                     line
                 )
                 if m is not None:
