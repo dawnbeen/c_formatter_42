@@ -141,6 +141,7 @@ PenaltyBreakString: 1
 # The penalty for each character outside of the column limit.
 PenaltyExcessCharacter: 10
 
+PenaltyReturnTypeOnItsOwnLine: 100
 
 # SpaceAfterCStyleCast (bool)
 # If true, a space is inserted after C style casts.

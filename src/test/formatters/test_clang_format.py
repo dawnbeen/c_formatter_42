@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 07:37:20 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 16:43:55 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 17:33:44 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -80,4 +80,23 @@ static char *g_sep_str_lookup[] = {
 \t[TAG_PARENT_OPEN] = "(",
 };
 """
+    assert output == clang_format(input)
+
+
+def test_clang_long_function_declaration():
+    input = """
+static void st_merge_fields_in_curr(
+		char *strs[3], t_tok_lst **curr, t_tok_lst *fields)
+
+"""
+
+# static void
+# st_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst *fields)
+
+    output = """
+static void st_merge_fields_in_curr(char *strs[3],
+\t\t\t\t\t\t\t\t\tt_tok_lst **curr,
+\t\t\t\t\t\t\t\t\tt_tok_lst *fields)
+"""
+    print(clang_format(input))
     assert output == clang_format(input)
