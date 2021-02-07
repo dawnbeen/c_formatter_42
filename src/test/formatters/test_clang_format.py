@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 07:37:20 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/09 19:56:02 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 14:08:39 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -51,7 +51,6 @@ if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
 \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
 """
     assert clang_format(input) == output
-
 
 
 def test_clang_format_non_array_assignment_packing():

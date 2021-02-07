@@ -6,12 +6,13 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 10:11:55 by cacharle         ###   ########.fr        #
+#    Updated: 2021/02/07 14:54:28 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 
 import re
+from enum import Enum
 
 import formatters.helper as helper
 
@@ -29,7 +30,13 @@ import formatters.helper as helper
 #         for (prefix, suffix), alignment in zip(aligned, alignments)
 #     ]
 
-def align_scope(content: str, scope: str) -> str:
+
+class Scope(Enum):
+    LOCAL  = 0
+    GLOBAL = 1
+
+
+def align_scope(content: str, scope: Scope) -> str:
     """ Align content
         scope can be either local or global
           local:  for variable declarations in function
@@ -39,23 +46,21 @@ def align_scope(content: str, scope: str) -> str:
     lines = content.split("\n")
     aligned = []
     # select regex according to scope
-    if scope == "local":
+    if scope is Scope.LOCAL:
         align_regex = (
             "^\t"
-            r"(?P<prefix>{t})\s+"
-            r"(?P<suffix>{d};)$"
+            r"(?P<prefix>{type})\s+"
+            r"(?P<suffix>{decl};)$"
         )
-    elif scope == "global":
+    elif scope is Scope.GLOBAL:
         align_regex = (
-            r"^(?P<prefix>{t})\s+"
-            r"(?P<suffix>({n}\(.*\);?)|({d}(;|(\s+=\s+.*))))$"
+            r"^(?P<prefix>{type})\s+"
+            r"(?P<suffix>({name}\(.*\);?)|({decl}(;|(\s+=\s+.*))))$"
         )
-    else:
-        raise RuntimeError("scope should be 'global' or 'local'")
     align_regex = align_regex.format(
-        t=helper.REGEX_TYPE,
-        n=helper.REGEX_NAME,
-        d=helper.REGEX_DECL_NAME
+        type=helper.REGEX_TYPE,
+        name=helper.REGEX_NAME,
+        decl=helper.REGEX_DECL_NAME
     )
     # get the lines to be aligned
     matches = [re.match(align_regex, line) for line in lines]
@@ -63,7 +68,7 @@ def align_scope(content: str, scope: str) -> str:
                for i, (line, match) in enumerate(zip(lines, matches))
                if match is not None]
 
-    if scope == "global":
+    if scope is Scope.GLOBAL:
         typedecl_regex       = (r"^(?P<prefix>\s*(typedef\s+)?(struct|enum|union))"
                                 r"\s+(?P<suffix>[a-zA-Z]\w+)$")
         typedecl_close_regex = r"^(?P<prefix>})\s+(?P<suffix>[a-zA-Z]\w+;)$"
@@ -91,14 +96,13 @@ def align_scope(content: str, scope: str) -> str:
 
     # get the minimum alignment required for each line
     min_alignment = max(
-        [len(prefix.replace("\t", " " * 4)) // 4 + 1
-         for _, prefix, _ in aligned],
+        (len(prefix.replace("\t", " " * 4)) // 4 + 1 for _, prefix, _ in aligned),
         default=1
     )
     for i, prefix, suffix in aligned:
         alignment = len(prefix) // 4
         lines[i] = prefix + "\t" * (min_alignment - alignment) + suffix
-        if scope == "local":
+        if scope is Scope.LOCAL:
             lines[i] = "\t" + lines[i]
     return "\n".join(lines)
 
@@ -106,11 +110,11 @@ def align_scope(content: str, scope: str) -> str:
 @helper.locally_scoped
 def align_local(content: str) -> str:
     """ Wrapper for align_scope to use local_scope decorator """
-    return align_scope(content, scope="local")
+    return align_scope(content, scope=Scope.LOCAL)
 
 
 def align(content: str) -> str:
     """ Align the content in global and local scopes """
-    content = align_scope(content, scope="global")
+    content = align_scope(content, scope=Scope.GLOBAL)
     content = align_local(content)
     return content

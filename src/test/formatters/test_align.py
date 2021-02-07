@@ -6,11 +6,11 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 10:09:14 by cacharle         ###   ########.fr        #
+#    Updated: 2021/02/07 14:36:43 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
-from formatters.align import align, align_scope, align_local
+from formatters.align import align, align_scope, align_local, Scope
 
 
 def test_align_global_basic():
@@ -22,19 +22,19 @@ char\tbar()
     assert output == align_scope("""\
 int foo()
 char   bar()
-""", scope="global")
+""", scope=Scope.GLOBAL)
     assert output == align_scope("""\
 int\t\t\t\t\t\tfoo()
 char   bar()
-""", scope="global")
+""", scope=Scope.GLOBAL)
     assert output == align_scope("""\
 int\t\t\t         \t\t\tfoo()
 char  \t bar()
-""", scope="global")
+""", scope=Scope.GLOBAL)
     assert output == align_scope("""\
 int\t\t\t         \t\t\tfoo()
 char  \t bar()
-""", scope="global")
+""", scope=Scope.GLOBAL)
 
 
 def test_align_local_basic():
@@ -397,153 +397,153 @@ int\t\t\tf();
     assert align(input) == output
 
 
-def test_align_enum():
-    input = """
-enum e_bonjour
-{
-\tBONJOUR_A,
-\tBONJOUR_B,
-};
-int f();
-"""
-    output = """
-enum\te_bonjour
-{
-\tBONJOUR_A,
-\tBONJOUR_B,
-};
-int\t\t();
-"""
-    assert align(input) == output
-
-
-def test_align_union():
-    input = """
-union u_bonjour
-{
-\tint a;
-\tchar b;
-};
-int f();
-"""
-    output = """
-union\t\tu_bonjour
-{
-\tint\t\ta;
-\tchar\tb;
-};
-int\t\t\tf();
-"""
-    assert align(input) == output
-
-
-def test_align_typedef():
-    input = """
-typedef struct s_bonjour
-{
-\tint a;
-\tchar b;
-} t_bonjour;
-int f();
-"""
-    output = """
-typedef struct\ts_bonjour
-{
-\tint\t\t\ta;
-\tchar\t\tb;
-}\t\t\t\tt_bonjour;
-int\t\t\t\tf();
-"""
-    assert align(input) == output
-    input = """
-typedef enum e_bonjour
-{
-\tBONJOUR_A,
-\tBONJOUR_B,
-} t_bonjour;
-int f();
-"""
-    output = """
-typedef enum\te_bonjour
-{
-\tBONJOUR_A,
-\tBONJOUR_B,
-}\t\t\t\tt_bonjour;
-int\t\t\t\tf();
-"""
-    assert align(input) == output
-    input = """
-typedef union u_bonjour
-{
-\tint a;
-\tchar b;
-} t_bonjour;
-int f();
-"""
-    output = """
-typedef union\tu_bonjour
-{
-\tint\t\t\ta;
-\tchar\t\tb;
-}\t\t\t\tt_bonjour;
-int\t\t\t\tf();
-"""
-    assert align(input) == output
-
-
-def test_align_typedef_anonymous():
-    input = """
-typedef struct
-{
-\tint a;
-\tchar b;
-} t_bonjour;
-int f();
-"""
-    output = """
-typedef struct
-{
-\tint\t\ta;
-\tchar\tb;
-}\t\t\tt_bonjour;
-int\t\t\tf();
-"""
-    assert align(input) == output
-    input = """
-typedef enum
-{
-\tBONJOUR_A,
-\tBONJOUR_B,
-} t_bonjour;
-int f();
-"""
-    output = """
-typedef enum
-{
-\tBONJOUR_A,
-\tBONJOUR_B,
-}\tt_bonjour;
-int\tf();
-"""
-    assert align(input) == output
-    input = """
-typedef union
-{
-\tint a;
-\tchar b;
-} t_bonjour;
-int f();
-"""
-    output = """
-typedef union
-{
-\tint\t\ta;
-\tchar\tb;
-}\t\t\tt_bonjour;
-int\t\t\tf();
-"""
-    assert align(input) == output
-
-
-def test_align_nested():
-    pass
+# def test_align_enum():
+#     input = """
+# enum e_bonjour
+# {
+# \tBONJOUR_A,
+# \tBONJOUR_B,
+# };
+# int f();
+# """
+#     output = """
+# enum\te_bonjour
+# {
+# \tBONJOUR_A,
+# \tBONJOUR_B,
+# };
+# int\t\t();
+# """
+#     assert align(input) == output
+#
+#
+# def test_align_union():
+#     input = """
+# union u_bonjour
+# {
+# \tint a;
+# \tchar b;
+# };
+# int f();
+# """
+#     output = """
+# union\t\tu_bonjour
+# {
+# \tint\t\ta;
+# \tchar\tb;
+# };
+# int\t\t\tf();
+# """
+#     assert align(input) == output
+#
+#
+# def test_align_typedef():
+#     input = """
+# typedef struct s_bonjour
+# {
+# \tint a;
+# \tchar b;
+# } t_bonjour;
+# int f();
+# """
+#     output = """
+# typedef struct\ts_bonjour
+# {
+# \tint\t\t\ta;
+# \tchar\t\tb;
+# }\t\t\t\tt_bonjour;
+# int\t\t\t\tf();
+# """
+#     assert align(input) == output
+#     input = """
+# typedef enum e_bonjour
+# {
+# \tBONJOUR_A,
+# \tBONJOUR_B,
+# } t_bonjour;
+# int f();
+# """
+#     output = """
+# typedef enum\te_bonjour
+# {
+# \tBONJOUR_A,
+# \tBONJOUR_B,
+# }\t\t\t\tt_bonjour;
+# int\t\t\t\tf();
+# """
+#     assert align(input) == output
+#     input = """
+# typedef union u_bonjour
+# {
+# \tint a;
+# \tchar b;
+# } t_bonjour;
+# int f();
+# """
+#     output = """
+# typedef union\tu_bonjour
+# {
+# \tint\t\t\ta;
+# \tchar\t\tb;
+# }\t\t\t\tt_bonjour;
+# int\t\t\t\tf();
+# """
+#     assert align(input) == output
+#
+#
+# def test_align_typedef_anonymous():
+#     input = """
+# typedef struct
+# {
+# \tint a;
+# \tchar b;
+# } t_bonjour;
+# int f();
+# """
+#     output = """
+# typedef struct
+# {
+# \tint\t\ta;
+# \tchar\tb;
+# }\t\t\tt_bonjour;
+# int\t\t\tf();
+# """
+#     assert align(input) == output
+#     input = """
+# typedef enum
+# {
+# \tBONJOUR_A,
+# \tBONJOUR_B,
+# } t_bonjour;
+# int f();
+# """
+#     output = """
+# typedef enum
+# {
+# \tBONJOUR_A,
+# \tBONJOUR_B,
+# }\tt_bonjour;
+# int\tf();
+# """
+#     assert align(input) == output
+#     input = """
+# typedef union
+# {
+# \tint a;
+# \tchar b;
+# } t_bonjour;
+# int f();
+# """
+#     output = """
+# typedef union
+# {
+# \tint\t\ta;
+# \tchar\tb;
+# }\t\t\tt_bonjour;
+# int\t\t\tf();
+# """
+#     assert align(input) == output
+#
+#
+# def test_align_nested():
+#     pass

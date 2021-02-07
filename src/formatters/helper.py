@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:38:00 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/05 09:42:11 by cacharle         ###   ########.fr        #
+#    Updated: 2021/02/07 14:25:51 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -34,5 +34,3 @@ def locally_scoped(func):
             flags=re.DOTALL
         )
     return wrapper
-
-# def type_scope(func):

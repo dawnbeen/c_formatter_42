@@ -12,7 +12,6 @@
 #                                                                              #
 # ############################################################################ #
 
-import re
 import os
 import sys
 import shutil
@@ -40,7 +39,6 @@ def append_to_path(home_dir, repo_dir, rc_file):
                 print("Added c_formatter_42 to your PATH in your {}".format(rc_file))
     except OSError as e:
         print("Error: Couldn't append to PATH: {}: {}".format(e.filename, e.strerror))
-
 
 
 def main():

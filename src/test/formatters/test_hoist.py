@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/09 18:01:45 by cacharle         ###   ########.fr        #
+#    Updated: 2021/02/07 14:08:27 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -87,6 +87,7 @@ def test_remove_empty_line():
 }
 """
     assert output == hoist(input)
+
 
 def test_hoist_pointer():
     input = """

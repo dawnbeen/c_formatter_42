@@ -1,0 +1,5 @@
+pytest
+mypy
+flake8
+flake8_comprehensions
+pep8_naming
