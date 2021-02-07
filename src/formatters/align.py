@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 14:54:28 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 15:47:55 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -65,7 +65,7 @@ def align_scope(content: str, scope: Scope) -> str:
     # get the lines to be aligned
     matches = [re.match(align_regex, line) for line in lines]
     aligned = [(i, match.group("prefix"), match.group("suffix"))
-               for i, (line, match) in enumerate(zip(lines, matches))
+               for i, match in enumerate(matches)
                if match is not None]
 
     if scope is Scope.GLOBAL:

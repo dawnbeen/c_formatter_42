@@ -1,4 +1,5 @@
 pytest
+pytest-clarity
 mypy
 flake8
 flake8_comprehensions

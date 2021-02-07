@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 14:08:27 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 16:23:14 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -15,7 +15,7 @@ from formatters.hoist import hoist
 
 
 def scoped(s):
-    return "\n{\n" + s + "\n}\n"
+    return "int foo()\n{\n" + s + "\n}\n"
 
 
 def test_assignment_splitting():
@@ -37,6 +37,7 @@ def test_hoist():
 
 def test_remove_empty_line():
     input = """
+int foo()
 {
 \tint\ta;
 
@@ -47,6 +48,7 @@ def test_remove_empty_line():
 }
 """
     output = """
+int foo()
 {
 \tint\ta;
 
@@ -57,6 +59,7 @@ def test_remove_empty_line():
     assert output == hoist(input)
 
     input = """
+int foo()
 {
 
 \tputs("bonjour");
@@ -64,6 +67,7 @@ def test_remove_empty_line():
 }
 """
     output = """
+int foo()
 {
 \tputs("bonjour");
 }
@@ -71,6 +75,7 @@ def test_remove_empty_line():
     assert output == hoist(input)
 
     input = """
+int foo()
 {
 \tint a = 1;
 
@@ -79,6 +84,7 @@ def test_remove_empty_line():
 }
 """
     output = """
+int foo()
 {
 \tint\ta;
 
@@ -91,11 +97,13 @@ def test_remove_empty_line():
 
 def test_hoist_pointer():
     input = """
+int foo()
 {
 \tint *a = 1;
 }
 """
     output = """
+int foo()
 {
 \tint\t*a;
 

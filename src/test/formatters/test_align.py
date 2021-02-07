@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 14:36:43 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 15:28:35 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -18,7 +18,6 @@ def test_align_global_basic():
 int\t\tfoo()
 char\tbar()
 """
-
     assert output == align_scope("""\
 int foo()
 char   bar()
@@ -39,6 +38,7 @@ char  \t bar()
 
 def test_align_local_basic():
     output = """
+int foo()
 {
 \tint\t\tfoo;
 \tchar\tbar;
@@ -46,24 +46,28 @@ def test_align_local_basic():
 """
 
     assert output == align_local("""
+int foo()
 {
 \tint foo;
 \tchar   bar;
 }
 """)
     assert output == align_local("""
+int foo()
 {
 \tint\t\t\t\t\t\tfoo;
 \tchar   bar;
 }
 """)
     assert output == align_local("""
+int foo()
 {
 \tint\t\t\t         \t\t\tfoo;
 \tchar  \t bar;
 }
 """)
     assert output == align_local("""
+int foo()
 {
 \tint\t\t\t         \t\t\tfoo;
 \tchar  \t bar;
@@ -373,6 +377,24 @@ char f();
     output = """
 int\t\tg_a = 1;
 char\tf();
+"""
+    assert align(input) == output
+
+
+def test_align_number_label():
+    input = """
+uint64_t foo64()
+{
+\tuint64_t foo64;
+\tc5 foo65;
+}
+"""
+    output = """
+uint64_t\tfoo64()
+{
+\tuint64_t\tfoo64;
+\tc5\t\t\tfoo65;
+}
 """
     assert align(input) == output
 
