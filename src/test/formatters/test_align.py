@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 20:59:28 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 21:03:02 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -659,5 +659,18 @@ struct\t\ts_bonjour
 \tchar\t(*b[0][1][2][ASDF])(int a, char buf[2048], t_type);
 };
 int\t\t\tf();
+"""
+    assert output == align(input)
+
+
+@pytest.mark.skip()  # not common
+def test_align_struct_singleton():
+    input = """
+struct s_bonjour;
+int f();
+"""
+    output = """
+struct s_bonjour
+int\tf();
 """
     assert output == align(input)

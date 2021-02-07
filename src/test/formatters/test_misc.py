@@ -6,29 +6,73 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 14:53:05 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 17:43:08 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 21:30:47 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
-import pytest
-
-# from formatters.misc import (
-#     parenthesize_return,
-#     space_before_semi_colon,
-#     remove_multiline_condition_space
-# )
+from formatters.misc import (
+    parenthesize_return,
+    space_before_semi_colon,
+    remove_multiline_condition_space
+)
 
 
-@pytest.mark.skip()
-def test_parenthesize_return():
-    pass
+def test_run_space_before_semi_colon():
+    assert "return ;"   == space_before_semi_colon("return ;")
+    assert "break ;"    == space_before_semi_colon("break ;")
+    assert "continue ;" == space_before_semi_colon("continue ;")
 
 
-@pytest.mark.skip()
-def test_space_before_semi_colon():
-    pass
+def test_run_parenthesize_return():
+    assert "return (a);"                 == parenthesize_return("return a;")
+    assert "return (a);"                 == parenthesize_return("return \n\na;")
+    assert "return (a);"                 == parenthesize_return("return a\n\n;")
+    assert "return (a);"                 == parenthesize_return("return \na\n;")
+    assert "return (a);"                 == parenthesize_return("return    a   ;")
+    assert "return (a);"                 == parenthesize_return("return \t\ta\t  ;")
+    assert "return (a);"                 == parenthesize_return("return  a\n\t\n ;")
+    assert "return (foo());"             == parenthesize_return("return foo();")
+    assert "return (foo());"             == parenthesize_return("return \n\nfoo();")
+    assert "return (foo());"             == parenthesize_return("return foo()\n\n;")
+    assert "return (foo());"             == parenthesize_return("return \nfoo()\n;")
+    assert "return;"                     == parenthesize_return("return;")
+    assert "return ;"                    == parenthesize_return("return ;")
+    assert "return ();"                  == parenthesize_return("return ();")
+    assert "return (bar(a++ + ++b[34]);" == parenthesize_return("return bar(a++ + ++b[34];")
 
 
-@pytest.mark.skip()
-def test_remove_multiline_condition_space():
-    pass
+def test_run_space_in_condition():
+    input = """
+while (input != NULL && input->tag & TAG_IS_STR &&
+\t   input->tag & TAG_STICK &&
+\t   input->next != NULL && input->next->tag & TAG_IS_STR)
+    """
+    output = """
+while (input != NULL && input->tag & TAG_IS_STR &&
+\t\tinput->tag & TAG_STICK &&
+\t\tinput->next != NULL && input->next->tag & TAG_IS_STR)
+    """
+    assert output == remove_multiline_condition_space(input)
+
+    input = """
+while (input != NULL && input->tag & TAG_IS_STR &&
+\t  input->tag & TAG_STICK &&
+\t  input->next != NULL && input->next->tag & TAG_IS_STR)
+    """
+    output = """
+while (input != NULL && input->tag & TAG_IS_STR &&
+\t\tinput->tag & TAG_STICK &&
+\t\tinput->next != NULL && input->next->tag & TAG_IS_STR)
+    """
+    assert output == remove_multiline_condition_space(input)
+    input = """
+while (input != NULL && input->tag & TAG_IS_STR &&
+\t input->tag & TAG_STICK &&
+\t input->next != NULL && input->next->tag & TAG_IS_STR)
+    """
+    output = """
+while (input != NULL && input->tag & TAG_IS_STR &&
+\t\tinput->tag & TAG_STICK &&
+\t\tinput->next != NULL && input->next->tag & TAG_IS_STR)
+    """
+    assert output == remove_multiline_condition_space(input)

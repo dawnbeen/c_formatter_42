@@ -6,7 +6,7 @@
 #    By: charles <me@cacharle.xyz>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/07 14:39:26 by charles           #+#    #+#              #
-#    Updated: 2021/02/07 14:40:27 by charles          ###   ########.fr        #
+#    Updated: 2021/02/07 21:16:03 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -25,7 +25,7 @@ def parenthesize_return(content: str) -> str:
 def space_before_semi_colon(content: str) -> str:
     return re.sub(
         r"(?P<keyword>return|break|continue);",
-        lambda match: "{} ;".format(match.group("keyword")),
+        lambda match: match.group("keyword") + " ;",
         content
     )
 
