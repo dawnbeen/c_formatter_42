@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 21:02:16 by charles          ###   ########.fr        #
+#    Updated: 2021/02/08 18:33:16 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -41,7 +41,7 @@ def align_scope(content: str, scope: Scope) -> str:
     elif scope is Scope.GLOBAL:
         align_regex = (
             r"^(?P<prefix>{type})\s+"
-            r"(?P<suffix>({name}\(.*\);?)|({decl}(;|(\s+=\s+.*))))$"
+            r"(?P<suffix>({name}\(.*\)?;?)|({decl}(;|(\s+=\s+.*))))$"
         )
     align_regex = align_regex.format(
         type=helper.REGEX_TYPE,
@@ -52,7 +52,8 @@ def align_scope(content: str, scope: Scope) -> str:
     matches = [re.match(align_regex, line) for line in lines]
     aligned = [(i, match.group("prefix"), match.group("suffix"))
                for i, match in enumerate(matches)
-               if match is not None]
+               if match is not None and
+               match.group("prefix") not in ["struct", "union", "enum"]]
 
     # global type declaration (struct/union/enum)
     if scope is Scope.GLOBAL:

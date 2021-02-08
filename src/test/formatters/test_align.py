@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 21:03:02 by charles          ###   ########.fr        #
+#    Updated: 2021/02/08 18:32:50 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -663,14 +663,69 @@ int\t\t\tf();
     assert output == align(input)
 
 
-@pytest.mark.skip()  # not common
 def test_align_struct_singleton():
     input = """
 struct s_bonjour;
 int f();
+char f2();
 """
     output = """
-struct s_bonjour
-int\tf();
+struct s_bonjour;
+int\t\tf();
+char\tf2();
+"""
+    assert output == align(input)
+
+
+def test_align_union_singleton():
+    input = """
+union s_bonjour;
+int f();
+char f2();
+"""
+    output = """
+union s_bonjour;
+int\t\tf();
+char\tf2();
+"""
+    assert output == align(input)
+
+
+def test_align_enum_singleton():
+    input = """
+enum s_bonjour;
+int f();
+char f2();
+"""
+    output = """
+enum s_bonjour;
+int\t\tf();
+char\tf2();
+"""
+    assert output == align(input)
+
+
+def test_align_multiline_func_decl():
+    input = """
+t_parsed *parse_pipeline(t_tok_lst *input)
+static t_parsed *st_parse_op_build(
+\t\t\tt_parsed *left, t_parsed *right, enum e_tok sep_tag)
+"""
+    output = """
+t_parsed\t\t*parse_pipeline(t_tok_lst *input)
+static t_parsed\t*st_parse_op_build(
+\t\t\tt_parsed *left, t_parsed *right, enum e_tok sep_tag)
+"""
+    assert output == align(input)
+
+
+def test_align_global_array():
+    input = """
+static char *g_sep_str_lookup[] = {};
+static t_parsed *st_parse_op_build(t_parsed *left)
+"""
+    output = """
+static char\t\t*g_sep_str_lookup[] = {};
+static t_parsed\t*st_parse_op_build(t_parsed *left)
 """
     assert output == align(input)
