@@ -1,4 +1,4 @@
-[What\_is\_it](./Img/final_back.png)
+![What\_is\_it](./Img/final_back.png)
 
 
 # Intro
