@@ -1,6 +1,9 @@
-# C formatter for 42 norminette
+[What\_is\_it](./Img/final_back.png)
 
-This is C language formatter that fits 42 norminette.
+
+# Intro
+
+It is Prettier of C for 42.
 I know you are already a good Human norm.
 It's just for convenience.
 
@@ -34,8 +37,7 @@ $ brew install clang-format
 "editor.formatOnPaste": false,
 "editor.formatOnSave": false,
 ```
-(🚨 **CAUTION**
-Check your **clang-format version**.
+##### 🚨 **CAUTION** Check your **clang-format version**.
 If version is lower than 10, `SpaceBeforeSquareBrackets: false` and `AllowShortBlocksOnASingleLine: Never` can't work well.
 So you should comment them out!)
 
