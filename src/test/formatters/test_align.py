@@ -6,11 +6,11 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/09 20:34:24 by charles          ###   ########.fr        #
+#    Updated: 2021/02/10 18:43:05 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
-# import pytest
+import pytest
 
 from formatters.align import align, align_scope, align_local, Scope
 
@@ -598,7 +598,7 @@ int\t\t\tf();
     assert output == align(input)
 
 
-# @pytest.mark.skip()
+@pytest.mark.skip()
 def test_align_nested_typedecl():
     input = """
 struct s_bonjour
