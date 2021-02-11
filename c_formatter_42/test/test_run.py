@@ -6,13 +6,13 @@
 #    By: charles <me@cacharle.xyz>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/08 19:56:48 by charles           #+#    #+#              #
-#    Updated: 2021/02/10 18:45:30 by charles          ###   ########.fr        #
+#    Updated: 2021/02/11 20:27:07 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 import pytest
 
-from run import run_all
+from c_formatter_42.run import run_all
 
 
 @pytest.mark.skip()

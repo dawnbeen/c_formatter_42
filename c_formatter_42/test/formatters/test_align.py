@@ -6,13 +6,13 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/10 18:43:05 by charles          ###   ########.fr        #
+#    Updated: 2021/02/11 20:35:54 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 import pytest
 
-from formatters.align import align, align_scope, align_local, Scope
+from c_formatter_42.formatters.align import align, align_scope, align_local, Scope
 
 
 def test_align_global_basic():
@@ -272,8 +272,8 @@ int qq()
 \tlong foo[BUFFER_SIZE];
 \tlong long foo[A][B][C];
 \tlong long int foo[A][B][C];
-\tstatic long long int foo[A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C];
-\tstatic short short int foo[1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3];
+\tstatic long long int foo[A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B];
+\tstatic short short int foo[1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1];
 \tregister long long int foo[10000000000000000000000000000000000000000];
 \tvolatile short short int foo[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA];
 \tvolatile short short int foo[TEST + 1];
@@ -291,8 +291,8 @@ int\tqq()
 \tlong\t\t\t\t\t\tfoo[BUFFER_SIZE];
 \tlong long\t\t\t\t\tfoo[A][B][C];
 \tlong long int\t\t\t\tfoo[A][B][C];
-\tstatic long long int\t\tfoo[A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C];
-\tstatic short short int\t\tfoo[1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3];
+\tstatic long long int\t\tfoo[A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B][C][A][B];
+\tstatic short short int\t\tfoo[1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1][2][3][1];
 \tregister long long int\t\tfoo[10000000000000000000000000000000000000000];
 \tvolatile short short int\tfoo[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA];
 \tvolatile short short int\tfoo[TEST + 1];

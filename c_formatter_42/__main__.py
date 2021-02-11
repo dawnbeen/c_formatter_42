@@ -18,7 +18,7 @@ import shutil
 import argparse
 import textwrap
 
-from run import run_all
+from c_formatter_42.run import run_all
 
 
 def append_to_path(home_dir, repo_dir, rc_file):

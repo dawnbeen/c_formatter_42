@@ -6,12 +6,12 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 16:23:14 by charles          ###   ########.fr        #
+#    Updated: 2021/02/11 20:27:34 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 
-from formatters.hoist import hoist
+from c_formatter_42.formatters.hoist import hoist
 
 
 def scoped(s):

@@ -6,11 +6,11 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 07:37:20 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 19:51:44 by charles          ###   ########.fr        #
+#    Updated: 2021/02/11 20:35:29 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
-from formatters.clang_format import clang_format
+from c_formatter_42.formatters.clang_format import clang_format
 
 
 def test_clang_format_missing_closing_delimiter():
@@ -19,8 +19,10 @@ def test_clang_format_missing_closing_delimiter():
 
 
 def test_clang_format_gibberish():
-    assert clang_format("qwasfjkahskluhiouhcjkvzhxcklhvklxzhv") == "qwasfjkahskluhiouhcjkvzhxcklhvklxzhv"
-    assert clang_format("qwa()sfahskl{}[]uhcjkvzhxcklhv[]xzhv") == "qwa() sfahskl{}[] uhcjkvzhxcklhv[] xzhv"
+    assert (clang_format("qwasfjkahskluhiouhcjkvzhxcklhvklxzhv") ==
+            "qwasfjkahskluhiouhcjkvzhxcklhvklxzhv")
+    assert (clang_format("qwa()sfahskl{}[]uhcjkvzhxcklhv[]xzhv") ==
+            "qwa() sfahskl{}[] uhcjkvzhxcklhv[] xzhv")
 
 
 def test_clang_format_empty():
