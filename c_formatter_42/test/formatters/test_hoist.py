@@ -6,10 +6,11 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/11 20:27:34 by charles          ###   ########.fr        #
+#    Updated: 2021/02/11 22:16:57 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
+import pytest
 
 from c_formatter_42.formatters.hoist import hoist
 
@@ -114,3 +115,11 @@ int foo()
 
 
 # TODO test on weird types
+@pytest.mark.skip()
+def test_hoist_array():
+    pass
+
+
+@pytest.mark.skip()
+def test_hoist_func_ptr():
+    pass

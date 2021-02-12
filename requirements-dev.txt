@@ -1,4 +1,5 @@
 pytest
+six
 pytest-clarity
 mypy
 flake8
