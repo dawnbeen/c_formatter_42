@@ -1,5 +1,6 @@
-![What\_is\_it](./Img/final_back.png)
+# c\_formatte\_42 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/c-formatter-42)](https://pypi.org/project/c-formatter-42/)
 
+![What\_is\_it](./Img/final_back.png)
 
 # Intro
 
