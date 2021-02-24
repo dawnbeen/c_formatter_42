@@ -1,10 +1,7 @@
 language: python
 
-os:
-  - linux
-  # disabled since travis CI doesn't support python build on OSX and Window
-  # (https://docs.travis-ci.com/user/languages/python/)
-  # - osx
+os: linux
+dist: focal  # for clang-format>=10 (https://packages.ubuntu.com/focal/clang-format)
 
 python:
   - "3.6"
@@ -12,9 +9,10 @@ python:
   - "3.8"
   - "3.9"
 
-# before_install:
-#   - [ "$TRAVIS_OS_NAME" = "osx" ] && brew update
-#   - [ "$TRAVIS_OS_NAME" = "osx" ] && brew install valgrind
+addons:
+  apt:
+    packages:
+      - clang-format
 
 install:
   - pip install -e .
