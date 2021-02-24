@@ -6,11 +6,11 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 14:53:05 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/07 21:30:47 by charles          ###   ########.fr        #
+#    Updated: 2021/02/11 20:27:44 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
-from formatters.misc import (
+from c_formatter_42.formatters.misc import (
     parenthesize_return,
     space_before_semi_colon,
     remove_multiline_condition_space
