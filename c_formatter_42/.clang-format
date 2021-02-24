@@ -184,6 +184,6 @@ BinPackArguments: false
 
 BinPackParameters: false
 
-InsertTrailingCommas: Wrapped
+#InsertTrailingCommas: Wrapped
 
 # vim:ft=yaml

@@ -33,7 +33,7 @@ def main():
         "filepaths",
         metavar="FILE",
         nargs="*",
-        help="File to format, if no file is provided read STDIN"
+        help="File to format inplace, if no file is provided read STDIN"
     )
     args = arg_parser.parse_args()
 
