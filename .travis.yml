@@ -1,0 +1,27 @@
+language: python
+
+os:
+  - linux
+  # disabled since travis CI doesn't support python build on OSX and Window
+  # (https://docs.travis-ci.com/user/languages/python/)
+  # - osx
+
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+
+# before_install:
+#   - [ "$TRAVIS_OS_NAME" = "osx" ] && brew update
+#   - [ "$TRAVIS_OS_NAME" = "osx" ] && brew install valgrind
+
+install:
+  - pip install -e .
+  - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
+
+script:
+  - python -m flake8 c_formatter_42
+  - python -m mypy c_formatter_42
+  - python -m pytest c_formatter_42
