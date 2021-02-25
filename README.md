@@ -74,6 +74,7 @@ Recommended to set in `Workspace Preference`.
 
 ```
 $ pip3 install c-formatter-42
+$ pip3 install --user c-formatter-42  # if you don't have root privileges
 ```
 
 #### Manual

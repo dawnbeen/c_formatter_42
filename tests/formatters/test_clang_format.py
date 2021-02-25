@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/05 07:37:20 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/12 11:43:41 by charles          ###   ########.fr        #
+#    Updated: 2021/02/25 19:10:23 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -44,14 +44,14 @@ if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
 \tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
 \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
 """
-    assert output == clang_format(input)
+    assert clang_format(input) == output
 
     input = """
 if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
 \tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
 \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
 """
-    assert input == clang_format(input)
+    assert clang_format(input) == input
 
 
 def test_clang_format_non_array_assignment_packing():
@@ -68,7 +68,7 @@ static char *g_sep_str_lookup[] = {
 \t[TAG_PARENT_OPEN] = "(",
 };
 """
-    assert input == clang_format(input)
+    assert clang_format(input) == input
 
 
 def test_clang_format_long_function_declaration():
@@ -81,8 +81,7 @@ static void st_merge_fields_in_curr(char *strs[3],
 \t\t\t\t\t\t\t\t\tt_tok_lst **curr,
 \t\t\t\t\t\t\t\t\tt_tok_lst *fields)
 """
-    print(clang_format(input))
-    assert output == clang_format(input)
+    assert clang_format(input) == output
 
 
 @contextmanager

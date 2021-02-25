@@ -1,7 +1,7 @@
 language: python
 
 os: linux
-dist: focal  # for clang-format>=10 (https://packages.ubuntu.com/focal/clang-format)
+dist: focal
 
 python:
   - "3.6"
@@ -12,14 +12,15 @@ python:
 addons:
   apt:
     packages:
-      - clang-format
+      - libtinfo-dev
+      - libtinfo5
+      - libtinfo6
 
 install:
   - pip install -e .
-  - pip install -r requirements.txt
   - pip install -r requirements-dev.txt
 
 script:
   - python -m flake8 c_formatter_42
   - python -m mypy c_formatter_42
-  - python -m pytest c_formatter_42
+  - python -m pytest -vvv
