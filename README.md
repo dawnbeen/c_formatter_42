@@ -1,4 +1,4 @@
-# c\_formatte\_42 [![Build Status](https://api.travis-ci.com/cacharle/c_formatter_42.svg?branch=master)](https://travis-ci.com/cacharle/c_formatter_42) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/c-formatter-42)](https://pypi.org/project/c-formatter-42/)
+# c\_formatter\_42 [![Build Status](https://api.travis-ci.com/cacharle/c_formatter_42.svg?branch=master)](https://travis-ci.com/cacharle/c_formatter_42) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/c-formatter-42)](https://pypi.org/project/c-formatter-42/)
 
 ![What\_is\_it](./Img/final_back.png)
 
