@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 10:40:07 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/25 19:13:06 by cacharle         ###   ########.fr        #
+#    Updated: 2021/02/25 20:26:03 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -39,11 +39,13 @@ def _config_context():
                 previous_config = f.read()
         os.unlink(CONFIG_FILENAME)
         os.symlink(config_path, CONFIG_FILENAME)
-    yield
-    os.unlink(CONFIG_FILENAME)
-    if previous_config is not None:
-        with open(CONFIG_FILENAME, "w") as f:
-            f.write(previous_config)
+    try:
+        yield
+    finally:
+        os.unlink(CONFIG_FILENAME)
+        if previous_config is not None:
+            with open(CONFIG_FILENAME, "w") as f:
+                f.write(previous_config)
 
 
 if sys.platform == "linux":
@@ -65,7 +67,6 @@ def clang_format(content: str) -> str:
             the path to a configuration file
     """
     with _config_context():
-        print(CLANG_FORMAT_EXEC)
         process = subprocess.Popen(
             [CLANG_FORMAT_EXEC, "-style=file"],
             stdin=subprocess.PIPE,
@@ -73,6 +74,6 @@ def clang_format(content: str) -> str:
             stderr=subprocess.PIPE,
         )
         out, err = process.communicate(input=content.encode())
-        print("code", process.returncode)
-        print("stderr: ", err.decode())
+        if process.returncode != 0:
+            raise RuntimeError(f"clang-format error: {err.decode()}")
         return out.decode()
