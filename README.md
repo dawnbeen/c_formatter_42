@@ -1,5 +1,6 @@
-![What\_is\_it](./Img/final_back.png)
+# c\_formatter\_42 [![Build Status](https://api.travis-ci.com/cacharle/c_formatter_42.svg?branch=master)](https://travis-ci.com/cacharle/c_formatter_42) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/c-formatter-42)](https://pypi.org/project/c-formatter-42/)
 
+![What\_is\_it](./Img/final_back.png)
 
 # What is c\_formatter\_42?
 
@@ -61,7 +62,46 @@ float       b = 23;
 std::string ccc = 23;
 ```
 
-
 Recommended to set in `Workspace Preference`.
+
+---
+
+## Command line tool
+
+### Installation
+
+#### pip
+
+```
+$ pip3 install c-formatter-42
+$ pip3 install --user c-formatter-42  # if you don't have root privileges
+```
+
+#### Manual
+
+```
+$ git clone https://github.com/dawnbeen/c_formatter_42
+$ cd c_formatter_42
+$ pip3 install -e .
+```
+
+### Usage
+
+```
+$ c_formatter_42 < file.c
+$ python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
+
+$ c_formatter_42 --help
+usage: c_formatter_42 [-h] [-c] [FILE [FILE ...]]
+
+Format C source according to the norm
+
+positional arguments:
+  FILE           File to format inplace, if no file is provided read STDIN
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -c, --confirm  Ask confirmation before overwritting any file
+```
 
 Feel free to report issues or contribute. :)

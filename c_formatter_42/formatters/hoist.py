@@ -6,13 +6,13 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:16:28 by cacharle          #+#    #+#              #
-#    Updated: 2020/10/09 18:07:08 by cacharle         ###   ########.fr        #
+#    Updated: 2021/02/11 20:13:29 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 import re
 
-import formatters.helper as helper
+import c_formatter_42.formatters.helper as helper
 
 
 @helper.locally_scoped

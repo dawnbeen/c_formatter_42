@@ -2,3 +2,5 @@ __pycache__
 tags
 .tox/
 *egg-info
+dist/
+build/

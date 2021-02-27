@@ -12,37 +12,15 @@
 #                                                                              #
 # ############################################################################ #
 
-import os
 import sys
-import shutil
 import argparse
-import textwrap
 
-from run import run_all
-
-
-def append_to_path(home_dir, repo_dir, rc_file):
-    """ Append the repo directory to a rc_file path variable """
-    try:
-        rc_path = os.path.join(home_dir, rc_file)
-        already_installed = False
-        with open(rc_path, "r") as file:
-            if file.read().find("Added by c_formatter_42") != -1:
-                already_installed = True
-        if not already_installed:
-            with open(rc_path, "a") as file:
-                file.write(textwrap.dedent("""
-                    # Added by c_formatter_42
-                    export PATH="$PATH:{}"
-                    """.format(repo_dir)
-                ))
-                print("Added c_formatter_42 to your PATH in your {}".format(rc_file))
-    except OSError as e:
-        print("Error: Couldn't append to PATH: {}: {}".format(e.filename, e.strerror))
+from c_formatter_42.run import run_all
 
 
 def main():
     arg_parser = argparse.ArgumentParser(
+        prog="c_formatter_42",
         description="Format C source according to the norm",
         formatter_class=argparse.RawTextHelpFormatter
     )
@@ -52,36 +30,12 @@ def main():
         help="Ask confirmation before overwritting any file"
     )
     arg_parser.add_argument(
-        "-i", "--install",
-        action="store_true",
-        help=textwrap.dedent("""\
-            Copy the .clang-format in your home (required by clang-format).
-            Add c_formatter_42 to your PATH in your .zshrc and .bashrc""")
-    )
-    arg_parser.add_argument(
         "filepaths",
         metavar="FILE",
         nargs="*",
-        help="File to format, if no file is provided read STDIN"
+        help="File to format inplace, if no file is provided read STDIN"
     )
     args = arg_parser.parse_args()
-
-    if args.install:
-        home_dir = os.environ.get("HOME")
-        if home_dir is None:
-            print("HOME environment variable not set")
-            sys.exit(1)
-        repo_dir = os.path.realpath(os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            ".."
-        ))
-        append_to_path(home_dir, repo_dir, ".zshrc")
-        append_to_path(home_dir, repo_dir, ".bashrc")
-        # Copy .clang-format in user's home directory
-        home_clang_file = os.path.join(home_dir, ".clang-format")
-        shutil.copyfile(os.path.join(repo_dir, ".clang-format"), home_clang_file)
-        print("Copied .clang-format in {}".format(home_clang_file))
-        sys.exit(0)
 
     if len(args.filepaths) == 0:
         content = sys.stdin.read()

@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 09:56:31 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/08 18:33:16 by charles          ###   ########.fr        #
+#    Updated: 2021/02/11 20:13:11 by charles          ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -14,7 +14,7 @@
 import re
 from enum import Enum
 
-import formatters.helper as helper
+import c_formatter_42.formatters.helper as helper
 
 
 class Scope(Enum):

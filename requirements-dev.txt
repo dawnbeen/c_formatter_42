@@ -1,4 +1,5 @@
-pytest
+pytest==6.2.2
+six
 pytest-clarity
 mypy
 flake8
