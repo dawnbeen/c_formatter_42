@@ -4,3 +4,4 @@ tags
 *egg-info
 dist/
 build/
+docs/build/

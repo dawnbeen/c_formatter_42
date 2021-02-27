@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 10:40:07 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/25 20:26:03 by cacharle         ###   ########.fr        #
+#    Updated: 2021/02/25 20:46:18 by cacharle         ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -57,14 +57,11 @@ else:
 
 
 def clang_format(content: str) -> str:
-    """ Wrapper around the clang-format command
+    """ Wrapper around clang-format
 
-        Pass content on stdin and return stdout
-
-        Note:
-            Need to put .clang-format in user's home directory
-            since clang-format doesn't allow to specify
-            the path to a configuration file
+        Pass content on stdin and return stdout.
+        The clang-format executable is selected according to the platform,
+        this is to keep the same version of clang-format accross all setup.
     """
     with _config_context():
         process = subprocess.Popen(
