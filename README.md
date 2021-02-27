@@ -1,9 +1,9 @@
 ![What\_is\_it](./Img/final_back.png)
 
 
-# Intro
+# What is c\_formatter\_42?
 
-It is Prettier of C for 42.
+It is Prettier for C in 42.
 I know you are already a good Human norm.
 It's just for convenience.
 
