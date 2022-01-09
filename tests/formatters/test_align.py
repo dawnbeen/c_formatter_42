@@ -14,27 +14,26 @@ import pytest
 
 from c_formatter_42.formatters.align import align, align_scope, align_local, Scope
 
-
 def test_align_global_basic():
     output = """\
-int\t\tfoo()
-char\tbar()
+int\t\tfoo();
+char\tbar();
 """
     assert output == align_scope("""\
-int foo()
-char   bar()
+int foo();
+char   bar();
 """, scope=Scope.GLOBAL)
     assert output == align_scope("""\
-int\t\t\t\t\t\tfoo()
-char   bar()
+int\t\t\t\t\t\tfoo();
+char   bar();
 """, scope=Scope.GLOBAL)
     assert output == align_scope("""\
-int\t\t\t         \t\t\tfoo()
-char  \t bar()
+int\t\t\t         \t\t\tfoo();
+char  \t bar();
 """, scope=Scope.GLOBAL)
     assert output == align_scope("""\
-int\t\t\t         \t\t\tfoo()
-char  \t bar()
+int\t\t\t         \t\t\tfoo();
+char  \t bar();
 """, scope=Scope.GLOBAL)
 
 
@@ -753,5 +752,21 @@ static t_parsed *st_parse_op_build(t_parsed *left)
     output = """
 static char\t\t*g_sep_str_lookup[] = {};
 static t_parsed\t*st_parse_op_build(t_parsed *left)
+"""
+    assert output == align(input)
+
+
+def test_align_func_typedef():
+    input = """
+typedef void *(*t_routine)(void *arg);
+
+unsigned long long int foo();
+int foo();
+"""
+    output = """
+typedef void\t\t*(*t_routine)(void *arg);
+
+unsigned long long int\tfoo();
+int\t\t\t\tbar();
 """
     assert output == align(input)

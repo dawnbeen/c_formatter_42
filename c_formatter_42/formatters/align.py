@@ -14,7 +14,7 @@
 import re
 from enum import Enum
 
-import c_formatter_42.formatters.helper as helper
+from c_formatter_42.formatters import helper
 
 
 class Scope(Enum):
