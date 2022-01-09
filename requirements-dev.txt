@@ -1,7 +1,8 @@
-pytest==6.2.2
+pytest
 six
 pytest-clarity
 mypy
 flake8
 flake8_comprehensions
 pep8_naming
+tox
