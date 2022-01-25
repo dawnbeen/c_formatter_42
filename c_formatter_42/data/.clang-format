@@ -57,11 +57,6 @@ AlignEscapedNewlines: Left
 AllowShortBlocksOnASingleLine: Never
 
 
-# Dependent on the value, int f() { return 0; } can be put on a single line.
-# SFS_None (in configuration: None) Never merge functions into a single line.
-AllowShortFunctionsOnASingleLine: None
-
-
 # If true, if (a) return; can be put on a single line.
 # SIS_Never (in configuration: Never) Never put short ifs on the same line.
 AllowShortIfStatementsOnASingleLine: Never
@@ -179,10 +174,6 @@ SpacesInSquareBrackets: false
 AlignOperands: false
 
 Cpp11BracedListStyle: true
-
-BinPackArguments: false
-
-BinPackParameters: false
 
 #InsertTrailingCommas: Wrapped
 
