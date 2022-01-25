@@ -13,32 +13,36 @@
 from c_formatter_42.formatters.misc import (
     parenthesize_return,
     space_before_semi_colon,
-    remove_multiline_condition_space
+    remove_multiline_condition_space,
 )
 
 
 def test_run_space_before_semi_colon():
-    assert "return ;"   == space_before_semi_colon("return ;")
-    assert "break ;"    == space_before_semi_colon("break ;")
+    assert "return ;" == space_before_semi_colon("return ;")
+    assert "break ;" == space_before_semi_colon("break ;")
     assert "continue ;" == space_before_semi_colon("continue ;")
 
 
 def test_run_parenthesize_return():
-    assert "return (a);"                 == parenthesize_return("return a;")
-    assert "return (a);"                 == parenthesize_return("return \n\na;")
-    assert "return (a);"                 == parenthesize_return("return a\n\n;")
-    assert "return (a);"                 == parenthesize_return("return \na\n;")
-    assert "return (a);"                 == parenthesize_return("return    a   ;")
-    assert "return (a);"                 == parenthesize_return("return \t\ta\t  ;")
-    assert "return (a);"                 == parenthesize_return("return  a\n\t\n ;")
-    assert "return (foo());"             == parenthesize_return("return foo();")
-    assert "return (foo());"             == parenthesize_return("return \n\nfoo();")
-    assert "return (foo());"             == parenthesize_return("return foo()\n\n;")
-    assert "return (foo());"             == parenthesize_return("return \nfoo()\n;")
-    assert "return;"                     == parenthesize_return("return;")
-    assert "return ;"                    == parenthesize_return("return ;")
-    assert "return ();"                  == parenthesize_return("return ();")
-    assert "return (bar(a++ + ++b[34]);" == parenthesize_return("return bar(a++ + ++b[34];")
+    assert "return (a);" == parenthesize_return("return a;")
+    assert "return (a);" == parenthesize_return("return \n\na;")
+    assert "return (a);" == parenthesize_return("return a\n\n;")
+    assert "return (a);" == parenthesize_return("return \na\n;")
+    assert "return (a);" == parenthesize_return("return    a   ;")
+    assert "return (a);" == parenthesize_return("return \t\ta\t  ;")
+    assert "return (a);" == parenthesize_return("return  a\n\t\n ;")
+    assert "return (foo());" == parenthesize_return("return foo();")
+    assert "return (foo());" == parenthesize_return("return \n\nfoo();")
+    assert "return (foo());" == parenthesize_return("return foo()\n\n;")
+    assert "return (foo());" == parenthesize_return("return \nfoo()\n;")
+    assert "return;" == parenthesize_return("return;")
+    assert "return ;" == parenthesize_return("return ;")
+    assert "return ();" == parenthesize_return("return ();")
+    assert "return (bar(a++ + ++b[34]);" == parenthesize_return(
+        "return bar(a++ + ++b[34];"
+    )
+    assert "return (func(a, b));" == parenthesize_return("return func(a, b);")
+    assert "return ((void *)p);" == parenthesize_return("return (void *)p;")
 
 
 def test_run_space_in_condition():
