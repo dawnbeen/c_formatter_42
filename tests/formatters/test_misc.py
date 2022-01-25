@@ -14,6 +14,7 @@ from c_formatter_42.formatters.misc import (
     parenthesize_return,
     space_before_semi_colon,
     remove_multiline_condition_space,
+    insert_void,
 )
 
 
@@ -80,3 +81,11 @@ while (input != NULL && input->tag & TAG_IS_STR &&
 \t\tinput->next != NULL && input->next->tag & TAG_IS_STR)
     """
     assert output == remove_multiline_condition_space(input)
+
+
+def test_insert_void():
+    assert "int main()" == insert_void("int main()")
+    assert "void func  ( )" == insert_void("void func  ( )")
+    assert "int	main(void)" == insert_void("int	main()")
+    assert "void	func  (void)" == insert_void("void	func  ( )")
+    assert "void		func  (void)" == insert_void("void		func  ( )")
