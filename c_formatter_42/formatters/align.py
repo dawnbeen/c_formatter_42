@@ -65,7 +65,7 @@ def align_scope(content: str, scope: Scope) -> str:
             m = re.match(typedecl_open_regex, line)
             if m is not None:
                 in_type_scope = True
-                if m.group("suffix") is not None:
+                if m.group("suffix") is not None and "typedef" not in m.group("prefix"):
                     aligned.append((i, m.group("prefix"), m.group("suffix")))
                 continue
             m = re.match(typedecl_close_regex, line)
