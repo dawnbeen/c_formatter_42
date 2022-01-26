@@ -1,13 +1,14 @@
-<h1 align="center">
- c_formatter_42
-</h1>
 
 <p align="center">
   <a style="text-decoration:none" href="https://badge.fury.io/py/c-formatter-42"><img src="https://badge.fury.io/py/c-formatter-42.svg" alt="PyPI version" height="20"></a>
   <a style="text-decoration:none" href="https://app.travis-ci.com/cacharle/c_formatter_42"><img src="https://app.travis-ci.com/cacharle/c_formatter_42.svg?branch=master" height="20"></a>
+   <a style="text-decoration:none" href="https://pypi.org/project/c-formatter-42/"><img src="https://img.shields.io/pypi/pyversions/c-formatter-42" height="20"></a>
 </p>
 
-<!-- [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/c-formatter-42)](https://pypi.org/project/c-formatter-42/) -->
+<h1 align="center">
+ c_formatter_42
+</h1>
+
 
 <p align="center">
   <img width="65%" align="center" src="./Img/final_back.png">
@@ -30,7 +31,7 @@ $ pip3 install c-formatter-42
 $ pip3 install --user c-formatter-42  # if you don't have root privileges
 ```
 
-### from source (recommended for Norminette v3 users)
+### from source
 
 ```
 $ git clone https://github.com/cacharle/c_formatter_42
