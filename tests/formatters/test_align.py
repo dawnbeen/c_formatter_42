@@ -782,12 +782,12 @@ def test_align_func_typedef():
 typedef void *(*t_routine)(void *arg);
 
 unsigned long long int foo();
-int foo();
+int bar();
 """
     output = """
-typedef void\t\t*(*t_routine)(void *arg);
+typedef void\t\t\t*(*t_routine)(void *arg);
 
 unsigned long long int\tfoo();
-int\t\t\t\tbar();
+int\t\t\t\t\t\tbar();
 """
     assert output == align(input)
