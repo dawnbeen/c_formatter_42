@@ -5,3 +5,5 @@ tags
 dist/
 build/
 docs/build/
+
+/.venv
