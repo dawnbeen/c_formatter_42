@@ -18,12 +18,13 @@ from c_formatter_42.formatters.return_type_single_tab import return_type_single_
 from c_formatter_42.formatters.misc import (
     parenthesize_return,
     space_before_semi_colon,
-    remove_multiline_condition_space
+    remove_multiline_condition_space,
+    insert_void,
 )
 
 
 def run_all(content: str) -> str:
-    """ Run all formatters """
+    """Run all formatters"""
     content = clang_format(content)
     content = preprocessor_directive(content)
     content = remove_multiline_condition_space(content)
@@ -32,4 +33,5 @@ def run_all(content: str) -> str:
     content = hoist(content)
     content = align(content)
     content = return_type_single_tab(content)
+    content = insert_void(content)
     return content
