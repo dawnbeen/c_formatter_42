@@ -1,91 +1,63 @@
-# c\_formatter\_42 [![Build Status](https://api.travis-ci.com/cacharle/c_formatter_42.svg?branch=master)](https://travis-ci.com/cacharle/c_formatter_42) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/c-formatter-42)](https://pypi.org/project/c-formatter-42/)
+<p align="center">
+  <a style="text-decoration:none" href="https://badge.fury.io/py/c-formatter-42"><img src="https://badge.fury.io/py/c-formatter-42.svg" alt="PyPI version" height="20"></a>
+  <a style="text-decoration:none" href="https://github.com/cacharle/c_formatter_42/actions"><img src="https://github.com/cacharle/c_formatter_42/actions/workflows/python-package.yml/badge.svg" height="20"></a>
+  <a style="text-decoration:none" href="https://github.com/cacharle/c_formatter_42/actions"><img src="https://github.com/cacharle/c_formatter_42/actions/workflows/python-publish.yml/badge.svg" height="20"></a>
+   <a style="text-decoration:none" href="https://pypi.org/project/c-formatter-42/"><img src="https://img.shields.io/pypi/pyversions/c-formatter-42" height="20"></a>
+</p>
 
-![What\_is\_it](./Img/final_back.png)
+<br />
 
-# What is c\_formatter\_42?
+<p align="center">
+  <img width="65%" align="center" src="./Img/final_back.png">
+</p>
 
-It is Prettier for C in 42.
+# c_formatter_42
+
+C language prettier that almost meets 42 norm.
 I know you are already a good Human norm.
 It's just for convenience.
 
+## Installation
 
-## Vim
+Requires Python3.6+ (3.7, 3.8, 3.9, 3.10)
 
-Checkout [c\_formatter\_42.vim](https://github.com/cacharle/c_formatter_42.vim)
-
-
-
-## VSCode
-
-1. Install clang-format.
-
-- MacOS
-```
-$ brew install clang-format
-```
- Or you can install vscode extension `Clang-Format`
-
-
-2. Copy `.clang-format` in your Workspace directory.
-
-
-3. VSCode Settings
-- Set Default Formatter as clang-format.
-- Turn off `Format On Paste`, `Format On Save`.
-- Or You can just copy this in your `.vscode/settings.json` file.
-```
-"editor.defaultFormatter": "xaver.clang-format",
-"editor.formatOnPaste": false,
-"editor.formatOnSave": false,
-```
-##### 🚨 **CAUTION** Check your **clang-format version**.
-If version is lower than 10, `SpaceBeforeSquareBrackets: false` and `AllowShortBlocksOnASingleLine: Never` can't work well.
-So you should comment them out!)
-
-4. Execute code formatting
-- On Windows: Shift + Alt + F
-- On Mac: Shift + Option + F
-- On Linux: Ctrl + Shift + I
-
-
-#### 🚨Caution(VSCode)
-
-It's not perfect.
-**You should format these rules MANUALLY after auto-formatting.**
-- `global aligned`
-- `declarations aligned`
-- `declarations must be followed by one empty line`
-- `Empty line`
-```
-int         aaaa = 12;
-float       b = 23;
-std::string ccc = 23;
-```
-
-Recommended to set in `Workspace Preference`.
-
----
-
-## Command line tool
-
-### Installation
-
-#### pip
+### from pypi
 
 ```
 $ pip3 install c-formatter-42
 $ pip3 install --user c-formatter-42  # if you don't have root privileges
 ```
 
-#### Manual
+### from source
 
 ```
-$ git clone https://github.com/dawnbeen/c_formatter_42
+$ git clone https://github.com/cacharle/c_formatter_42
 $ cd c_formatter_42
 $ pip3 install -e .
 ```
 
-### Usage
+## usage
+
+### Vim
+
+Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) plugin. This plugin automatically installs the c_formatter_42 package using pip.
+
+### VSCode
+
+1. Install [emeraldwalk.runonsave](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave) extension.
+2. Add Configuration to format with c_formatter_42 on save to vscode. (We recommend you to put it in `Workspace Preference`)
+
+```
+"emeraldwalk.runonsave": {
+    "commands": [{
+        "match": ".[ch]",
+        "cmd": "python3 -m c_formatter_42 < ${file} | tee _cfdump && cat _cfdump | tee ${file} && rm -f _cfdump"
+    }]
+}
+```
+You can copy above and paste it in the `.vscode/setting.json`.
+
+### Command line
 
 ```
 $ c_formatter_42 < file.c

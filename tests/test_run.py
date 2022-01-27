@@ -49,3 +49,7 @@ t_tok_lst\t\t\t\t*tok_lst_push_front(t_tok_lst **tokens,
 t_tok_lst\t\t\t\t*tok_lst_uncons(t_tok_lst **tokens);
 """
     assert output == run_all(input)
+
+
+def test_run_func_decl_single_tab_and_global_aligned():
+    pass

@@ -17,25 +17,37 @@ from c_formatter_42.formatters.align import align, align_scope, align_local, Sco
 
 def test_align_global_basic():
     output = """\
-int\t\tfoo()
-char\tbar()
+int\t\tfoo();
+char\tbar();
 """
-    assert output == align_scope("""\
-int foo()
-char   bar()
-""", scope=Scope.GLOBAL)
-    assert output == align_scope("""\
-int\t\t\t\t\t\tfoo()
-char   bar()
-""", scope=Scope.GLOBAL)
-    assert output == align_scope("""\
-int\t\t\t         \t\t\tfoo()
-char  \t bar()
-""", scope=Scope.GLOBAL)
-    assert output == align_scope("""\
-int\t\t\t         \t\t\tfoo()
-char  \t bar()
-""", scope=Scope.GLOBAL)
+    assert output == align_scope(
+        """\
+int foo();
+char   bar();
+""",
+        scope=Scope.GLOBAL,
+    )
+    assert output == align_scope(
+        """\
+int\t\t\t\t\t\tfoo();
+char   bar();
+""",
+        scope=Scope.GLOBAL,
+    )
+    assert output == align_scope(
+        """\
+int\t\t\t         \t\t\tfoo();
+char  \t bar();
+""",
+        scope=Scope.GLOBAL,
+    )
+    assert output == align_scope(
+        """\
+int\t\t\t         \t\t\tfoo();
+char  \t bar();
+""",
+        scope=Scope.GLOBAL,
+    )
 
 
 def test_align_local_basic():
@@ -47,34 +59,42 @@ int foo()
 }
 """
 
-    assert output == align_local("""
+    assert output == align_local(
+        """
 int foo()
 {
 \tint foo;
 \tchar   bar;
 }
-""")
-    assert output == align_local("""
+"""
+    )
+    assert output == align_local(
+        """
 int foo()
 {
 \tint\t\t\t\t\t\tfoo;
 \tchar   bar;
 }
-""")
-    assert output == align_local("""
+"""
+    )
+    assert output == align_local(
+        """
 int foo()
 {
 \tint\t\t\t         \t\t\tfoo;
 \tchar  \t bar;
 }
-""")
-    assert output == align_local("""
+"""
+    )
+    assert output == align_local(
+        """
 int foo()
 {
 \tint\t\t\t         \t\t\tfoo;
 \tchar  \t bar;
 }
-""")
+"""
+    )
 
 
 def test_align_global_prototypes_basic():
@@ -500,12 +520,12 @@ typedef struct s_bonjour
 int f();
 """
     output = """
-typedef struct\ts_bonjour
+typedef struct s_bonjour
 {
-\tint\t\t\ta;
-\tchar\t\tb;
-}\t\t\t\tt_bonjour;
-int\t\t\t\tf();
+\tint\t\ta;
+\tchar\tb;
+}\t\t\tt_bonjour;
+int\t\t\tf();
 """
     assert output == align(input)
     input = """
@@ -517,12 +537,12 @@ typedef enum e_bonjour
 int f();
 """
     output = """
-typedef enum\te_bonjour
+typedef enum e_bonjour
 {
 \tBONJOUR_A,
 \tBONJOUR_B,
-}\t\t\t\tt_bonjour;
-int\t\t\t\tf();
+}\tt_bonjour;
+int\tf();
 """
     assert output == align(input)
     input = """
@@ -534,12 +554,12 @@ typedef union u_bonjour
 int f();
 """
     output = """
-typedef union\tu_bonjour
+typedef union u_bonjour
 {
-\tint\t\t\ta;
-\tchar\t\tb;
-}\t\t\t\tt_bonjour;
-int\t\t\t\tf();
+\tint\t\ta;
+\tchar\tb;
+}\t\t\tt_bonjour;
+int\t\t\tf();
 """
     assert output == align(input)
 
@@ -753,5 +773,21 @@ static t_parsed *st_parse_op_build(t_parsed *left)
     output = """
 static char\t\t*g_sep_str_lookup[] = {};
 static t_parsed\t*st_parse_op_build(t_parsed *left)
+"""
+    assert output == align(input)
+
+
+def test_align_func_typedef():
+    input = """
+typedef void *(*t_routine)(void *arg);
+
+unsigned long long int foo();
+int bar();
+"""
+    output = """
+typedef void\t\t\t*(*t_routine)(void *arg);
+
+unsigned long long int\tfoo();
+int\t\t\t\t\t\tbar();
 """
     assert output == align(input)

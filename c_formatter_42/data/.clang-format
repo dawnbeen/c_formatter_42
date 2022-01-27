@@ -57,11 +57,6 @@ AlignEscapedNewlines: Left
 AllowShortBlocksOnASingleLine: Never
 
 
-# Dependent on the value, int f() { return 0; } can be put on a single line.
-# SFS_None (in configuration: None) Never merge functions into a single line.
-AllowShortFunctionsOnASingleLine: None
-
-
 # If true, if (a) return; can be put on a single line.
 # SIS_Never (in configuration: Never) Never put short ifs on the same line.
 AllowShortIfStatementsOnASingleLine: Never
@@ -78,12 +73,12 @@ AlwaysBreakBeforeMultilineStrings: false
 
 # BinPackArguments (bool)
 # If false, a function call’s arguments will either be all on the same line or will have one line each.
-BinPackArguments: true
+BinPackArguments: false
 
 
 # BinPackParameters (bool)
 # If false, a function declaration’s or function definition’s parameters will either all be on the same line or will have one line each.
-BinPackParameters: true
+BinPackParameters: false
 
 # BreakBeforeBraces (BraceBreakingStyle)
 # The brace breaking style to use.
@@ -179,10 +174,6 @@ SpacesInSquareBrackets: false
 AlignOperands: false
 
 Cpp11BracedListStyle: true
-
-BinPackArguments: false
-
-BinPackParameters: false
 
 #InsertTrailingCommas: Wrapped
 
