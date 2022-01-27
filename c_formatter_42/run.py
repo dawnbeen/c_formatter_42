@@ -21,6 +21,7 @@ from c_formatter_42.formatters.misc import (
     remove_multiline_condition_space,
     insert_void,
 )
+from c_formatter_42.formatters.line_breaker import line_breaker
 
 
 def run_all(content: str) -> str:
@@ -34,4 +35,5 @@ def run_all(content: str) -> str:
     content = align(content)
     content = return_type_single_tab(content)
     content = insert_void(content)
+    content = line_breaker(content)
     return content
