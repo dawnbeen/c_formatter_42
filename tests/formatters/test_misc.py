@@ -24,7 +24,7 @@ def test_run_space_before_semi_colon():
     assert "continue ;" == space_before_semi_colon("continue ;")
 
 
-def test_run_parenthesize_return():
+def test_run_parenthesize_return_1():
     assert "return (a);" == parenthesize_return("return a;")
     assert "return (a);" == parenthesize_return("return \n\na;")
     assert "return (a);" == parenthesize_return("return a\n\n;")
@@ -44,6 +44,18 @@ def test_run_parenthesize_return():
     )
     assert "return (func(a, b));" == parenthesize_return("return func(a, b);")
     assert "return ((void *)p);" == parenthesize_return("return (void *)p;")
+    assert "\t\treturn (NULL);" == parenthesize_return("\t\treturn NULL;")
+
+
+def test_run_parenthesize_return_2():
+    output = """\
+return ;
+return (NULL);
+"""
+    assert output == parenthesize_return("""\
+return ;
+return NULL;
+""")
 
 
 def test_run_space_in_condition():

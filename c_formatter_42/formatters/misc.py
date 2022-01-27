@@ -14,27 +14,8 @@ import re
 
 
 def parenthesize_return(content: str) -> str:
-    ptn_no_value = r"return\s*;"
-    ptn_surrounded = r"return\s+?(?P<value>\(.*\))\s*;"
-    ptn_paren_leaded = r"return\s+\(?(?P<value>(?=\().*)\)?\s*;"
-    ptn_other = r"return\s+(?P<value>.*)\s*;"
-
-    if re.search(ptn_no_value, content):
-        return content
-
-    if re.search(ptn_surrounded, content):
-        return content
-
-    if re.search(ptn_paren_leaded, content):
-        return re.sub(
-            ptn_paren_leaded,
-            lambda match: "return ({});".format(match.group("value").strip()),
-            content,
-            re.DOTALL,
-        )
-
     return re.sub(
-        ptn_other,
+        r"return\s+(?!;)(?!\(.*\);)(?P<value>\(?.*?)\s*;",
         lambda match: "return ({});".format(match.group("value").strip()),
         content,
         re.DOTALL,
