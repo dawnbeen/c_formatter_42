@@ -14,7 +14,7 @@ import re
 
 
 # regex for a type
-REGEX_TYPE      = r"([a-z]+\s+)*[a-zA-Z_]\w*"
+REGEX_TYPE      = r"(?!return)([a-z]+\s+)*[a-zA-Z_]\w*"
 # regex for a c variable/function name
 REGEX_NAME      = r"\**[a-zA-Z_*()]\w*"
 # regex for a name in a declaration context (with array and function ptr)

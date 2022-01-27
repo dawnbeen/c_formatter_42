@@ -3,8 +3,7 @@
 #                                                         :::      ::::::::    #
 #    test_hoist.py                                      :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
+#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         # +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
 #    Updated: 2021/02/11 22:16:57 by charles          ###   ########.fr        #
 #                                                                              #
@@ -114,7 +113,25 @@ int foo()
     assert output == hoist(input)
 
 
+def test_hoist_ex():
+    output = """\
+void	*foo()
+{
+	if ()
+		return NULL;
+}
+"""
+    assert output == hoist("""\
+void	*foo()
+{
+	if ()
+		return NULL;
+}
+""")
+
 # TODO test on weird types
+
+
 @pytest.mark.skip()
 def test_hoist_array():
     pass
