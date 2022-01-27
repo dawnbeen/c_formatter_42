@@ -1,4 +1,3 @@
-
 <p align="center">
   <a style="text-decoration:none" href="https://badge.fury.io/py/c-formatter-42"><img src="https://badge.fury.io/py/c-formatter-42.svg" alt="PyPI version" height="20"></a>
   <a style="text-decoration:none" href="https://github.com/cacharle/c_formatter_42/actions"><img src="https://github.com/cacharle/c_formatter_42/actions/workflows/python-package.yml/badge.svg" height="20"></a>
@@ -6,18 +5,15 @@
    <a style="text-decoration:none" href="https://pypi.org/project/c-formatter-42/"><img src="https://img.shields.io/pypi/pyversions/c-formatter-42" height="20"></a>
 </p>
 
-<h1 align="center">
- c_formatter_42
-</h1>
-
+<br />
 
 <p align="center">
   <img width="65%" align="center" src="./Img/final_back.png">
 </p>
 
-## What is c_formatter_42?
+# c_formatter_42
 
-It is Prettier for C in 42.
+C language prettier that almost meets 42 norm.
 I know you are already a good Human norm.
 It's just for convenience.
 
@@ -49,7 +45,7 @@ Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) pl
 ### VSCode
 
 1. Install [emeraldwalk.runonsave](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave) extension.
-2. Add Configuration to vscode. (We recommend you to put it in `Workspace Preference`)
+2. Add Configuration to format with c_formatter_42 on save to vscode. (We recommend you to put it in `Workspace Preference`)
 
 ```
 "emeraldwalk.runonsave": {
