@@ -13,7 +13,7 @@
 
 # c_formatter_42
 
-C language prettier that almost meets 42 norm.
+C language prettier that conforms to 42 norm.
 I know you are already a good Human norm.
 It's just for convenience.
 
@@ -36,7 +36,7 @@ $ cd c_formatter_42
 $ pip3 install -e .
 ```
 
-## usage
+## Usage
 
 ### Vim
 

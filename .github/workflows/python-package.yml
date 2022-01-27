@@ -6,8 +6,14 @@ name: CI
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+    - 'License'
+    - 'README.md'
   pull_request:
     branches: [ master ]
+    paths-ignore:
+    - 'License'
+    - 'README.md'
 
 jobs:
   build:
