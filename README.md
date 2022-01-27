@@ -36,7 +36,7 @@ $ cd c_formatter_42
 $ pip3 install -e .
 ```
 
-## usage
+## Usage
 
 ### Vim
 
