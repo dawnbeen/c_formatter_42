@@ -57,6 +57,10 @@ Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) pl
 ```
 You can copy above and paste it in the `.vscode/setting.json`.
 
+### Atom
+
+Not supported yet, [see related issue](https://github.com/dawnbeen/c_formatter_42/issues/12).
+
 ### Command line
 
 ```
