@@ -98,6 +98,8 @@ while (input != NULL && input->tag & TAG_IS_STR &&
 def test_insert_void():
     assert "int main()" == insert_void("int main()")
     assert "void func  ( )" == insert_void("void func  ( )")
-    assert "int	main(void)" == insert_void("int	main()")
-    assert "void	func  (void)" == insert_void("void	func  ( )")
-    assert "void		func  (void)" == insert_void("void		func  ( )")
+    assert "int\tmain(void)" == insert_void("int\tmain()")
+    assert "void\tfunc  (void)" == insert_void("void\tfunc  ( )")
+    assert "void\t\tfunc  (void)" == insert_void("void\t\tfunc  ( )")
+    assert "\t(void *)foo()" == insert_void("\t(void *)foo()")
+    assert "\tfoo()" == insert_void("\tfoo()")
