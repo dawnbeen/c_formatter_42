@@ -34,6 +34,7 @@ def insert_break(line: str, column_limit: int) -> str:
 
     return line
 
+
 #
 # additional indent level increases in proportion to corresponds paren depth
 #
@@ -54,8 +55,8 @@ def additional_indent_level(s: str) -> int:
     additional_indent_level = 1
 
     discount_pattern = r"(^\t*{type}\t+.*?[a-zA-Z0-9_]\()|(^\t*typedef)|(^\t*(if|while))"
-    discount_pattern =  discount_pattern.format(
-        type = helper.REGEX_TYPE,
+    discount_pattern = discount_pattern.format(
+        type=helper.REGEX_TYPE,
     )
     if re.match(discount_pattern, s):
         additional_indent_level = 0
