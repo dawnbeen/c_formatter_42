@@ -162,8 +162,26 @@ static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst 
 """
     output = """
 static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr,
-\t\t\tt_tok_lst *fields)
+\t\tt_tok_lst *fields)
 """
     assert line_breaker(input) == output
 
+def test_insert_line_break_control_statement_1():
+    input = """\
+\twhile (true + false)
+"""
+    output = """\
+\twhile (true
+\t\t+ false)
+"""
+    assert line_breaker(input, 7) == output
 
+def test_insert_line_break_control_statement_2():
+    input = """\
+\tif (true + false)
+"""
+    output = """\
+\tif (true
+\t\t+ false)
+"""
+    assert line_breaker(input, 5) == output

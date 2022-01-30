@@ -1,4 +1,5 @@
 import re
+from c_formatter_42.formatters import helper
 
 
 def line_breaker(content: str, column_limit: int = 80) -> str:
@@ -17,19 +18,6 @@ def insert_break(line: str, column_limit: int) -> str:
     line = re.sub(breakable_space_pattern, "\n", line)
     segments = line.split("\n")
 
-    # additional indent level increases in proportion to corresponds paren depth
-    #
-    # (examples)
-    # foo() * bar() * baz()
-    # ~~~~~~~~~~~~~^~~~~~~~ when line breaks here,
-    # foo() * bar()
-    # >   * baz()           next line should be indented with 1 tab
-    # ===
-    # (foo(bar() * baz()))
-    # ~~~~~~~~~~^~~~~~~~~    when line breaks here,
-    # (foo(bar()
-    # >   >   >   * baz()))  next line should be indented with 3 tabs
-
     line_indent_level = indent_level(line)
 
     # join as many segments as it doesn't exceed line length limit
@@ -46,9 +34,32 @@ def insert_break(line: str, column_limit: int) -> str:
 
     return line
 
-
+#
+# additional indent level increases in proportion to corresponds paren depth
+#
+# (examples)
+# foo() * bar() * baz()
+# ~~~~~~~~~~~~~^~~~~~~~ when line breaks here,
+# foo() * bar()
+# >   * baz()           next line should be indented with 1 tab
+# ===
+# (foo(bar() * baz()))
+# ~~~~~~~~~~^~~~~~~~~    when line breaks here,
+# (foo(bar()
+# >   >   >   * baz()))  next line should be indented with 3 tabs
+#
+# function declaration, user defined type (?), and control statement needs one less tab (discount)
+#
 def additional_indent_level(s: str) -> int:
     additional_indent_level = 1
+
+    discount_pattern = r"(^\t*{type}\t+.*?[a-zA-Z0-9_]\()|(^\t*typedef)|(^\t*(if|while))"
+    discount_pattern =  discount_pattern.format(
+        type = helper.REGEX_TYPE,
+    )
+    if re.match(discount_pattern, s):
+        additional_indent_level = 0
+
     is_surrounded_sq = False
     is_surrounded_dq = False
 
