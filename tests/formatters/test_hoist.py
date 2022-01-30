@@ -130,7 +130,20 @@ void	*foo()
 """)
 
 # TODO test on weird types
+    output = """\
+void foo()
+{
+\tt_list\t*bar;
 
+\tbar = (t_list *)malloc(sizeof(t_list) * (count_elements(baz) + 1));
+}
+"""
+    assert output == hoist("""\
+void foo()
+{
+\tt_list\t*bar = (t_list *)malloc(sizeof(t_list) * (count_elements(baz) + 1));
+}
+""")
 
 @pytest.mark.skip()
 def test_hoist_array():
