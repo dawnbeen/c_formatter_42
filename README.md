@@ -13,7 +13,7 @@
 
 # c_formatter_42
 
-C language prettier that conforms to 42 norm.
+C language prettier that conforms to 42 norm v3.
 I know you are already a good Human norm.
 It's just for convenience.
 
