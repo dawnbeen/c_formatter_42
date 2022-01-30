@@ -92,7 +92,7 @@ BreakBeforeTernaryOperators: true
 
 # ColumnLimit (unsigned)
 # The column limit.
-ColumnLimit: 80
+ColumnLimit: 0
 
 
 # FixNamespaceComments (bool)
