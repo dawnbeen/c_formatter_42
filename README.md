@@ -38,6 +38,36 @@ $ pip3 install -e .
 
 ## Usage
 
+### Command line
+
+```
+$ c_formatter_42 < file.c
+$ python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
+
+$ c_formatter_42 --help
+usage: c_formatter_42 [-h] [-c] [FILE [FILE ...]]
+
+Format C source according to the norm
+
+positional arguments:
+  FILE           File to format inplace, if no file is provided read STDIN
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -c, --confirm  Ask confirmation before overwritting any file
+```
+
+---
+
+### ***caution***
+
+We strongly recommend you to confirm that the binary works without exceptions **before** using the formatter's output to replace the file content destructively.
+```
+$ python3 -m c_formatter_42 < [file.c]
+```
+
+---
+
 ### Vim
 
 Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) plugin. This plugin automatically installs the c_formatter_42 package using pip.
@@ -61,23 +91,5 @@ You can copy above and paste it in the `.vscode/setting.json`.
 
 Not supported yet, [see related issue](https://github.com/dawnbeen/c_formatter_42/issues/12).
 
-### Command line
-
-```
-$ c_formatter_42 < file.c
-$ python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
-
-$ c_formatter_42 --help
-usage: c_formatter_42 [-h] [-c] [FILE [FILE ...]]
-
-Format C source according to the norm
-
-positional arguments:
-  FILE           File to format inplace, if no file is provided read STDIN
-
-optional arguments:
-  -h, --help     show this help message and exit
-  -c, --confirm  Ask confirmation before overwritting any file
-```
 
 Feel free to report issues or contribute. :)
