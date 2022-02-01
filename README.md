@@ -21,7 +21,7 @@ It's just for convenience.
 
 Requires Python3.6+ (3.7, 3.8, 3.9, 3.10)
 
-### from pypi
+### from pypi (currently not working)
 
 ```
 $ pip3 install c-formatter-42
