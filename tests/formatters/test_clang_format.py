@@ -33,26 +33,26 @@ def test_clang_format_empty():
     assert clang_format("") == ""
 
 
-def test_clang_format_dont_join_lines():
-    input = """
-if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-\t|| bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-\t|| cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
-"""
-    output = """
-if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
-\tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
-\tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
-"""
-    assert clang_format(input) == output
-
-    input = """
-if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
-\tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
-\tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
-"""
-    assert clang_format(input) == input
-
+# def test_clang_format_dont_join_lines():
+#     input = """
+# if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+# \t|| bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+# \t|| cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
+# """
+#     output = """
+# if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
+# \tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
+# \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
+# """
+#     assert clang_format(input) == output
+# 
+#     input = """
+# if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
+# \tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
+# \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
+# """
+#     assert clang_format(input) == input
+# 
 
 def test_clang_format_non_array_assignment_packing():
     input = """
@@ -69,19 +69,6 @@ static char *g_sep_str_lookup[] = {
 };
 """
     assert clang_format(input) == input
-
-
-def test_clang_format_long_function_declaration():
-    input = """
-static void st_merge_fields_in_curr(
-\t\tchar *strs[3], t_tok_lst **curr, t_tok_lst *fields)
-"""
-    output = """
-static void st_merge_fields_in_curr(char *strs[3],
-\t\t\t\t\t\t\t\t\tt_tok_lst **curr,
-\t\t\t\t\t\t\t\t\tt_tok_lst *fields)
-"""
-    assert clang_format(input) == output
 
 
 @contextmanager
