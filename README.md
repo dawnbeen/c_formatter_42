@@ -13,7 +13,7 @@
 
 # c_formatter_42
 
-C language prettier that conforms to 42 norm.
+C language prettier that conforms to 42 norm v3.
 I know you are already a good Human norm.
 It's just for convenience.
 
@@ -21,7 +21,7 @@ It's just for convenience.
 
 Requires Python3.6+ (3.7, 3.8, 3.9, 3.10)
 
-### from pypi
+### from pypi (currently not working)
 
 ```
 $ pip3 install c-formatter-42
@@ -37,6 +37,36 @@ $ pip3 install -e .
 ```
 
 ## Usage
+
+### Command line
+
+```
+$ c_formatter_42 < file.c
+$ python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
+
+$ c_formatter_42 --help
+usage: c_formatter_42 [-h] [-c] [FILE [FILE ...]]
+
+Format C source according to the norm
+
+positional arguments:
+  FILE           File to format inplace, if no file is provided read STDIN
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -c, --confirm  Ask confirmation before overwritting any file
+```
+
+---
+
+### ***caution***
+
+We strongly recommend you to confirm that the binary works without exceptions **before** using the formatter's output to replace the file content destructively.
+```
+$ python3 -m c_formatter_42 < [file.c]
+```
+
+---
 
 ### Vim
 
@@ -61,23 +91,5 @@ You can copy above and paste it in the `.vscode/setting.json`.
 
 Not supported yet, [see related issue](https://github.com/dawnbeen/c_formatter_42/issues/12).
 
-### Command line
-
-```
-$ c_formatter_42 < file.c
-$ python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
-
-$ c_formatter_42 --help
-usage: c_formatter_42 [-h] [-c] [FILE [FILE ...]]
-
-Format C source according to the norm
-
-positional arguments:
-  FILE           File to format inplace, if no file is provided read STDIN
-
-optional arguments:
-  -h, --help     show this help message and exit
-  -c, --confirm  Ask confirmation before overwritting any file
-```
 
 Feel free to report issues or contribute. :)
