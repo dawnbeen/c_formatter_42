@@ -59,15 +59,6 @@ optional arguments:
 
 ---
 
-### ***caution***
-
-We strongly recommend you to confirm that the binary works without exceptions **before** using the formatter's output to replace the file content destructively.
-```
-$ python3 -m c_formatter_42 < [file.c]
-```
-
----
-
 ### Vim
 
 Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) plugin. This plugin automatically installs the c_formatter_42 package using pip.
@@ -81,7 +72,7 @@ Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) pl
 "emeraldwalk.runonsave": {
     "commands": [{
         "match": ".[ch]",
-        "cmd": "python3 -m c_formatter_42 < ${file} | tee _cfdump && cat _cfdump | tee ${file} && rm -f _cfdump"
+        "cmd": "python3 -m c_formatter_42 ${file}"
     }]
 }
 ```
