@@ -65,16 +65,17 @@ Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) pl
 
 ### VSCode
 
-1. Install [emeraldwalk.runonsave](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave) extension.
-2. Add Configuration to format with c_formatter_42 on save to vscode. (We recommend you to put it in `Workspace Preference`)
+1. Install `c_formatter_42`.
+2. Install [keyhr.42-c-format](https://marketplace.visualstudio.com/items?itemName=keyhr.42-c-format) extension.
+3. Add Configuration to set default to formatting with `c_formatter_42`.
 
-```
-"emeraldwalk.runonsave": {
-    "commands": [{
-        "match": ".[ch]",
-        "cmd": "python3 -m c_formatter_42 ${file}"
-    }]
+```json
+{
+  "[c]": {
+    "editor.defaultFormatter": "keyhr.42-c-format"
+  }
 }
+
 ```
 You can copy above and paste it in the `.vscode/setting.json`.
 
