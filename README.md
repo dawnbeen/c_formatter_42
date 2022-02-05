@@ -77,7 +77,7 @@ Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) pl
 }
 
 ```
-You can copy above and paste it in the `.vscode/setting.json`.
+You can put this in the `.vscode/setting.json`.
 
 ### Atom
 
