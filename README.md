@@ -59,33 +59,25 @@ optional arguments:
 
 ---
 
-### ***caution***
-
-We strongly recommend you to confirm that the binary works without exceptions **before** using the formatter's output to replace the file content destructively.
-```
-$ python3 -m c_formatter_42 < [file.c]
-```
-
----
-
 ### Vim
 
 Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) plugin. This plugin automatically installs the c_formatter_42 package using pip.
 
 ### VSCode
 
-1. Install [emeraldwalk.runonsave](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave) extension.
-2. Add Configuration to format with c_formatter_42 on save to vscode. (We recommend you to put it in `Workspace Preference`)
+1. Install `c_formatter_42`.
+2. Install [keyhr.42-c-format](https://marketplace.visualstudio.com/items?itemName=keyhr.42-c-format) extension.
+3. Add Configuration to set default to formatting with `c_formatter_42`.
+
+```json
+{
+  "[c]": {
+    "editor.defaultFormatter": "keyhr.42-c-format"
+  }
+}
 
 ```
-"emeraldwalk.runonsave": {
-    "commands": [{
-        "match": ".[ch]",
-        "cmd": "python3 -m c_formatter_42 < ${file} | tee _cfdump && cat _cfdump | tee ${file} && rm -f _cfdump"
-    }]
-}
-```
-You can copy above and paste it in the `.vscode/setting.json`.
+You can put this in the `.vscode/setting.json`.
 
 ### Atom
 
