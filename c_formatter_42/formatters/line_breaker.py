@@ -14,7 +14,7 @@ def insert_break(line: str, column_limit: int) -> str:
         return line
 
     # break at all breakable spaces (space after comma or space before binary operators)
-    breakable_space_pattern = r"((?<=,) | (?=[+\-*/%])(?!\*+\S|\+\+|\-\-))"
+    breakable_space_pattern = r"((?<=,) | (?=[+\-*/%]|\|\||&&)(?!\*+\S|\+\+|\-\-))"
     line = re.sub(breakable_space_pattern, "\n", line)
     segments = line.split("\n")
 
@@ -54,7 +54,7 @@ def insert_break(line: str, column_limit: int) -> str:
 def additional_indent_level(s: str) -> int:
     additional_indent_level = 1
 
-    discount_pattern = r"(^\t*{type}\t+.*?[a-zA-Z0-9_]\()|(^\t*typedef)|(^\t*(if|while))"
+    discount_pattern = r"(^\t*{type}\t+.*?[a-zA-Z0-9_]\()|(^\t*typedef)|(^\t*(if|while|return))"
     discount_pattern = discount_pattern.format(
         type=helper.REGEX_TYPE,
     )
