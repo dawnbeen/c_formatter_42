@@ -40,8 +40,8 @@ looooooooooooooooooooooong = 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2;
 def test_insert_line_break_basic_3():
     output = """\
 \t\t\t\treturn (fooooooooooooooooooooooooo(a, b, cccccccccccc,
-\t\t\t\t\t\t\tddddddddddddd, eeeeeeeeeeeeeeee, fffffffffffffff,
-\t\t\t\t\t\t\tgggggggggggg, hhhhhhhhhhhhhhhhhh));
+\t\t\t\t\t\tddddddddddddd, eeeeeeeeeeeeeeee, fffffffffffffff,
+\t\t\t\t\t\tgggggggggggg, hhhhhhhhhhhhhhhhhh));
 """
     assert output == line_breaker("""\
 \t\t\t\treturn (fooooooooooooooooooooooooo(a, b, cccccccccccc, ddddddddddddd, eeeeeeeeeeeeeeee, fffffffffffffff, gggggggggggg, hhhhhhhhhhhhhhhhhh));
