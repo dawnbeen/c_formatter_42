@@ -13,7 +13,8 @@ def insert_break(line: str, column_limit: int) -> str:
     if line_length(line) <= column_limit:
         return line
 
-    # break at all breakable spaces (space after comma or space before binary operators)
+    # break at all breakable spaces (space after comma or space before binary
+    # operators or logical AND or OR)
     breakable_space_pattern = r"((?<=,) | (?=[+\-*/%]|\|\||&&)(?!\*+\S|\+\+|\-\-))"
     line = re.sub(breakable_space_pattern, "\n", line)
     segments = line.split("\n")
@@ -54,7 +55,8 @@ def insert_break(line: str, column_limit: int) -> str:
 def additional_indent_level(s: str) -> int:
     additional_indent_level = 1
 
-    discount_pattern = r"(^\t*{type}\t+.*?[a-zA-Z0-9_]\()|(^\t*typedef)|(^\t*(if|while|return))"
+    discount_pattern = r"(^\t*{type}\t+.*?[a-zA-Z0-9_]\((?!.*?;))|(^\t*typedef)" \
+        "|(^\t*(if|while|return))"
     discount_pattern = discount_pattern.format(
         type=helper.REGEX_TYPE,
     )
@@ -83,4 +85,16 @@ def line_length(line: str) -> int:
 
 
 def indent_level(line: str) -> int:
+    # an exeptional rule for function declaration
+    align_pattern = r"^(static\s+)?{type}\s+{name}\((.|\s)*?\);"
+    align_pattern = align_pattern.format(
+        type=helper.REGEX_TYPE,
+        name=helper.REGEX_NAME
+    )
+    if re.match(align_pattern, line):
+        last_tab_index = line.rfind("\t")
+        if last_tab_index == -1:
+            return 0
+        return int(len(line[:last_tab_index + 1].expandtabs(4)) / 4)
+
     return line.count("\t")

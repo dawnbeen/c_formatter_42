@@ -19,6 +19,24 @@ def test_line_indent_depth_basic_3():
 """
     assert 4 == indent_level(input)
 
+def test_line_indent_depth_basic_4():
+    input = """\
+static\tint\t\ttest();
+"""
+    assert 4 == indent_level(input)
+
+def test_line_indent_depth_basic_5():
+    input = """\
+static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst *fields);
+"""
+    assert 3 == indent_level(input)
+
+def test_additional_indent_level_1():
+    input = """\
+static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst *fields);
+"""
+    assert 1 == additional_indent_level(input)
+
 
 def test_insert_line_break_basic_1():
     output = """\
@@ -158,11 +176,11 @@ def test_insert_line_break_basic_23():
 
 def test_insert_line_break_long_function_declaration():
     input = """
-static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst *fields)
+static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst *fields);
 """
     output = """
 static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr,
-\t\tt_tok_lst *fields)
+\t\t\t\tt_tok_lst *fields);
 """
     assert line_breaker(input) == output
 
