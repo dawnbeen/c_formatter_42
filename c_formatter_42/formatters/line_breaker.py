@@ -4,7 +4,7 @@ from c_formatter_42.formatters import helper
 
 def line_breaker(content: str, column_limit: int = 80) -> str:
     lines = content.split("\n")
-    lines = list(map(lambda s: insert_break(s, column_limit), lines))
+    lines = [insert_break(line, column_limit) for line in lines]
 
     return "\n".join(lines)
 
