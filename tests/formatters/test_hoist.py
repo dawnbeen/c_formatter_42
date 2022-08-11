@@ -3,7 +3,8 @@
 #                                                         :::      ::::::::    #
 #    test_hoist.py                                      :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         # +#+#+#+#+#+   +#+            #
+#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
 #    Updated: 2021/02/11 22:16:57 by charles          ###   ########.fr        #
 #                                                                              #
@@ -144,6 +145,53 @@ void foo()
 \tt_list\t*bar = (t_list *)malloc(sizeof(t_list) * (count_elements(baz) + 1));
 }
 """)
+
+
+def test_hoist_empty_function():
+    input = """
+void empty_function(void)
+{
+}
+
+int **function()
+{
+\tint **tab = malloc(4 * sizeof(int *));
+\tint i = -1;
+\twhile (++i < 4)
+\t{
+\t\ttab[i] = malloc(4 * sizeof(int));
+\t\tint j = -1;
+\t\twhile (++j < 4)
+\t\t\ttab[i][j] = i * j;
+\t}
+\treturn (tab);
+}
+"""
+    output = """
+void empty_function(void)
+{
+}
+
+int **function()
+{
+\tint\t**tab;
+\tint\ti;
+\tint\tj;
+
+\ttab = malloc(4 * sizeof(int *));
+\ti = -1;
+\twhile (++i < 4)
+\t{
+\t\ttab[i] = malloc(4 * sizeof(int));
+\t\tj = -1;
+\t\twhile (++j < 4)
+\t\t\ttab[i][j] = i * j;
+\t}
+\treturn (tab);
+}
+"""
+    assert output == hoist(input)
+
 
 @pytest.mark.skip()
 def test_hoist_array():
