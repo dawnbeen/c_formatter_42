@@ -52,6 +52,8 @@ if sys.platform == "linux":
     CLANG_FORMAT_EXEC = os.path.join(DATA_DIR, "clang-format-linux")
 elif sys.platform == "darwin":
     CLANG_FORMAT_EXEC = os.path.join(DATA_DIR, "clang-format-darwin")
+elif sys.platform == "win32":
+    CLANG_FORMAT_EXEC = os.path.join(DATA_DIR, "clang-format-win32.exe")
 else:
     raise NotImplementedError("Your platform is not supported")
 
