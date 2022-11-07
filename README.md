@@ -54,7 +54,7 @@ positional arguments:
 
 optional arguments:
   -h, --help     show this help message and exit
-  -c, --confirm  Ask confirmation before overwritting any file
+  -c, --confirm  Ask confirmation before overwriting any file
 ```
 
 ---
