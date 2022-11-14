@@ -101,5 +101,6 @@ def test_insert_void():
     assert "int\tmain(void)" == insert_void("int\tmain()")
     assert "void\tfunc  (void)" == insert_void("void\tfunc  ( )")
     assert "void\t\tfunc  (void)" == insert_void("void\t\tfunc  ( )")
+    assert "void\t\t*func  (void)" == insert_void("void\t\t*func  ( )")
     assert "\t(void *)foo()" == insert_void("\t(void *)foo()")
     assert "\tfoo()" == insert_void("\tfoo()")
