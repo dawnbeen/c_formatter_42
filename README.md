@@ -23,14 +23,14 @@ Requires Python 3.6+ (3.7, 3.8, 3.9, 3.10)
 
 ### From PyPI
 
-```command
+```console
 $ pip3 install c-formatter-42
 $ pip3 install --user c-formatter-42  # If you don't have root privileges
 ```
 
 ### From source
 
-```command
+```console
 $ git clone https://github.com/cacharle/c_formatter_42
 $ cd c_formatter_42
 $ pip3 install -e .
@@ -40,7 +40,7 @@ $ pip3 install -e .
 
 ### Command line
 
-```command
+```console
 $ c_formatter_42 < file.c
 $ python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
 
