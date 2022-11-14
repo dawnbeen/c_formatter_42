@@ -25,9 +25,9 @@ DATA_DIR = os.path.dirname(inspect.getfile(c_formatter_42.data))
 
 @contextmanager
 def _config_context():
-    """ Temporarly place .clang-format config file in the current directory
-        If there already is a config in the current directory, it's backed up
-        then put back in place after clang-format is done running
+    """Temporarly place .clang-format config file in the current directory
+    If there already is a config in the current directory, it's backed up
+    then put back in place after clang-format is done running
     """
     config_path = os.path.join(DATA_DIR, CONFIG_FILENAME)
     previous_config = None
@@ -59,11 +59,11 @@ else:
 
 
 def clang_format(content: str) -> str:
-    """ Wrapper around clang-format
+    """Wrapper around clang-format
 
-        Pass content on stdin and return stdout.
-        The clang-format executable is selected according to the platform,
-        this is to keep the same version of clang-format accross all setup.
+    Pass content on stdin and return stdout.
+    The clang-format executable is selected according to the platform,
+    this is to keep the same version of clang-format accross all setup.
     """
     with _config_context():
         process = subprocess.Popen(

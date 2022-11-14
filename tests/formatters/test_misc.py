@@ -52,10 +52,12 @@ def test_run_parenthesize_return_2():
 return ;
 return (NULL);
 """
-    assert output == parenthesize_return("""\
+    assert output == parenthesize_return(
+        """\
 return ;
 return NULL;
-""")
+"""
+    )
 
 
 def test_run_space_in_condition():

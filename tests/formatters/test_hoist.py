@@ -122,15 +122,17 @@ void	*foo()
 		return NULL;
 }
 """
-    assert output == hoist("""\
+    assert output == hoist(
+        """\
 void	*foo()
 {
 	if ()
 		return NULL;
 }
-""")
+"""
+    )
 
-# TODO test on weird types
+    # TODO test on weird types
     output = """\
 void foo()
 {
@@ -139,12 +141,14 @@ void foo()
 \tbar = (t_list *)malloc(sizeof(t_list) * (count_elements(baz) + 1));
 }
 """
-    assert output == hoist("""\
+    assert output == hoist(
+        """\
 void foo()
 {
 \tt_list\t*bar = (t_list *)malloc(sizeof(t_list) * (count_elements(baz) + 1));
 }
-""")
+"""
+    )
 
 
 def test_hoist_empty_function():
