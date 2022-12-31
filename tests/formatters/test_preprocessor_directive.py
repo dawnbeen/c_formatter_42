@@ -217,3 +217,16 @@ def test_preprocessor_directive_nested_10():
 #endif
 """
     assert output == preprocessor_directive(input)
+
+def test_preprocessor_1():
+    input = """
+#include "libft.h"
+void *ft_function(char c)
+"""
+    output = """
+#include "libft.h"
+
+void *ft_function(char c)
+"""
+    assert output == preprocessor_directive(input)
+    assert output == preprocessor_directive(preprocessor_directive(input))
