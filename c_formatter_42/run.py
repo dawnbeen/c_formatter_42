@@ -23,6 +23,7 @@ from c_formatter_42.formatters.misc import (
 )
 from c_formatter_42.formatters.line_breaker import line_breaker
 
+
 def run_all(content: str) -> str:
     """Run all formatters"""
     content = clang_format(content)
