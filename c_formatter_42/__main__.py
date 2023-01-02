@@ -22,10 +22,11 @@ def main():
     arg_parser = argparse.ArgumentParser(
         prog="c_formatter_42",
         description="Format C source according to the norm",
-        formatter_class=argparse.RawTextHelpFormatter
+        formatter_class=argparse.RawTextHelpFormatter,
     )
     arg_parser.add_argument(
-        "-c", "--confirm",
+        "-c",
+        "--confirm",
         action="store_true",
         help="Ask confirmation before overwriting any file"
     )
@@ -33,7 +34,7 @@ def main():
         "filepaths",
         metavar="FILE",
         nargs="*",
-        help="File to format inplace, if no file is provided read STDIN"
+        help="File to format inplace, if no file is provided read STDIN",
     )
     args = arg_parser.parse_args()
 
@@ -46,8 +47,9 @@ def main():
                 with open(filepath, "r") as file:
                     content = file.read()
                 if args.confirm:
-                    result = input("Are you sure you want to overwrite {}?[y/N]"
-                                   .format(filepath))
+                    result = input(
+                        "Are you sure you want to overwrite {}?[y/N]".format(filepath)
+                    )
                     if result != "y":
                         continue
                 print("Writing to {}".format(filepath))

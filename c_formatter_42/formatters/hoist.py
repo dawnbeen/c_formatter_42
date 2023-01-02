@@ -17,7 +17,7 @@ import c_formatter_42.formatters.helper as helper
 
 @helper.locally_scoped
 def hoist(content: str) -> str:
-    r""" Hoist local variable and split assigned declaration
+    r"""Hoist local variable and split assigned declaration
 
     Assignment splitting:
     {                   {
@@ -51,29 +51,27 @@ def hoist(content: str) -> str:
             r"^(?P<indent>\s+)"
             r"(?P<type>{t})\s+"
             r"(?P<name>{d})\s+=\s+"
-            r"(?P<value>.+);$"
-            .format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
-            line
+            r"(?P<value>.+);$".format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
+            line,
         )
         if m is not None:
-            lines.append("\t{}\t{};".format(
-                m.group("type"),
-                m.group("name"))
-            )
-            lines.append("{}{} = {};".format(
-                m.group("indent"),
-                m.group("name").replace("*", ""),
-                m.group("value"))
+            lines.append("\t{}\t{};".format(m.group("type"), m.group("name")))
+            lines.append(
+                "{}{} = {};".format(
+                    m.group("indent"),
+                    m.group("name").replace("*", ""),
+                    m.group("value"),
+                )
             )
         else:
             lines.append(line)
 
     # hoist declarations and filter empty lines
-    decl_regex = r"^\s*{t}\s+{d};$".format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME)
-    declarations = [line for line in lines
-                    if re.match(decl_regex, line) is not None]
-    body = [line for line in lines
-            if line not in declarations and line != ""]
+    decl_regex = r"^\s*{t}\s+{d};$".format(
+        t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME
+    )
+    declarations = [line for line in lines if re.match(decl_regex, line) is not None]
+    body = [line for line in lines if line not in declarations and line != ""]
     lines = declarations
     if len(declarations) != 0:
         lines.append("")

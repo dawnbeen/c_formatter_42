@@ -20,22 +20,30 @@ def test_return_type_single_tab_basic():
 int\tfoo()
 char\tbar()
 """
-    assert output == return_type_single_tab("""\
+    assert output == return_type_single_tab(
+        """\
 int foo()
 char   bar()
-""")
-    assert output == return_type_single_tab("""\
+"""
+    )
+    assert output == return_type_single_tab(
+        """\
 int\t\t\t\t\t\tfoo()
 char   bar()
-""")
-    assert output == return_type_single_tab("""\
+"""
+    )
+    assert output == return_type_single_tab(
+        """\
 int\t\t\t         \t\t\tfoo()
 char  \t bar()
-""")
-    assert output == return_type_single_tab("""\
+"""
+    )
+    assert output == return_type_single_tab(
+        """\
 int\t\t\t         \t\t\tfoo()
 char  \t bar()
-""")
+"""
+    )
 
 
 @pytest.mark.parametrize(
@@ -57,7 +65,7 @@ char  \t bar();
 int\t\t\t         \t\t\tfoo();
 char  \t bar();
         """,
-    ]
+    ],
 )
 def test_return_type_single_tab_no_prototype(content):
     assert content == return_type_single_tab(content)
