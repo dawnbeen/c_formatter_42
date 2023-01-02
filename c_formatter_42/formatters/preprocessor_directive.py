@@ -33,4 +33,13 @@ def preprocessor_directive(content: str) -> str:
             indent += 1
         if directive_name == "endif":
             indent -= 1
+
+    # if newline doesn't follows preprocessor part, insert one
+    lastline_index = idented[-1][0]
+    try:
+        if lines[lastline_index + 1] != "":
+            lines.insert(lastline_index + 1, "")
+    except IndexError:
+        pass
+
     return "\n".join(lines)

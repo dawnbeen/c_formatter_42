@@ -28,7 +28,7 @@ def main():
         "-c",
         "--confirm",
         action="store_true",
-        help="Ask confirmation before overwritting any file",
+        help="Ask confirmation before overwriting any file",
     )
     arg_parser.add_argument(
         "filepaths",
@@ -52,7 +52,7 @@ def main():
                     )
                     if result != "y":
                         continue
-                print("Writting to {}".format(filepath))
+                print("Writing to {}".format(filepath))
                 with open(filepath, "w") as file:
                     file.write(run_all(content))
             except OSError as e:

@@ -9,3 +9,5 @@ docs/build/
 /.venv
 /debug
 /.vimspector.json
+
+.vscode

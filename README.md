@@ -19,7 +19,7 @@ It's just for convenience.
 
 ## Installation
 
-Requires Python 3.6+ (3.7, 3.8, 3.9, 3.10)
+Requires Python3.7+ (3.8, 3.9, 3.10, 3.11)
 
 ### From PyPI
 
@@ -54,7 +54,7 @@ positional arguments:
 
 optional arguments:
   -h, --help     show this help message and exit
-  -c, --confirm  Ask confirmation before overwritting any file
+  -c, --confirm  Ask confirmation before overwriting any file
 ```
 
 ## Plugins / Extensions
