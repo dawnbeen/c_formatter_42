@@ -28,7 +28,7 @@ def main():
         "-c",
         "--confirm",
         action="store_true",
-        help="Ask confirmation before overwriting any file"
+        help="Ask confirmation before overwriting any file",
     )
     arg_parser.add_argument(
         "filepaths",
