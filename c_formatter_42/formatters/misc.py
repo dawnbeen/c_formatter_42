@@ -40,7 +40,7 @@ def remove_multiline_condition_space(content: str) -> str:
 
 def insert_void(content: str) -> str:
     return re.sub(
-        r"(?P<funcdef>[0-9a-zA-Z_]+\t+[0-9a-zA-Z_]*\s*)\(\s*\)",
+        r"(?P<funcdef>[0-9a-zA-Z_]+\t+\**[0-9a-zA-Z_]*\s*)\(\s*\)",
         lambda match: "{}({})".format(match.group("funcdef"), "void"),
         content,
     )

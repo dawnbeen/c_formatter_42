@@ -18,9 +18,11 @@ def preprocessor_directive(content: str) -> str:
 
     directive_regex = r"^\#\s*(?P<name>[a-z]+)\s?(?P<rest>.*)$"
     matches = [re.match(directive_regex, line) for line in lines]
-    idented = [(i, match.group("name"), match.group("rest"))
-               for i, match in enumerate(matches)
-               if match is not None]
+    idented = [
+        (i, match.group("name"), match.group("rest"))
+        for i, match in enumerate(matches)
+        if match is not None
+    ]
     indent = 0
     for i, directive_name, directive_rest in idented:
         if directive_name in ["elif", "else", "endif"]:

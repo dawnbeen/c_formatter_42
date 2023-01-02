@@ -23,10 +23,14 @@ def test_clang_format_missing_closing_delimiter():
 
 
 def test_clang_format_gibberish():
-    assert (clang_format("qwasfjkahskluhiouhcjkvzhxcklhvklxzhv") ==
-            "qwasfjkahskluhiouhcjkvzhxcklhvklxzhv")
-    assert (clang_format("qwa()sfahskl{}[]uhcjkvzhxcklhv[]xzhv") ==
-            "qwa() sfahskl{}[] uhcjkvzhxcklhv[] xzhv")
+    assert (
+        clang_format("qwasfjkahskluhiouhcjkvzhxcklhvklxzhv")
+        == "qwasfjkahskluhiouhcjkvzhxcklhvklxzhv"
+    )
+    assert (
+        clang_format("qwa()sfahskl{}[]uhcjkvzhxcklhv[]xzhv")
+        == "qwa() sfahskl{}[] uhcjkvzhxcklhv[] xzhv"
+    )
 
 
 def test_clang_format_empty():
@@ -45,14 +49,15 @@ def test_clang_format_empty():
 # \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
 # """
 #     assert clang_format(input) == output
-# 
+#
 #     input = """
 # if (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ||
 # \tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ||
 # \tcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc)
 # """
 #     assert clang_format(input) == input
-# 
+#
+
 
 def test_clang_format_non_array_assignment_packing():
     input = """
@@ -83,13 +88,17 @@ def change_temp_dir_context():
 def test_clang_format_config_file():
     with change_temp_dir_context():
         assert not os.path.exists(".clang-format")
-        assert clang_format("int main() { return 0; }") == "int main()\n{\n\treturn 0;\n}"
+        assert (
+            clang_format("int main() { return 0; }") == "int main()\n{\n\treturn 0;\n}"
+        )
         assert not os.path.exists(".clang-format")
 
     with change_temp_dir_context():
         with open(".clang-format", "w") as f:
             f.write("bonjour")
-        assert clang_format("int main() { return 0; }") == "int main()\n{\n\treturn 0;\n}"
+        assert (
+            clang_format("int main() { return 0; }") == "int main()\n{\n\treturn 0;\n}"
+        )
         assert os.path.exists(".clang-format")
         with open(".clang-format") as f:
             assert f.read() == "bonjour"

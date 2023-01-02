@@ -2,7 +2,7 @@
   <a style="text-decoration:none" href="https://badge.fury.io/py/c-formatter-42"><img src="https://badge.fury.io/py/c-formatter-42.svg" alt="PyPI version" height="20"></a>
   <a style="text-decoration:none" href="https://github.com/cacharle/c_formatter_42/actions"><img src="https://github.com/cacharle/c_formatter_42/actions/workflows/python-package.yml/badge.svg" height="20"></a>
   <a style="text-decoration:none" href="https://github.com/cacharle/c_formatter_42/actions"><img src="https://github.com/cacharle/c_formatter_42/actions/workflows/python-publish.yml/badge.svg" height="20"></a>
-   <a style="text-decoration:none" href="https://pypi.org/project/c-formatter-42/"><img src="https://img.shields.io/pypi/pyversions/c-formatter-42" height="20"></a>
+  <a style="text-decoration:none" href="https://pypi.org/project/c-formatter-42/"><img src="https://img.shields.io/pypi/pyversions/c-formatter-42" height="20"></a>
 </p>
 
 <br />
@@ -14,23 +14,23 @@
 # c_formatter_42
 
 C language prettier that conforms to 42 norm v3.
-I know you are already a good Human norm.
+I know you are already a good human norm.
 It's just for convenience.
 
 ## Installation
 
 Requires Python3.7+ (3.8, 3.9, 3.10, 3.11)
 
-### from pypi (currently not working)
+### From PyPI
 
-```
+```console
 $ pip3 install c-formatter-42
-$ pip3 install --user c-formatter-42  # if you don't have root privileges
+$ pip3 install --user c-formatter-42  # If you don't have root privileges
 ```
 
-### from source
+### From source
 
-```
+```console
 $ git clone https://github.com/cacharle/c_formatter_42
 $ cd c_formatter_42
 $ pip3 install -e .
@@ -40,7 +40,7 @@ $ pip3 install -e .
 
 ### Command line
 
-```
+```console
 $ c_formatter_42 < file.c
 $ python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
 
@@ -57,17 +57,17 @@ optional arguments:
   -c, --confirm  Ask confirmation before overwriting any file
 ```
 
----
+## Plugins / Extensions
 
 ### Vim
 
-Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) plugin. This plugin automatically installs the c_formatter_42 package using pip.
+Check out the [`c_formatter_42.vim`](https://github.com/cacharle/c_formatter_42.vim) plugin. This plugin automatically installs the `c_formatter_42` package using pip.
 
-### VSCode
+### Visual Studio Code
 
-1. Install `c_formatter_42`.
-2. Install [keyhr.42-c-format](https://marketplace.visualstudio.com/items?itemName=keyhr.42-c-format) extension.
-3. Add Configuration to set default to formatting with `c_formatter_42`.
+1. Install `c_formatter_42`
+1. Install the [`keyhr.42-c-format`](https://marketplace.visualstudio.com/items?itemName=keyhr.42-c-format) extension
+1. Set `keyhr.42-c-format` as the default formatter for C files in `.vscode/settings.json`
 
 ```json
 {
@@ -75,13 +75,8 @@ Checkout [c_formatter_42.vim](https://github.com/cacharle/c_formatter_42.vim) pl
     "editor.defaultFormatter": "keyhr.42-c-format"
   }
 }
-
 ```
-You can put this in the `.vscode/setting.json`.
 
-### Atom
-
-Not supported yet, [see related issue](https://github.com/dawnbeen/c_formatter_42/issues/12).
-
+## Contributing
 
 Feel free to report issues or contribute. :)

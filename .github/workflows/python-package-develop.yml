@@ -37,9 +37,13 @@ jobs:
         python -m pip install -r requirements-dev.txt
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         python -m pip install -e .
+    - name: Check formatted with black
+      run: |
+        black --check c_formatter_42 tests
     - name: Lint with flake8
       run: |
         flake8 c_formatter_42
+        flake8 --extend-ignore=W191,E101,E501 tests
     - name: Test with pytest
       run: |
         pytest -vvv
