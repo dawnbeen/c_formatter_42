@@ -1,4 +1,5 @@
 pytest
+pytest-cov
 six
 pytest-clarity
 mypy
@@ -7,3 +8,4 @@ flake8_comprehensions
 pep8_naming
 tox
 black
+isort

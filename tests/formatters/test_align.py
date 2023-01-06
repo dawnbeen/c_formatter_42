@@ -12,7 +12,7 @@
 
 import pytest
 
-from c_formatter_42.formatters.align import align, align_scope, align_local, Scope
+from c_formatter_42.formatters.align import Scope, align, align_local, align_scope
 
 
 def test_align_global_basic():

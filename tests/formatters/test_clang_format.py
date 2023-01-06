@@ -13,6 +13,9 @@
 import os
 import tempfile
 from contextlib import contextmanager
+from pathlib import Path
+
+import pytest
 
 from c_formatter_42.formatters.clang_format import clang_format
 
@@ -79,26 +82,29 @@ static char *g_sep_str_lookup[] = {
 @contextmanager
 def change_temp_dir_context():
     tempdir = tempfile.mkdtemp("c_formatter_42")
-    current = os.getcwd()
+    current = Path.cwd()
     os.chdir(tempdir)
     yield
     os.chdir(current)
 
 
-def test_clang_format_config_file():
-    with change_temp_dir_context():
-        assert not os.path.exists(".clang-format")
-        assert (
-            clang_format("int main() { return 0; }") == "int main()\n{\n\treturn 0;\n}"
-        )
-        assert not os.path.exists(".clang-format")
+@pytest.fixture
+def clang_format_config_path():
+    return Path(".clang-format")
 
-    with change_temp_dir_context():
-        with open(".clang-format", "w") as f:
-            f.write("bonjour")
-        assert (
-            clang_format("int main() { return 0; }") == "int main()\n{\n\treturn 0;\n}"
-        )
-        assert os.path.exists(".clang-format")
-        with open(".clang-format") as f:
-            assert f.read() == "bonjour"
+
+def test_clang_format_config_file_no_existing_config(
+    tmp_path, clang_format_config_path
+):
+    os.chdir(tmp_path)
+    assert not clang_format_config_path.exists()
+    assert clang_format("int main() { return 0; }") == "int main()\n{\n\treturn 0;\n}"
+    assert not clang_format_config_path.exists()
+
+
+def test_clang_format_config_file_existing_config(tmp_path, clang_format_config_path):
+    os.chdir(tmp_path)
+    clang_format_config_path.write_text("bonjour")
+    assert clang_format("int main() { return 0; }") == "int main()\n{\n\treturn 0;\n}"
+    assert clang_format_config_path.exists()
+    assert clang_format_config_path.read_text() == "bonjour"

@@ -5,7 +5,7 @@ tags
 dist/
 build/
 docs/build/
-
+.coverage
 /.venv
 /debug
 /.vimspector.json

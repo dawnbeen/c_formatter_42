@@ -10,17 +10,16 @@
 #                                                                              #
 # ############################################################################ #
 
-import os
-import sys
-import inspect
 import subprocess
+import sys
 from contextlib import contextmanager
+from pathlib import Path
 
 import c_formatter_42.data
 
-CONFIG_FILENAME = ".clang-format"
+CONFIG_FILENAME = Path(".clang-format")
 
-DATA_DIR = os.path.dirname(inspect.getfile(c_formatter_42.data))
+DATA_DIR = Path(c_formatter_42.data.__file__).parent
 
 
 @contextmanager
@@ -29,31 +28,29 @@ def _config_context():
     If there already is a config in the current directory, it's backed up
     then put back in place after clang-format is done running
     """
-    config_path = os.path.join(DATA_DIR, CONFIG_FILENAME)
+    config_path = DATA_DIR / CONFIG_FILENAME
     previous_config = None
     try:
-        os.symlink(config_path, CONFIG_FILENAME)
+        CONFIG_FILENAME.symlink_to(config_path)
     except FileExistsError:
-        if not os.path.islink(CONFIG_FILENAME):
-            with open(CONFIG_FILENAME) as f:
-                previous_config = f.read()
-        os.unlink(CONFIG_FILENAME)
-        os.symlink(config_path, CONFIG_FILENAME)
+        if not CONFIG_FILENAME.is_symlink():
+            previous_config = CONFIG_FILENAME.read_text()
+        CONFIG_FILENAME.unlink()
+        CONFIG_FILENAME.symlink_to(config_path)
     try:
         yield
     finally:
-        os.unlink(CONFIG_FILENAME)
+        CONFIG_FILENAME.unlink()
         if previous_config is not None:
-            with open(CONFIG_FILENAME, "w") as f:
-                f.write(previous_config)
+            CONFIG_FILENAME.write_text(previous_config)
 
 
 if sys.platform == "linux":
-    CLANG_FORMAT_EXEC = os.path.join(DATA_DIR, "clang-format-linux")
+    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-linux"
 elif sys.platform == "darwin":
-    CLANG_FORMAT_EXEC = os.path.join(DATA_DIR, "clang-format-darwin")
+    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin"
 elif sys.platform == "win32":
-    CLANG_FORMAT_EXEC = os.path.join(DATA_DIR, "clang-format-win32.exe")
+    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-win32.exe"
 else:
     raise NotImplementedError("Your platform is not supported")
 
@@ -73,6 +70,6 @@ def clang_format(content: str) -> str:
             stderr=subprocess.PIPE,
         )
         out, err = process.communicate(input=content.encode())
-        if process.returncode != 0:
+        if process.returncode != 0:  # pragma: no cover
             raise RuntimeError(f"clang-format error: {err.decode()}")
         return out.decode()

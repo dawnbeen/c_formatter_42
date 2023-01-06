@@ -12,7 +12,6 @@
 
 import re
 
-
 # regex for a type
 REGEX_TYPE = r"(?!return)([a-z]+\s+)*[a-zA-Z_]\w*"
 # regex for a c variable/function name

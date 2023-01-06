@@ -11,10 +11,10 @@
 # ############################################################################ #
 
 from c_formatter_42.formatters.misc import (
-    parenthesize_return,
-    space_before_semi_colon,
-    remove_multiline_condition_space,
     insert_void,
+    parenthesize_return,
+    remove_multiline_condition_space,
+    space_before_semi_colon,
 )
 
 

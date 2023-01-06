@@ -12,8 +12,8 @@
 #                                                                              #
 # ############################################################################ #
 
-import sys
 import argparse
+import sys
 
 from c_formatter_42.run import run_all
 
@@ -28,7 +28,7 @@ def main():
         "-c",
         "--confirm",
         action="store_true",
-        help="Ask confirmation before overwriting any file"
+        help="Ask confirmation before overwriting any file",
     )
     arg_parser.add_argument(
         "filepaths",
@@ -48,15 +48,15 @@ def main():
                     content = file.read()
                 if args.confirm:
                     result = input(
-                        "Are you sure you want to overwrite {}?[y/N]".format(filepath)
+                        f"Are you sure you want to overwrite {filepath}?[y/N]"
                     )
                     if result != "y":
                         continue
-                print("Writing to {}".format(filepath))
+                print(f"Writing to {filepath}")
                 with open(filepath, "w") as file:
                     file.write(run_all(content))
             except OSError as e:
-                print("Error: {}: {}".format(e.filename, e.strerror))
+                print(f"Error: {e.filename}: {e.strerror}")
 
 
 if __name__ == "__main__":
