@@ -53,3 +53,18 @@ t_tok_lst\t\t\t\t*tok_lst_uncons(t_tok_lst **tokens);
 
 def test_run_func_decl_single_tab_and_global_aligned():
     pass
+
+
+def test_basic():
+    input = """
+int main(int argc, char*argv[]){
+	return 0;
+}
+"""
+    output = """
+int\tmain(int argc, char *argv[])
+{
+	return (0);
+}
+"""
+    assert output == run_all(input)
