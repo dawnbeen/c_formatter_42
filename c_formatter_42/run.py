@@ -10,18 +10,18 @@
 #                                                                              #
 # ############################################################################ #
 
+from c_formatter_42.formatters.align import align
 from c_formatter_42.formatters.clang_format import clang_format
 from c_formatter_42.formatters.hoist import hoist
-from c_formatter_42.formatters.align import align
+from c_formatter_42.formatters.line_breaker import line_breaker
+from c_formatter_42.formatters.misc import (
+    insert_void,
+    parenthesize_return,
+    remove_multiline_condition_space,
+    space_before_semi_colon,
+)
 from c_formatter_42.formatters.preprocessor_directive import preprocessor_directive
 from c_formatter_42.formatters.return_type_single_tab import return_type_single_tab
-from c_formatter_42.formatters.misc import (
-    parenthesize_return,
-    space_before_semi_colon,
-    remove_multiline_condition_space,
-    insert_void,
-)
-from c_formatter_42.formatters.line_breaker import line_breaker
 
 
 def run_all(content: str) -> str:

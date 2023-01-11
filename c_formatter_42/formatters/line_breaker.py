@@ -1,11 +1,11 @@
 import re
+
 from c_formatter_42.formatters import helper
 
 
 def line_breaker(content: str, column_limit: int = 80) -> str:
     lines = content.split("\n")
     lines = [insert_break(line, column_limit) for line in lines]
-
     return "\n".join(lines)
 
 
@@ -36,7 +36,6 @@ def insert_break(line: str, column_limit: int) -> str:
     return line
 
 
-#
 # additional indent level increases in proportion to corresponds paren depth
 #
 # (examples)

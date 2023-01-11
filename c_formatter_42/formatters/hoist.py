@@ -55,7 +55,7 @@ def hoist(content: str) -> str:
             line,
         )
         if m is not None:
-            lines.append("\t{}\t{};".format(m.group("type"), m.group("name")))
+            lines.append(f"\t{m.group('type')}\t{m.group('name')};")
             lines.append(
                 "{}{} = {};".format(
                     m.group("indent"),

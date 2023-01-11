@@ -1,7 +1,7 @@
 # from c_formatter_42.formatters.line_breaker import line_breaker, indent_level
 from c_formatter_42.formatters.line_breaker import (
-    indent_level,
     additional_indent_level,
+    indent_level,
     line_breaker,
 )
 
