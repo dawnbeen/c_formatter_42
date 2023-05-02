@@ -1,4 +1,3 @@
-# from c_formatter_42.formatters.line_breaker import line_breaker, indent_level
 from c_formatter_42.formatters.line_breaker import (
     additional_indent_level,
     indent_level,
@@ -220,7 +219,7 @@ def test_insert_line_break_basic_22():
 
 
 def test_insert_line_break_basic_23():
-    output = "foooooo(bar\n\t\t* baz)"
+    output = "foooooo(bar\n\t* baz)"
     assert output == line_breaker("foooooo(bar * baz)", 7)
 
 

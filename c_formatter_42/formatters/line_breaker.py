@@ -13,7 +13,7 @@ def insert_break(line: str, column_limit: int) -> str:
     if line_length(line) <= column_limit:
         return line
 
-    # break at all breakable spaces (space after comma or space before binary
+    # Break at all breakable spaces (space after comma or space before binary
     # operators or logical AND or OR)
     breakable_space_pattern = r"((?<=,) | (?=[+\-*/%]|\|\||&&)(?!\*+\S|\+\+|\-\-))"
     line = re.sub(breakable_space_pattern, "\n", line)
@@ -21,7 +21,7 @@ def insert_break(line: str, column_limit: int) -> str:
 
     line_indent_level = indent_level(line)
 
-    # join as many segments as it doesn't exceed line length limit
+    # Join as many segments as it doesn't exceed line length limit
     line = segments[0]
     current_line_length = line_length(segments[0])
     for segment in segments[1:]:
@@ -36,48 +36,40 @@ def insert_break(line: str, column_limit: int) -> str:
     return line
 
 
-# additional indent level increases in proportion to corresponds paren depth
+# The additional indent level increases in proportion to the corresponding parentheses depth
 #
-# (examples)
-# foo() * bar() * baz()
-# ~~~~~~~~~~~~~^~~~~~~~ when line breaks here,
-# foo() * bar()
-# >   * baz()           next line should be indented with 1 tab
-# ===
-# (foo(bar() * baz()))
-# ~~~~~~~~~~^~~~~~~~~    when line breaks here,
-# (foo(bar()
-# >   >   >   * baz()))  next line should be indented with 3 tabs
-#
-# function declaration, user defined type (?), and control statement needs one less tab (discount)
-#
+# Examples:
+#   -----------------------------------------------------------------------------------
+#   foo() * bar() * baz()
+#   ~~~~~~~~~~~~~^~~~~~~~   When line breaks here,
+#   foo() * bar()
+#   >   * baz()             Next line should be indented with 1 tab (default)
+#   -----------------------------------------------------------------------------------
+#   foo(bar() * baz())
+#   ~~~~~~~~~^~~~~~~~~      When line breaks here,
+#   foo(bar()
+#   >   * baz())            Next line should be indented with 1 tab (paren depth is 1)
+#   -----------------------------------------------------------------------------------
+#   (foo(bar() * baz()))
+#   ~~~~~~~~~~^~~~~~~~~~    When line breaks here,
+#   (foo(bar()
+#   >   >   * baz()))       Next line should be indented with 2 tabs (paren depth is 2)
+#   -----------------------------------------------------------------------------------
 def additional_indent_level(s: str) -> int:
-    additional_indent_level = 1
-
-    discount_pattern = (
-        r"(^\t*{type}\t+.*?[a-zA-Z0-9_]\((?!.*?;))|(^\t*typedef)"
-        "|(^\t*(if|while|return))"
-    )
-    discount_pattern = discount_pattern.format(
-        type=helper.REGEX_TYPE,
-    )
-    if re.match(discount_pattern, s):
-        additional_indent_level = 0
-
+    paren_depth = 0
     is_surrounded_sq = False
     is_surrounded_dq = False
-
     for c in s:
         if c == "'":
             is_surrounded_sq = not is_surrounded_sq
         elif c == '"':
             is_surrounded_dq = not is_surrounded_dq
         elif c == "(" and not is_surrounded_sq and not is_surrounded_dq:
-            additional_indent_level += 1
+            paren_depth += 1
         elif c == ")" and not is_surrounded_sq and not is_surrounded_dq:
-            additional_indent_level -= 1
+            paren_depth -= 1
 
-    return additional_indent_level
+    return max(1, paren_depth)  # 1 is the default additional indent level
 
 
 def line_length(line: str) -> int:
@@ -86,13 +78,13 @@ def line_length(line: str) -> int:
 
 
 def indent_level(line: str) -> int:
-    # an exeptional rule for function declaration
+    # An exceptional rule for function declaration
     align_pattern = r"^(static\s+)?{type}\s+{name}\((.|\s)*?\);"
     align_pattern = align_pattern.format(type=helper.REGEX_TYPE, name=helper.REGEX_NAME)
     if re.match(align_pattern, line):
         last_tab_index = line.rfind("\t")
         if last_tab_index == -1:
             return 0
-        return int(len(line[: last_tab_index + 1].expandtabs(4)) / 4)
+        return line_length(line[: last_tab_index + 1]) // 4
 
     return line.count("\t")
