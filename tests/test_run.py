@@ -55,6 +55,20 @@ def test_run_func_decl_single_tab_and_global_aligned():
     pass
 
 
+def test_run_long_aligned_func_decl():
+    # This function declaration is already aligned and should not be modified
+    input = """
+typedef struct s_foo
+{
+\tlong int\tbar;
+}\t\t\t\tt_foo;
+
+long int\t\tfoooooooooooooooooooooooooooooo(t_foo *foooooooo1,
+\t\t\t\t\tt_foo *foooooooo2, int barrrrrrrr1, int barrrrrrrr2);
+"""
+    assert input == run_all(input)
+
+
 def test_basic():
     input = """
 int main(int argc, char*argv[]){
