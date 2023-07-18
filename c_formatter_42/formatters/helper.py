@@ -1,19 +1,19 @@
-# ############################################################################ #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    helper.py                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
+#    By: kiokuless <me+kiokuless@tokinia.me>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:38:00 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/08 18:22:06 by charles          ###   ########.fr        #
+#    Updated: 2023/07/17 02:28:52 by kiokuless        ###   ########.fr        #
 #                                                                              #
-# ############################################################################ #
+# **************************************************************************** #
 
 import re
 
 # regex for a type
-REGEX_TYPE = r"(?!return)([a-z]+\s+)*[a-zA-Z_]\w*"
+REGEX_TYPE = r"(?!return|goto)([a-z]+\s+)*[a-zA-Z_]\w*"
 # regex for a c variable/function name
 REGEX_NAME = r"\**[a-zA-Z_*()]\w*"
 # regex for a name in a declaration context (with array and function ptr)
