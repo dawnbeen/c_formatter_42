@@ -80,3 +80,25 @@ Check out the [`c_formatter_42.vim`](https://github.com/cacharle/c_formatter_42.
 ## Contributing
 
 Feel free to report issues or contribute. :)
+
+### Run the tests
+
+```
+$ pip3 install tox
+$ tox
+$ tox -e py311  # for a specific python version
+```
+
+### Deploy a new version
+
+```
+$ pip3 install bumpversion
+$ bumpversion [major|minor|patch]
+$ git commit -m "Bumpversion a.b.c -> x.y.z
+$ git tag vx.y.z
+$ git push
+$ git push --tags
+```
+
+Go to: <https://github.com/dawnbeen/c_formatter_42/tags> and click on the tag you just created.
+Then click on `Create release from tag`, the pipeline will build and deploy that version for you.
