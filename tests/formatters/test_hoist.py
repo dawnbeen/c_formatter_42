@@ -197,6 +197,22 @@ int **function()
     assert output == hoist(input)
 
 
+def test_hoist_array_initialization():
+    input = """
+void foo(void)
+{
+\tint xs[4] = {1, 2, 3, 4};
+}
+"""
+    output = """
+void foo(void)
+{
+\tint xs[4] = {1, 2, 3, 4};
+}
+"""
+    assert output == hoist(input)
+
+
 @pytest.mark.skip()
 def test_hoist_array():
     pass
