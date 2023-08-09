@@ -54,7 +54,7 @@ def hoist(content: str) -> str:
             r"(?P<value>.+);$".format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
             line,
         )
-        if m is not None:
+        if m is not None and re.match(r".*\[.*\].*", m.group("name")) is None:
             lines.append(f"\t{m.group('type')}\t{m.group('name')};")
             lines.append(
                 "{}{} = {};".format(
