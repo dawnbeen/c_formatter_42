@@ -44,17 +44,26 @@ def hoist(content: str) -> str:
 
     input_lines = content.split("\n")
 
-    lines = []
-    # split assignment
-    for line in input_lines:
-        m = re.match(
+    def match_declaration_assignment(s):
+        return re.match(
             r"^(?P<indent>\s+)"
             r"(?P<type>{t})\s+"
             r"(?P<name>{d})\s+=\s+"
             r"(?P<value>.+);$".format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
-            line,
+            s,
         )
-        if m is not None and re.match(r".*\[.*\].*", m.group("name")) is None:
+
+    def is_declaration_assignment_array(s):
+        m = match_declaration_assignment(s)
+        if m is None:
+            return False
+        return re.match(r".*\[.*\].*", m.group("name")) is not None
+
+    lines = []
+    # split assignment
+    for line in input_lines:
+        m = match_declaration_assignment(line)
+        if m is not None and not is_declaration_assignment_array(line):
             lines.append(f"\t{m.group('type')}\t{m.group('name')};")
             lines.append(
                 "{}{} = {};".format(
@@ -70,7 +79,12 @@ def hoist(content: str) -> str:
     decl_regex = r"^\s*{t}\s+{d};$".format(
         t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME
     )
-    declarations = [line for line in lines if re.match(decl_regex, line) is not None]
+    declarations = [
+        line
+        for line in lines
+        if re.match(decl_regex, line) is not None
+        or is_declaration_assignment_array(line)
+    ]
     body = [line for line in lines if line not in declarations and line != ""]
     lines = declarations
     if len(declarations) != 0:

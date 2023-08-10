@@ -201,13 +201,72 @@ def test_hoist_array_initialization():
     input = """
 void foo(void)
 {
-\tint xs[4] = {1, 2, 3, 4};
+\tint\txs[4] = {1, 2, 3, 4};
+\txs[0] = -1;
 }
 """
     output = """
 void foo(void)
 {
-\tint xs[4] = {1, 2, 3, 4};
+\tint\txs[4] = {1, 2, 3, 4};
+
+\txs[0] = -1;
+}
+"""
+    assert output == hoist(input)
+
+
+def test_hoist_array_initialization_multiple_variable():
+    input = """
+void foo(void)
+{
+\tint\ta = 1;
+\ta++;
+\tint\txs[4] = {1, 2, 3, 4};
+\txs[0] = -1;
+\tint\tb = 2;
+\tb++;
+}
+"""
+    output = """
+void foo(void)
+{
+\tint\ta;
+\tint\txs[4] = {1, 2, 3, 4};
+\tint\tb;
+
+\ta = 1;
+\ta++;
+\txs[0] = -1;
+\tb = 2;
+\tb++;
+}
+"""
+    assert output == hoist(input)
+
+
+def test_hoist_array_initialization_issue_56_example():
+    input = """
+int main(void)
+{
+\tint\tlength;
+\tint\tval;
+\tint\tarray[] = {1, 2, 3, 4};
+\tlength = sizeof(array) / sizeof(array[0]);
+\tval = 2;
+\treturn (0);
+}
+"""
+    output = """
+int main(void)
+{
+\tint\tlength;
+\tint\tval;
+\tint\tarray[] = {1, 2, 3, 4};
+
+\tlength = sizeof(array) / sizeof(array[0]);
+\tval = 2;
+\treturn (0);
 }
 """
     assert output == hoist(input)
