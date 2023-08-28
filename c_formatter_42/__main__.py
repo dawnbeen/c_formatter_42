@@ -19,7 +19,6 @@ from c_formatter_42.run import run_all
 
 
 def main():
-    print("hello")
     arg_parser = argparse.ArgumentParser(
         prog="c_formatter_42",
         description="Format C source according to the norm",
@@ -48,7 +47,9 @@ def main():
                 with open(filepath, "r") as file:
                     content = file.read()
                 if args.confirm:
-                    result = input(f"Are you sure you want to overwrite {filepath}?[y/N]")
+                    result = input(
+                        f"Are you sure you want to overwrite {filepath}?[y/N]"
+                    )
                     if result != "y":
                         continue
                 print(f"Writing to {filepath}")
