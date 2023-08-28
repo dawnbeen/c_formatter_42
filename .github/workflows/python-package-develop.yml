@@ -32,6 +32,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+        lfs: true
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -46,10 +47,8 @@ jobs:
         flake8 c_formatter_42
         flake8 --extend-ignore=W191,E101,E501 tests
     - name: Test with pytest
-      with:
-        lfs: true
-        run: |
-          pytest -vvv
+      run: |
+        pytest -vvv
     - name: Static type checking with mypy
       run: |
         mypy c_formatter_42
