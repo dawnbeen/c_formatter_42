@@ -6,8 +6,8 @@ dist/
 build/
 docs/build/
 .coverage
-venv
 /.venv
 /debug
 /.vimspector.json
+
 .vscode

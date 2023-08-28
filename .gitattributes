@@ -1,3 +1,0 @@
-c_formatter_42/data/clang-format-darwin filter=lfs diff=lfs merge=lfs -text
-c_formatter_42/data/clang-format-linux filter=lfs diff=lfs merge=lfs -text
-c_formatter_42/data/clang-format-win32.exe filter=lfs diff=lfs merge=lfs -text
