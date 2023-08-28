@@ -46,10 +46,10 @@ jobs:
         flake8 c_formatter_42
         flake8 --extend-ignore=W191,E101,E501 tests
     - name: Test with pytest
-      run: |
-        pytest -vvv
       with:
         lfs: true
+        run: |
+          pytest -vvv
     - name: Static type checking with mypy
       run: |
         mypy c_formatter_42
