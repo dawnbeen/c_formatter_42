@@ -1,14 +1,14 @@
-# ############################################################################ #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    test_run.py                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: charles <me@cacharle.xyz>                  +#+  +:+       +#+         #
+#    By: yaassila <yaassila@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/08 19:56:48 by charles           #+#    #+#              #
-#    Updated: 2021/02/11 20:27:07 by charles          ###   ########.fr        #
+#    Updated: 2023/08/31 14:00:00 by yaassila         ###   ########.fr        #
 #                                                                              #
-# ############################################################################ #
+# **************************************************************************** #
 
 import pytest
 
@@ -82,3 +82,21 @@ int\tmain(int argc, char *argv[])
 }
 """
     assert output == run_all(input)
+
+
+@pytest.mark.timeout(15)
+def test_function_call_in_comment():
+    input = """
+#include "libft.h"
+
+/*
+The  bzero()  function  erases  the data in the n bytes of the memory starting at the location pointed to by s, by writing zeros (bytes containing '\\0') to that area.
+
+The explicit_bzero() function performs the same task as bzero().  It differs from bzero() in  that  it  guarantees that compiler optimizations will not remove the erase operation if the compiler deduces that the operation is "un-necessary".
+*/
+void	bzero(void *s, size_t n)
+{
+                    unsigned char *ptr_s;
+}
+"""
+    run_all(input)
