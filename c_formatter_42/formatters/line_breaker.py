@@ -83,10 +83,7 @@ def additional_nest_indent_level(line: str) -> int:
     # https://github.com/42School/norminette/blob/921b5e22d991591f385e1920f7e7ee5dcf71f3d5/norminette/rules/check_assignation_indent.py#L59
     align_pattern = r"^\s*({decl})((\.|->){decl})*\s+=\s+[^;]*?;$"
     align_pattern = align_pattern.format(decl=helper.REGEX_DECL_NAME)
-    if re.match(align_pattern, line):
-        return 1
-
-    return 0
+    return 1 if re.match(align_pattern, line) is not None else 0
 
 
 def line_length(line: str) -> int:
