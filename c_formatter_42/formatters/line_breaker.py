@@ -79,7 +79,7 @@ def line_length(line: str) -> int:
 
 def indent_level(line: str) -> int:
     # An exceptional rule for function declaration
-    align_pattern = r"^(static\s+)?{type}\s+{name}\((.|\s)*?\);"
+    align_pattern = r"^(static\s+)?{type}\s+{name}\([^)]*?\);"
     align_pattern = align_pattern.format(type=helper.REGEX_TYPE, name=helper.REGEX_NAME)
     if re.match(align_pattern, line):
         last_tab_index = line.rfind("\t")
