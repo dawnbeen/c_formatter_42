@@ -81,7 +81,7 @@ def additional_indent_level(s: str, nest_indent_level: int = 0) -> int:
 def additional_nest_indent_level(line: str) -> int:
     # An exceptional rule for variable assignment
     # https://github.com/42School/norminette/blob/921b5e22d991591f385e1920f7e7ee5dcf71f3d5/norminette/rules/check_assignation_indent.py#L59
-    align_pattern = r"^\s*{decl}\s+=\s+(.|\s)*?;$"
+    align_pattern = r"^\s*{decl}\s+=\s+[^;]*?;$"
     align_pattern = align_pattern.format(decl=helper.REGEX_DECL_NAME)
     if re.match(align_pattern, line):
         return 1
