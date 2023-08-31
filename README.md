@@ -94,8 +94,6 @@ $ tox -e py311  # for a specific python version
 ```
 $ pip3 install bumpversion
 $ bumpversion [major|minor|patch]
-$ git commit -m "Bumpversion a.b.c -> x.y.z
-$ git tag vx.y.z
 $ git push
 $ git push --tags
 ```
