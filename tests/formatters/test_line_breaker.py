@@ -223,6 +223,16 @@ def test_insert_line_break_basic_23():
     assert output == line_breaker("foooooo(bar * baz)", 7)
 
 
+def test_insert_line_break_basic_24():
+    output = "*foo = foooooo(bar\n\t\t* baz);"
+    assert output == line_breaker("*foo = foooooo(bar * baz);", 18)
+
+
+def test_insert_line_break_basic_25():
+    output = "foo[0] = foooooo(bar\n\t\t* baz);"
+    assert output == line_breaker("foo[0] = foooooo(bar * baz);", 20)
+
+
 def test_insert_line_break_long_function_declaration():
     input = """
 static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst *fields);
