@@ -244,6 +244,17 @@ static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr,
     assert line_breaker(input) == output
 
 
+def test_insert_line_break_long_function_declaration_with_parens():
+    input = """
+static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, void (*del)(void *));
+"""
+    output = """
+static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr,
+\t\t\t\tvoid (*del)(void *));
+"""
+    assert line_breaker(input) == output
+
+
 def test_insert_line_break_control_statement_1():
     input = """\
 \twhile (true + false)
