@@ -39,6 +39,23 @@ def insert_break(line: str, column_limit: int) -> str:
     return line
 
 
+def get_paren_depth(s: str) -> int:
+    paren_depth = 0
+    is_surrounded_sq = False
+    is_surrounded_dq = False
+    for c in s:
+        if c == "'":
+            is_surrounded_sq = not is_surrounded_sq
+        elif c == '"':
+            is_surrounded_dq = not is_surrounded_dq
+        elif c == "(" and not is_surrounded_sq and not is_surrounded_dq:
+            paren_depth += 1
+        elif c == ")" and not is_surrounded_sq and not is_surrounded_dq:
+            paren_depth -= 1
+
+    return paren_depth
+
+
 # The additional indent level increases in proportion to the corresponding parentheses depth
 #
 # Examples:
@@ -59,31 +76,16 @@ def insert_break(line: str, column_limit: int) -> str:
 #   >   >   * baz()))       Next line should be indented with 2 tabs (paren depth is 2)
 #   -----------------------------------------------------------------------------------
 def additional_indent_level(s: str, nest_indent_level: int = 0) -> int:
-    paren_depth = 0
-    is_surrounded_sq = False
-    is_surrounded_dq = False
-    for c in s:
-        if c == "'":
-            is_surrounded_sq = not is_surrounded_sq
-        elif c == '"':
-            is_surrounded_dq = not is_surrounded_dq
-        elif c == "(" and not is_surrounded_sq and not is_surrounded_dq:
-            paren_depth += 1
-        elif c == ")" and not is_surrounded_sq and not is_surrounded_dq:
-            paren_depth -= 1
-
-    if paren_depth > 0:
-        return nest_indent_level + paren_depth
-    else:
-        return 1  # 1 is the default additional indent level
+    paren_depth = get_paren_depth(s)
+    return nest_indent_level + paren_depth if paren_depth > 0 else 1
 
 
 def additional_nest_indent_level(line: str) -> int:
     # An exceptional rule for variable assignment
     # https://github.com/42School/norminette/blob/921b5e22d991591f385e1920f7e7ee5dcf71f3d5/norminette/rules/check_assignation_indent.py#L59
-    align_pattern = r"^\s*({decl})((\.|->){decl})*\s+=\s+(.|\n)*?;$"
-    align_pattern = align_pattern.format(decl=helper.REGEX_DECL_NAME)
-    return 1 if re.match(align_pattern, line) is not None else 0
+    parts = line.split("=")
+    is_assignation = len(parts) > 1 and get_paren_depth(parts[0]) == 0
+    return 1 if is_assignation else 0
 
 
 def line_length(line: str) -> int:
