@@ -234,6 +234,11 @@ def test_insert_line_break_basic_25():
 
 
 def test_insert_line_break_basic_26():
+    output = '"EXT = TXT" + foooooo(bar\n\t* baz);'
+    assert output == line_breaker('"EXT = TXT" + foooooo(bar * baz);', 27)
+
+
+def test_insert_line_break_basic_27():
     input = (
         '((t_cast *)it->content)->name = get_name((t_cast *)it->content, "EXT=TXT");'
     )
