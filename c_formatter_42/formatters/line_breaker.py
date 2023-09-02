@@ -83,21 +83,23 @@ def additional_indent_level(s: str, nest_indent_level: int = 0) -> int:
 def additional_nest_indent_level(line: str) -> int:
     # An exceptional rule for variable assignment
     # https://github.com/42School/norminette/blob/921b5e22d991591f385e1920f7e7ee5dcf71f3d5/norminette/rules/check_assignation_indent.py#L59
-    index = 0
+    is_assignation = False
     is_surrounded_sq = False
     is_surrounded_dq = False
-    for c in line:
+    for index, c in enumerate(line):
         if c == "'" and not is_surrounded_dq:
             is_surrounded_sq = not is_surrounded_sq
         elif c == '"' and not is_surrounded_sq:
             is_surrounded_dq = not is_surrounded_dq
-        elif c == "=" and not is_surrounded_sq and not is_surrounded_dq:
+        is_assignation = (
+            c == "="
+            and not is_surrounded_sq
+            and not is_surrounded_dq
+            and get_paren_depth(line[:index]) == 0
+        )
+        if is_assignation:
             break
-        index += 1
-    if index == len(line):
-        return 0
-    var_name = line[:index].strip()
-    is_assignation = get_paren_depth(var_name) == 0
+
     return 1 if is_assignation else 0
 
 
