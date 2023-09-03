@@ -224,13 +224,27 @@ def test_insert_line_break_basic_23():
 
 
 def test_insert_line_break_basic_24():
-    output = "*foo = foooooo(bar\n\t\t* baz);"
-    assert output == line_breaker("*foo = foooooo(bar * baz);", 18)
+    output = "foo = foooooo(bar\n\t\t* baz);"
+    assert output == line_breaker("foo = foooooo(bar * baz);", 18)
 
 
 def test_insert_line_break_basic_25():
-    output = "foo[0] = foooooo(bar\n\t\t* baz);"
-    assert output == line_breaker("foo[0] = foooooo(bar * baz);", 20)
+    output = "foo[i] = foooooo(bar\n\t\t* baz);"
+    assert output == line_breaker("foo[i] = foooooo(bar * baz);", 21)
+
+
+def test_insert_line_break_basic_26():
+    output = '"EXT = TXT" + foooooo(bar\n\t* baz);'
+    assert output == line_breaker('"EXT = TXT" + foooooo(bar * baz);', 27)
+
+
+def test_insert_line_break_basic_27():
+    input = (
+        '((t_cast *)it->content)->name = get_name((t_cast *)it->content, "EXT=TXT");'
+    )
+    output = """((t_cast *)it->content)->name = get_name((t_cast *)it->content,
+\t\t\"EXT=TXT\");"""
+    assert output == line_breaker(input, 64)
 
 
 def test_insert_line_break_long_function_declaration():
