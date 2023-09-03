@@ -1,14 +1,14 @@
-# ############################################################################ #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    test_align.py                                      :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
+#    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/11 20:35:54 by charles          ###   ########.fr        #
+#    Updated: 2023/09/02 20:26:16 by root             ###   ########.fr        #
 #                                                                              #
-# ############################################################################ #
+# **************************************************************************** #
 
 import pytest
 
@@ -789,5 +789,17 @@ typedef void\t\t\t*(*t_routine)(void *arg);
 
 unsigned long long int\tfoo();
 int\t\t\t\t\t\tbar();
+"""
+    assert output == align(input)
+
+
+def test_align_array_initialization():
+    input = """
+int\ta;
+static int\txs[4] = {1, 2, 3, 4};
+"""
+    output = """
+int\t\t\ta;
+static int\txs[4] = {1, 2, 3, 4};
 """
     assert output == align(input)

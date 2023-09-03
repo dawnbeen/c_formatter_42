@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    helper.py                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kiokuless <me+kiokuless@tokinia.me>        +#+  +:+       +#+         #
+#    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:38:00 by cacharle          #+#    #+#              #
-#    Updated: 2023/07/17 02:28:52 by kiokuless        ###   ########.fr        #
+#    Updated: 2023/09/03 11:05:57 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 from __future__ import annotations
@@ -22,7 +22,9 @@ REGEX_TYPE = r"(?!return|goto)([a-z]+\s+)*[a-zA-Z_]\w*"
 # regex for a c variable/function name
 REGEX_NAME = r"\**[a-zA-Z_*()]\w*"
 # regex for a name in a declaration context (with array and function ptr)
-REGEX_DECL_NAME = r"\(?{name}(\[.*\])*(\)\(.*\))?".format(name=REGEX_NAME)
+REGEX_DECL_NAME = r"\(?{name}(\[.*\])*(\s\=\s{{.*}})?(\)\(.*\))?".format(
+    name=REGEX_NAME
+)
 
 
 def locally_scoped(func: Callable[[str], str]) -> Callable[[str], str]:
