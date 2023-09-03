@@ -14,6 +14,10 @@ import re
 
 import c_formatter_42.formatters.helper as helper
 
+DECLARATION_REGEX = re.compile(
+    r"^\s*{t}\s+{d};$".format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME)
+)
+
 
 @helper.locally_scoped
 def hoist(content: str) -> str:
@@ -41,11 +45,9 @@ def hoist(content: str) -> str:
         char b;               }
     }
     """
-
     input_lines = content.split("\n")
-
     lines = []
-    # split assignment
+    # Split assignment
     for line in input_lines:
         m = re.match(
             r"^(?P<indent>\s+)"
@@ -54,27 +56,26 @@ def hoist(content: str) -> str:
             r"(?P<value>.+);$".format(t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME),
             line,
         )
+        # If line is a declaration + assignment on the same line,
+        # create 2 new lines, one for the declaration and one for the assignment
+        # NOTE: edge case for array declarations which can't be hoisted (See #56)
         if m is not None and re.match(r".*\[.*\].*", m.group("name")) is None:
             lines.append(f"\t{m.group('type')}\t{m.group('name')};")
             lines.append(
                 "{}{} = {};".format(
                     m.group("indent"),
-                    m.group("name").replace("*", ""),
+                    m.group("name").replace("*", ""),  # replace '*' for pointers
                     m.group("value"),
                 )
             )
         else:
             lines.append(line)
 
-    # hoist declarations and filter empty lines
-    decl_regex = r"^\s*{t}\s+{d};$".format(
-        t=helper.REGEX_TYPE, d=helper.REGEX_DECL_NAME
-    )
-    declarations = [line for line in lines if re.match(decl_regex, line) is not None]
+    # Split declarations from body and remove empty lines
+    declarations = [line for line in lines if DECLARATION_REGEX.match(line) is not None]
     body = [line for line in lines if line not in declarations and line != ""]
     lines = declarations
     if len(declarations) != 0:
         lines.append("")
     lines.extend(body)
-
     return "\n".join(lines)

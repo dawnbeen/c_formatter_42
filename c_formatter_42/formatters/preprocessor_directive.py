@@ -15,12 +15,11 @@ import re
 
 def preprocessor_directive(content: str) -> str:
     lines = content.split("\n")
-
     directive_regex = r"^\#\s*(?P<name>[a-z]+)\s?(?P<rest>.*)$"
-    matches = [re.match(directive_regex, line) for line in lines]
+    directive_lines = [re.match(directive_regex, line) for line in lines]
     idented = [
         (i, match.group("name"), match.group("rest"))
-        for i, match in enumerate(matches)
+        for i, match in enumerate(directive_lines)
         if match is not None
     ]
     indent = 0
@@ -34,12 +33,11 @@ def preprocessor_directive(content: str) -> str:
         if directive_name == "endif":
             indent -= 1
 
-    # if newline doesn't follows preprocessor part, insert one
+    # If newline doesn't follows preprocessor part, insert one (See PR#44)
     try:
         lastline_index = idented[-1][0]
         if lines[lastline_index + 1] != "":
             lines.insert(lastline_index + 1, "")
     except IndexError:
         pass
-
     return "\n".join(lines)

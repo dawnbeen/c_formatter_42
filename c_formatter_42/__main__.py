@@ -18,7 +18,7 @@ import sys
 from c_formatter_42.run import run_all
 
 
-def main():
+def main() -> int:
     arg_parser = argparse.ArgumentParser(
         prog="c_formatter_42",
         description="Format C source according to the norm",
@@ -41,23 +41,24 @@ def main():
     if len(args.filepaths) == 0:
         content = sys.stdin.read()
         print(run_all(content), end="")
-    else:
-        for filepath in args.filepaths:
-            try:
-                with open(filepath, "r") as file:
-                    content = file.read()
-                if args.confirm:
-                    result = input(
-                        f"Are you sure you want to overwrite {filepath}?[y/N]"
-                    )
-                    if result != "y":
-                        continue
-                print(f"Writing to {filepath}")
-                with open(filepath, "w") as file:
-                    file.write(run_all(content))
-            except OSError as e:
-                print(f"Error: {e.filename}: {e.strerror}")
+        return 0
+
+    for filepath in args.filepaths:
+        try:
+            with open(filepath, "r") as file:
+                content = file.read()
+            if args.confirm:
+                result = input(f"Are you sure you want to overwrite {filepath}?[y/N]")
+                if result != "y":
+                    continue
+            print(f"Writing to {filepath}")
+            with open(filepath, "w") as file:
+                file.write(run_all(content))
+        except OSError as e:
+            print(f"Error: {e.filename}: {e.strerror}", file=sys.stderr)
+            return 1
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -39,8 +39,10 @@ def insert_break(line: str, column_limit: int) -> str:
     return line
 
 
-def get_paren_depth(s: str) -> int:
+def parenthesis_depth(s: str) -> int:
     paren_depth = 0
+    # sq == single quote
+    # dq == double quote
     is_surrounded_sq = False
     is_surrounded_dq = False
     for c in s:
@@ -52,7 +54,6 @@ def get_paren_depth(s: str) -> int:
             paren_depth += 1
         elif c == ")" and not is_surrounded_sq and not is_surrounded_dq:
             paren_depth -= 1
-
     return paren_depth
 
 
@@ -76,7 +77,7 @@ def get_paren_depth(s: str) -> int:
 #   >   >   * baz()))       Next line should be indented with 2 tabs (paren depth is 2)
 #   -----------------------------------------------------------------------------------
 def additional_indent_level(s: str, nest_indent_level: int = 0) -> int:
-    paren_depth = get_paren_depth(s)
+    paren_depth = parenthesis_depth(s)
     return nest_indent_level + paren_depth if paren_depth > 0 else 1
 
 
@@ -95,17 +96,15 @@ def additional_nest_indent_level(line: str) -> int:
             c == "="
             and not is_surrounded_sq
             and not is_surrounded_dq
-            and get_paren_depth(line[:index]) == 0
+            and parenthesis_depth(line[:index]) == 0
         )
         if is_assignation:
             break
-
     return 1 if is_assignation else 0
 
 
 def line_length(line: str) -> int:
-    line = line.expandtabs(4)
-    return len(line)
+    return len(line.expandtabs(4))
 
 
 def indent_level(line: str) -> int:
@@ -118,5 +117,4 @@ def indent_level(line: str) -> int:
         if last_tab_index == -1:
             return 0
         return line_length(line[: last_tab_index + 1]) // 4
-
     return line.count("\t")

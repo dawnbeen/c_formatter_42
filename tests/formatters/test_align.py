@@ -12,7 +12,7 @@
 
 import pytest
 
-from c_formatter_42.formatters.align import Scope, align, align_local, align_scope
+from c_formatter_42.formatters.align import align, align_local, align_scope
 
 
 def test_align_global_basic():
@@ -25,28 +25,28 @@ char\tbar();
 int foo();
 char   bar();
 """,
-        scope=Scope.GLOBAL,
+        scope="global",
     )
     assert output == align_scope(
         """\
 int\t\t\t\t\t\tfoo();
 char   bar();
 """,
-        scope=Scope.GLOBAL,
+        scope="global",
     )
     assert output == align_scope(
         """\
 int\t\t\t         \t\t\tfoo();
 char  \t bar();
 """,
-        scope=Scope.GLOBAL,
+        scope="global",
     )
     assert output == align_scope(
         """\
 int\t\t\t         \t\t\tfoo();
 char  \t bar();
 """,
-        scope=Scope.GLOBAL,
+        scope="global",
     )
 
 

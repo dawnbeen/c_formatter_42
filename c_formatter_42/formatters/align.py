@@ -10,19 +10,32 @@
 #                                                                              #
 # ############################################################################ #
 
+from __future__ import annotations
 
 import re
-from enum import Enum
+import typing
+
+if typing.TYPE_CHECKING:
+    from typing import Literal
 
 from c_formatter_42.formatters import helper
 
+TYPEDECL_OPEN_REGEX = re.compile(
+    r"""^(?P<prefix>\s*(typedef\s+)?   # Maybe a typedef
+        (struct|enum|union))           # Followed by a struct, enum or union
+        \s*(?P<suffix>[a-zA-Z_]\w+)?$  # Name of the type declaration
+    """,
+    re.X,
+)
+TYPEDECL_CLOSE_REGEX = re.compile(
+    r"""^(?P<prefix>\})\s*             # Closing } followed by any amount of spaces
+        (?P<suffix>([a-zA-Z_]\w+)?;)$  # Name of the type (if typedef used)
+    """,
+    re.X,
+)
 
-class Scope(Enum):
-    LOCAL = 0
-    GLOBAL = 1
 
-
-def align_scope(content: str, scope: Scope) -> str:
+def align_scope(content: str, scope: Literal["local", "global"]) -> str:
     """Align content
     scope can be either local or global
       local:  for variable declarations in function
@@ -30,11 +43,10 @@ def align_scope(content: str, scope: Scope) -> str:
     """
 
     lines = content.split("\n")
-    aligned = []
     # select regex according to scope
-    if scope is Scope.LOCAL:
+    if scope == "local":
         align_regex = "^\t" r"(?P<prefix>{type})\s+" r"(?P<suffix>\**{decl};)$"
-    elif scope is Scope.GLOBAL:
+    elif scope == "global":
         align_regex = (
             r"^(?P<prefix>{type})\s+"
             r"(?P<suffix>({name}\(.*\)?;?)|({decl}(;|(\s+=\s+.*))))$"
@@ -42,31 +54,25 @@ def align_scope(content: str, scope: Scope) -> str:
     align_regex = align_regex.format(
         type=helper.REGEX_TYPE, name=helper.REGEX_NAME, decl=helper.REGEX_DECL_NAME
     )
-    # get the lines to be aligned
-    matches = [re.match(align_regex, line) for line in lines]
+    lines_to_be_aligned = [re.match(align_regex, line) for line in lines]
     aligned = [
         (i, match.group("prefix"), match.group("suffix"))
-        for i, match in enumerate(matches)
+        for i, match in enumerate(lines_to_be_aligned)
         if match is not None
         and match.group("prefix") not in ["struct", "union", "enum"]
     ]
 
-    # global type declaration (struct/union/enum)
-    if scope is Scope.GLOBAL:
-        typedecl_open_regex = (
-            r"^(?P<prefix>\s*(typedef\s+)?(struct|enum|union))"
-            r"\s*(?P<suffix>[a-zA-Z_]\w+)?$"
-        )
-        typedecl_close_regex = r"^(?P<prefix>\})\s*(?P<suffix>([a-zA-Z_]\w+)?;)$"
+    # Global type declaration (struct/union/enum)
+    if scope == "global":
         in_type_scope = False
         for i, line in enumerate(lines):
-            m = re.match(typedecl_open_regex, line)
+            m = TYPEDECL_OPEN_REGEX.match(line)
             if m is not None:
                 in_type_scope = True
                 if m.group("suffix") is not None and "typedef" not in m.group("prefix"):
                     aligned.append((i, m.group("prefix"), m.group("suffix")))
                 continue
-            m = re.match(typedecl_close_regex, line)
+            m = TYPEDECL_CLOSE_REGEX.match(line)
             if m is not None:
                 in_type_scope = False
                 if line != "};":
@@ -83,27 +89,29 @@ def align_scope(content: str, scope: Scope) -> str:
                 if m is not None:
                     aligned.append((i, m.group("prefix"), m.group("suffix")))
 
-    # get the minimum alignment required for each line
+    # Minimum alignment required for each line
     min_alignment = max(
-        (len(prefix.replace("\t", " " * 4)) // 4 + 1 for _, prefix, _ in aligned),
+        (len(prefix.expandtabs(4)) // 4 + 1 for _, prefix, _ in aligned),
         default=1,
     )
     for i, prefix, suffix in aligned:
-        alignment = len(prefix.replace("\t", " " * 4)) // 4
+        alignment = len(prefix.expandtabs(4)) // 4
         lines[i] = prefix + "\t" * (min_alignment - alignment) + suffix
-        if scope is Scope.LOCAL:
-            lines[i] = "\t" + lines[i]
+        if scope == "local":
+            lines[i] = (
+                "\t" + lines[i]
+            )  # Adding one more indent for inside the type declaration
     return "\n".join(lines)
 
 
 @helper.locally_scoped
 def align_local(content: str) -> str:
     """Wrapper for align_scope to use local_scope decorator"""
-    return align_scope(content, scope=Scope.LOCAL)
+    return align_scope(content, scope="local")
 
 
 def align(content: str) -> str:
     """Align the content in global and local scopes"""
-    content = align_scope(content, scope=Scope.GLOBAL)
+    content = align_scope(content, scope="global")
     content = align_local(content)
     return content

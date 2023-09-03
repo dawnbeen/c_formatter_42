@@ -10,19 +10,18 @@
 #                                                                              #
 # ############################################################################ #
 
+import contextlib
 import subprocess
 import sys
-from contextlib import contextmanager
 from pathlib import Path
 
 import c_formatter_42.data
 
 CONFIG_FILENAME = Path(".clang-format")
-
 DATA_DIR = Path(c_formatter_42.data.__file__).parent
 
 
-@contextmanager
+@contextlib.contextmanager
 def _config_context():
     """Temporarly place .clang-format config file in the current directory
     If there already is a config in the current directory, it's backed up
