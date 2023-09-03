@@ -19,7 +19,7 @@ It's just for convenience.
 
 ## Installation
 
-Requires Python3.7+ (3.8, 3.9, 3.10, 3.11)
+Requires Python3.8+ (3.9, 3.10, 3.11)
 
 ### From PyPI
 
