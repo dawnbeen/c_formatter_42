@@ -8,7 +8,7 @@
 <br />
 
 <p align="center">
-  <img width="65%" align="center" src="./Img/final_back.png">
+  <img width="65%" align="center" src="./img/final_back.png">
 </p>
 
 # c_formatter_42
