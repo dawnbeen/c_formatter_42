@@ -6,7 +6,7 @@
 #    By: leo <leo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:16:28 by cacharle          #+#    #+#              #
-#    Updated: 2023/09/22 15:47:45 by leo              ###   ########.fr        #
+#    Updated: 2023/09/22 16:15:11 by leo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,5 @@ def hoist(content: str) -> str:
     lines = declarations
     if len(declarations) != 0:
         lines.append("")
-    print(declarations)
-    print(body)
     lines.extend(body)
     return "\n".join(lines)
