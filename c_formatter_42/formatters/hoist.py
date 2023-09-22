@@ -1,14 +1,14 @@
-# ############################################################################ #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    hoist.py                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
+#    By: leo <leo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 11:16:28 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/11 20:13:29 by charles          ###   ########.fr        #
+#    Updated: 2023/09/22 15:47:45 by leo              ###   ########.fr        #
 #                                                                              #
-# ############################################################################ #
+# **************************************************************************** #
 
 import re
 
@@ -59,7 +59,11 @@ def hoist(content: str) -> str:
         # If line is a declaration + assignment on the same line,
         # create 2 new lines, one for the declaration and one for the assignment
         # NOTE: edge case for array declarations which can't be hoisted (See #56)
-        if m is not None and re.match(r".*\[.*\].*", m.group("name")) is None:
+        if (
+            m is not None
+            and re.match(r".*\[.*\].*", m.group("name")) is None
+            and re.match(r"\s*(const|static)\s.*", line) is None
+        ):
             lines.append(f"\t{m.group('type')}\t{m.group('name')};")
             lines.append(
                 "{}{} = {};".format(
@@ -77,5 +81,7 @@ def hoist(content: str) -> str:
     lines = declarations
     if len(declarations) != 0:
         lines.append("")
+    print(declarations)
+    print(body)
     lines.extend(body)
     return "\n".join(lines)
