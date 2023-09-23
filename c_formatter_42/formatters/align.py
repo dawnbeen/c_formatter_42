@@ -91,8 +91,7 @@ def align_scope(content: str, scope: Literal["local", "global"]) -> str:
 
     # Minimum alignment required for each line
     min_alignment = max(
-        (len(prefix.expandtabs(4)) // 4 + 1 for _, prefix, _ in aligned),
-        default=1,
+        (len(prefix.expandtabs(4)) // 4 + 1 for _, prefix, _ in aligned), default=1
     )
     for i, prefix, suffix in aligned:
         alignment = len(prefix.expandtabs(4)) // 4
