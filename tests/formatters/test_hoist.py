@@ -6,7 +6,7 @@
 #    By: leo <leo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2023/09/22 15:51:03 by leo              ###   ########.fr        #
+#    Updated: 2023/09/23 10:55:14 by leo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -197,7 +197,7 @@ int **function()
     assert output == hoist(input)
 
 
-def test_hoist_array_initialization():
+def test_hoist_initializations():
     input = """
 void foo(void)
 {
