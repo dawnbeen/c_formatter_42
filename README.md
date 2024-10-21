@@ -27,7 +27,11 @@ Requires Python3.8+ (3.9, 3.10, 3.11)
 pip3 install c-formatter-42
 pip3 install --user c-formatter-42  # If you don't have root privileges
 ```
+If the package doesn't work as expected, try adding the following command alias:
 
+```
+alias c_formatter_42='python3 -m c_formatter_42'
+```
 ### From source
 
 ```console
