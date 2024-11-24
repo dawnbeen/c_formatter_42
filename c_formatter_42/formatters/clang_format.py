@@ -11,6 +11,7 @@
 # ############################################################################ #
 
 import contextlib
+import platform
 import subprocess
 import sys
 from pathlib import Path
@@ -47,7 +48,12 @@ def _config_context():
 if sys.platform == "linux":
     CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-linux"
 elif sys.platform == "darwin":
-    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin"
+    if platform.machine() == "arm64":
+        # macOS M1 or Apple Silicon
+        CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin-arm64"
+    elif platform.machine() == "x86_64":
+        # macOS Intel
+        CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin"
 elif sys.platform == "win32":
     CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-win32.exe"
 else:
