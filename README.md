@@ -19,18 +19,18 @@ It's just for convenience.
 
 ## Installation
 
-Requires Python3.8+ (3.9, 3.10, 3.11)
+Requires Python3.8+ (3.9, 3.10, 3.11, 3.12)
 
 ### From PyPI
 
-```console
+```sh
 pip3 install c-formatter-42
 pip3 install --user c-formatter-42  # If you don't have root privileges
 ```
 
 ### From source
 
-```console
+```sh
 git clone https://github.com/cacharle/c_formatter_42
 cd c_formatter_42
 pip3 install -e .
@@ -40,7 +40,7 @@ pip3 install -e .
 
 ### Command line
 
-```console
+```sh
 c_formatter_42 < file.c
 python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
 
@@ -83,7 +83,7 @@ Feel free to report issues or contribute. :)
 
 ### Run the tests
 
-```
+```sh
 pip3 install tox
 tox
 tox -e py311  # for a specific python version
@@ -91,7 +91,7 @@ tox -e py311  # for a specific python version
 
 ### Deploy a new version
 
-```
+```sh
 pip3 install bumpversion
 bumpversion [major|minor|patch]
 git push
