@@ -10,19 +10,19 @@
 #                                                                              #
 # ############################################################################ #
 
+import contextlib
+import platform
 import subprocess
 import sys
-from contextlib import contextmanager
 from pathlib import Path
 
 import c_formatter_42.data
 
 CONFIG_FILENAME = Path(".clang-format")
-
 DATA_DIR = Path(c_formatter_42.data.__file__).parent
 
 
-@contextmanager
+@contextlib.contextmanager
 def _config_context():
     """Temporarly place .clang-format config file in the current directory
     If there already is a config in the current directory, it's backed up
@@ -48,7 +48,12 @@ def _config_context():
 if sys.platform == "linux":
     CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-linux"
 elif sys.platform == "darwin":
-    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin"
+    if platform.machine() == "arm64":
+        # macOS M1 or Apple Silicon
+        CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin-arm64"
+    elif platform.machine() == "x86_64":
+        # macOS Intel
+        CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin"
 elif sys.platform == "win32":
     CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-win32.exe"
 else:

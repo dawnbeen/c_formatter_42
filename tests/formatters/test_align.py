@@ -1,18 +1,18 @@
-# ############################################################################ #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    test_align.py                                      :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
+#    By: leo <leo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:19:45 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/11 20:35:54 by charles          ###   ########.fr        #
+#    Updated: 2023/09/23 11:06:39 by leo              ###   ########.fr        #
 #                                                                              #
-# ############################################################################ #
+# **************************************************************************** #
 
 import pytest
 
-from c_formatter_42.formatters.align import Scope, align, align_local, align_scope
+from c_formatter_42.formatters.align import align, align_local, align_scope
 
 
 def test_align_global_basic():
@@ -25,28 +25,28 @@ char\tbar();
 int foo();
 char   bar();
 """,
-        scope=Scope.GLOBAL,
+        scope="global",
     )
     assert output == align_scope(
         """\
 int\t\t\t\t\t\tfoo();
 char   bar();
 """,
-        scope=Scope.GLOBAL,
+        scope="global",
     )
     assert output == align_scope(
         """\
 int\t\t\t         \t\t\tfoo();
 char  \t bar();
 """,
-        scope=Scope.GLOBAL,
+        scope="global",
     )
     assert output == align_scope(
         """\
 int\t\t\t         \t\t\tfoo();
 char  \t bar();
 """,
-        scope=Scope.GLOBAL,
+        scope="global",
     )
 
 
@@ -188,7 +188,7 @@ uint64_t\t\t\tb()
     output = """
 int\t\t\tf()
 {
-\tint a = 0;
+\tint\ta = 0;
 }
 int\t\t\tg()
 {
@@ -789,5 +789,17 @@ typedef void\t\t\t*(*t_routine)(void *arg);
 
 unsigned long long int\tfoo();
 int\t\t\t\t\t\tbar();
+"""
+    assert output == align(input)
+
+
+def test_align_array_initialization():
+    input = """
+int\ta;
+static int\txs[4] = {1, 2, 3, 4};
+"""
+    output = """
+int\t\t\ta;
+static int\txs[4] = {1, 2, 3, 4};
 """
     assert output == align(input)

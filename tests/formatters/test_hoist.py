@@ -1,14 +1,14 @@
-# ############################################################################ #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    test_hoist.py                                      :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
+#    By: leo <leo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 12:29:07 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/11 22:16:57 by charles          ###   ########.fr        #
+#    Updated: 2023/09/23 10:55:14 by leo              ###   ########.fr        #
 #                                                                              #
-# ############################################################################ #
+# **************************************************************************** #
 
 import pytest
 
@@ -192,6 +192,31 @@ int **function()
 \t\t\ttab[i][j] = i * j;
 \t}
 \treturn (tab);
+}
+"""
+    assert output == hoist(input)
+
+
+def test_hoist_initializations():
+    input = """
+void foo(void)
+{
+\tint a = 2;
+\tstatic int\txs[4] = {1, 2, 3, 4};
+\tconst int\tb = 2;
+\tlong int\tc = 2;
+}
+"""
+    output = """
+void foo(void)
+{
+\tint\ta;
+\tstatic int\txs[4] = {1, 2, 3, 4};
+\tconst int\tb = 2;
+\tlong int\tc;
+
+\ta = 2;
+\tc = 2;
 }
 """
     assert output == hoist(input)

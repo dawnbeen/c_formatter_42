@@ -1,11 +1,15 @@
 pytest
+pytest-clarity
 pytest-cov
+pytest-timeout
+pytest-cov
+pytest-timeout
 six
 pytest-clarity
 mypy
+mypy-extensions
 flake8
-flake8_comprehensions
-pep8_naming
+flake8-comprehensions
 tox
 black
 isort

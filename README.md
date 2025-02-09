@@ -8,7 +8,7 @@
 <br />
 
 <p align="center">
-  <img width="65%" align="center" src="./Img/final_back.png">
+  <img width="65%" align="center" src="./img/final_back.png">
 </p>
 
 # c_formatter_42
@@ -19,32 +19,32 @@ It's just for convenience.
 
 ## Installation
 
-Requires Python3.7+ (3.8, 3.9, 3.10, 3.11)
+Requires Python3.8+ (3.9, 3.10, 3.11, 3.12)
 
 ### From PyPI
 
-```console
-$ pip3 install c-formatter-42
-$ pip3 install --user c-formatter-42  # If you don't have root privileges
+```sh
+pip3 install c-formatter-42
+pip3 install --user c-formatter-42  # If you don't have root privileges
 ```
 
 ### From source
 
-```console
-$ git clone https://github.com/cacharle/c_formatter_42
-$ cd c_formatter_42
-$ pip3 install -e .
+```sh
+git clone https://github.com/cacharle/c_formatter_42
+cd c_formatter_42
+pip3 install -e .
 ```
 
 ## Usage
 
 ### Command line
 
-```console
-$ c_formatter_42 < file.c
-$ python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
+```sh
+c_formatter_42 < file.c
+python3 -m c_formatter_42 < file.c  # If you get 'command not found' with the previous one
 
-$ c_formatter_42 --help
+c_formatter_42 --help
 usage: c_formatter_42 [-h] [-c] [FILE [FILE ...]]
 
 Format C source according to the norm
@@ -80,3 +80,23 @@ Check out the [`c_formatter_42.vim`](https://github.com/cacharle/c_formatter_42.
 ## Contributing
 
 Feel free to report issues or contribute. :)
+
+### Run the tests
+
+```sh
+pip3 install tox
+tox
+tox -e py311  # for a specific python version
+```
+
+### Deploy a new version
+
+```sh
+pip3 install bumpversion
+bumpversion [major|minor|patch]
+git push
+git push --tags
+```
+
+Go to: <https://github.com/dawnbeen/c_formatter_42/tags> and click on the tag you just created.
+Then click on `Create release from tag`, the pipeline will build and deploy that version for you.

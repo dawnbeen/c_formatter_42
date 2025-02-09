@@ -1,4 +1,3 @@
-# from c_formatter_42.formatters.line_breaker import line_breaker, indent_level
 from c_formatter_42.formatters.line_breaker import (
     additional_indent_level,
     indent_level,
@@ -220,8 +219,32 @@ def test_insert_line_break_basic_22():
 
 
 def test_insert_line_break_basic_23():
-    output = "foooooo(bar\n\t\t* baz)"
+    output = "foooooo(bar\n\t* baz)"
     assert output == line_breaker("foooooo(bar * baz)", 7)
+
+
+def test_insert_line_break_basic_24():
+    output = "foo = foooooo(bar\n\t\t* baz);"
+    assert output == line_breaker("foo = foooooo(bar * baz);", 18)
+
+
+def test_insert_line_break_basic_25():
+    output = "foo[i] = foooooo(bar\n\t\t* baz);"
+    assert output == line_breaker("foo[i] = foooooo(bar * baz);", 21)
+
+
+def test_insert_line_break_basic_26():
+    output = '"EXT = TXT" + foooooo(bar\n\t* baz);'
+    assert output == line_breaker('"EXT = TXT" + foooooo(bar * baz);', 27)
+
+
+def test_insert_line_break_basic_27():
+    input = (
+        '((t_cast *)it->content)->name = get_name((t_cast *)it->content, "EXT=TXT");'
+    )
+    output = """((t_cast *)it->content)->name = get_name((t_cast *)it->content,
+\t\t\"EXT=TXT\");"""
+    assert output == line_breaker(input, 64)
 
 
 def test_insert_line_break_long_function_declaration():
@@ -231,6 +254,17 @@ static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, t_tok_lst 
     output = """
 static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr,
 \t\t\t\tt_tok_lst *fields);
+"""
+    assert line_breaker(input) == output
+
+
+def test_insert_line_break_long_function_declaration_with_parens():
+    input = """
+static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr, void (*del)(void *));
+"""
+    output = """
+static void\tst_merge_fields_in_curr(char *strs[3], t_tok_lst **curr,
+\t\t\t\tvoid (*del)(void *));
 """
     assert line_breaker(input) == output
 
