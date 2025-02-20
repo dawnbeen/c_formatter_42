@@ -16,7 +16,7 @@ import argparse
 import os
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 from c_formatter_42.run import run_all
 
@@ -42,7 +42,7 @@ def process_file(filepath: Path, confirm: bool = False) -> bool:
 
 
 def process_path(
-    path: Path, confirm: bool = False, ignore_dirs: Optional[list[str]] = None
+    path: Path, confirm: bool = False, ignore_dirs: Optional[List[str]] = None
 ) -> bool:
     """
     Process a path (file or directory) recursively.
