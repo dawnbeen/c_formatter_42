@@ -28,6 +28,16 @@ pip3 install c-formatter-42
 pip3 install --user c-formatter-42  # If you don't have root privileges
 ```
 
+If you're on Ubuntu 22.04 or newer (or any Debian-based system with PEP 668 enabled), you might see an error like:
+
+`error: externally-managed-environment`
+
+To fix this, add the `--break-system-packages` flag:
+
+```sh
+pip3 install --break-system-packages c-formatter-42
+```
+
 ### From source
 
 ```sh
