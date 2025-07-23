@@ -1,3 +1,34 @@
+
+<div align="right">
+  <details>
+    <summary >🌐 Language</summary>
+    <div>
+      <div align="center">
+        <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=en">English</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=zh-CN">简体中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=zh-TW">繁體中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=ja">日本語</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=ko">한국어</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=hi">हिन्दी</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=th">ไทย</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=fr">Français</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=de">Deutsch</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=es">Español</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=it">Italiano</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=ru">Русский</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=pt">Português</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=nl">Nederlands</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=pl">Polski</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=ar">العربية</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=fa">فارسی</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=tr">Türkçe</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=vi">Tiếng Việt</a>
+        | <a href="https://openaitx.github.io/view.html?user=dawnbeen&project=c_formatter_42&lang=id">Bahasa Indonesia</a>
+      </div>
+    </div>
+  </details>
+</div>
+
 <p align="center">
   <a style="text-decoration:none" href="https://badge.fury.io/py/c-formatter-42"><img src="https://badge.fury.io/py/c-formatter-42.svg" alt="PyPI version" height="20"></a>
   <a style="text-decoration:none" href="https://github.com/dawnbeen/c_formatter_42/actions"><img src="https://github.com/cacharle/c_formatter_42/actions/workflows/python-package.yml/badge.svg" height="20"></a>
