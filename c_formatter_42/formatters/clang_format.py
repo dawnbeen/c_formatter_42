@@ -11,6 +11,7 @@
 # ############################################################################ #
 
 import contextlib
+import shutil
 import platform
 import subprocess
 import sys
@@ -45,11 +46,12 @@ def _config_context():
             CONFIG_FILENAME.write_text(previous_config)
 
 
-SYSTEM_CLANG_FORMAT = shutil.which("clang-format")
 
+# search if system has provided binary
+system_key = (sys.platform, platform.machine())
+
+# officially supported binaries
 BINARY_MAP = {
-    ("linux", "aarch64"): "SYSTEM_CLANG_FORMAT",
-    ("linux", "arm64"):   "SYSTEM_CLANG_FORMAT",
     ("linux", "x86_64"):  DATA_DIR / "clang-format-linux",
     ("darwin", "arm64"):  DATA_DIR / "clang-format-darwin-arm64",
     ("darwin", "x86_64"): DATA_DIR / "clang-format-darwin",
@@ -57,14 +59,19 @@ BINARY_MAP = {
     ("win32", "x86_64"):  DATA_DIR / "clang-format-win32.exe",
 }
 
-system_key = (sys.platform, platform.machine())
-
+# try to get bundled binary from map
 CLANG_FORMAT_EXEC = BINARY_MAP.get(system_key)
 
-if not CLANG_FORMAT_EXEC:
-    if system_key[0] == "linux" and system_key[1] in ["aarch64", "arm64"]:
-            raise FileNotFoundError("No clang-format installation found")
-    raise NotImplementedError(f"Platform {system_key} is not supported")
+# fallback: search if system has clang format installed
+if CLANG_FORMAT_EXEC is None:
+    CLANG_FORMAT_EXEC = shutil.which("clang-format")
+
+# error if neither found
+if CLANG_FORMAT_EXEC is None:
+    raise NotImplementedError(
+        f"Platform {system_key} is not supported and 'clang-format' "
+        "was not found in your PATH."
+    )
 
 def clang_format(content: str) -> str:
     """Wrapper around clang-format
