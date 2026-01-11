@@ -45,10 +45,11 @@ def _config_context():
             CONFIG_FILENAME.write_text(previous_config)
 
 
+SYSTEM_CLANG_FORMAT = shutil.which("clang-format")
 
 BINARY_MAP = {
-    ("linux", "aarch64"): "/usr/bin/clang-format",
-    ("linux", "arm64"):   "/usr/bin/clang-format",
+    ("linux", "aarch64"): "SYSTEM_CLANG_FORMAT",
+    ("linux", "arm64"):   "SYSTEM_CLANG_FORMAT",
     ("linux", "x86_64"):  DATA_DIR / "clang-format-linux",
     ("darwin", "arm64"):  DATA_DIR / "clang-format-darwin-arm64",
     ("darwin", "x86_64"): DATA_DIR / "clang-format-darwin",
@@ -61,6 +62,8 @@ system_key = (sys.platform, platform.machine())
 CLANG_FORMAT_EXEC = BINARY_MAP.get(system_key)
 
 if not CLANG_FORMAT_EXEC:
+    if system_key[0] == "linux" and system_key[1] in ["aarch64", "arm64"]:
+            raise FileNotFoundError("No clang-format installation found")
     raise NotImplementedError(f"Platform {system_key} is not supported")
 
 def clang_format(content: str) -> str:
