@@ -45,20 +45,23 @@ def _config_context():
             CONFIG_FILENAME.write_text(previous_config)
 
 
-if sys.platform == "linux":
-    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-linux"
-elif sys.platform == "darwin":
-    if platform.machine() == "arm64":
-        # macOS M1 or Apple Silicon
-        CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin-arm64"
-    elif platform.machine() == "x86_64":
-        # macOS Intel
-        CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin"
-elif sys.platform == "win32":
-    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-win32.exe"
-else:
-    raise NotImplementedError("Your platform is not supported")
 
+BINARY_MAP = {
+    ("linux", "aarch64"): "/usr/bin/clang-format",
+    ("linux", "arm64"):   "/usr/bin/clang-format",
+    ("linux", "x86_64"):  DATA_DIR / "clang-format-linux",
+    ("darwin", "arm64"):  DATA_DIR / "clang-format-darwin-arm64",
+    ("darwin", "x86_64"): DATA_DIR / "clang-format-darwin",
+    ("win32", "AMD64"):   DATA_DIR / "clang-format-win32.exe",
+    ("win32", "x86_64"):  DATA_DIR / "clang-format-win32.exe",
+}
+
+system_key = (sys.platform, platform.machine())
+
+CLANG_FORMAT_EXEC = BINARY_MAP.get(system_key)
+
+if not CLANG_FORMAT_EXEC:
+    raise NotImplementedError(f"Platform {system_key} is not supported")
 
 def clang_format(content: str) -> str:
     """Wrapper around clang-format
