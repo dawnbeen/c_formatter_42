@@ -75,7 +75,7 @@ def get_clang_format_path() -> str:
     )
 
 
-# Now your main logic is just one clean line:
+#Set var to result of search:
 CLANG_FORMAT_EXEC = get_clang_format_path()
 
 
