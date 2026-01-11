@@ -6,15 +6,14 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 10:40:07 by cacharle          #+#    #+#              #
-#    Updated: 2026/01/11 22:21:42 by lrain            ###   ########.fr        #
+#    Updated: 2026/01/11 23:14:21 by lrain            ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 import contextlib
-import shutil
 import platform
+import shutil
 import subprocess
-import sys
 from pathlib import Path
 
 import c_formatter_42.data
@@ -46,32 +45,39 @@ def _config_context():
             CONFIG_FILENAME.write_text(previous_config)
 
 
+def get_clang_format_path() -> str:
+    """Finds the bundled binary or system clang-format, or raises an error."""
+    system_key = (platform.system().lower(), platform.machine().lower())
 
-# search if system has provided binary
-system_key = (sys.platform, platform.machine())
+    # officially supported binaries
+    BINARY_MAP = {
+        ("linux", "x86_64"): DATA_DIR / "clang-format-linux",
+        ("darwin", "arm64"): DATA_DIR / "clang-format-darwin-arm64",
+        ("darwin", "x86_64"): DATA_DIR / "clang-format-darwin",
+        ("win32", "AMD64"): DATA_DIR / "clang-format-win32.exe",
+        ("win32", "x86_64"): DATA_DIR / "clang-format-win32.exe",
+    }
 
-# officially supported binaries
-BINARY_MAP = {
-    ("linux", "x86_64"):  DATA_DIR / "clang-format-linux",
-    ("darwin", "arm64"):  DATA_DIR / "clang-format-darwin-arm64",
-    ("darwin", "x86_64"): DATA_DIR / "clang-format-darwin",
-    ("win32", "AMD64"):   DATA_DIR / "clang-format-win32.exe",
-    ("win32", "x86_64"):  DATA_DIR / "clang-format-win32.exe",
-}
+    # check for bundled binaries
+    bundled_path = BINARY_MAP.get(system_key)
+    if bundled_path:
+        return str(bundled_path)
 
-# try to get bundled binary from map
-CLANG_FORMAT_EXEC = BINARY_MAP.get(system_key)
+    # check system path
+    system_path = shutil.which("clang-format")
+    if system_path:
+        return system_path
 
-# fallback: search if system has clang format installed
-if CLANG_FORMAT_EXEC is None:
-    CLANG_FORMAT_EXEC = shutil.which("clang-format")
-
-# error if neither found
-if CLANG_FORMAT_EXEC is None:
-    raise NotImplementedError(
-        f"Platform {system_key} isn't offically supported and 'clang-format' "
-        "was not found in your PATH."
+    # if neither, return
+    raise FileNotFoundError(
+        f"clang-format not found for {system_key}. "
+        "Please install it via your package manager."
     )
+
+
+# Now your main logic is just one clean line:
+CLANG_FORMAT_EXEC = get_clang_format_path()
+
 
 def clang_format(content: str) -> str:
     """Wrapper around clang-format
