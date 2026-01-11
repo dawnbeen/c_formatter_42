@@ -6,7 +6,7 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 10:40:07 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/25 20:46:18 by cacharle         ###   ########.fr        #
+#    Updated: 2026/01/11 22:21:42 by lrain            ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
@@ -69,7 +69,7 @@ if CLANG_FORMAT_EXEC is None:
 # error if neither found
 if CLANG_FORMAT_EXEC is None:
     raise NotImplementedError(
-        f"Platform {system_key} is not supported and 'clang-format' "
+        f"Platform {system_key} isn't offically supported and 'clang-format' "
         "was not found in your PATH."
     )
 
