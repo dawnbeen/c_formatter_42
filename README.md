@@ -21,7 +21,13 @@ It's just for convenience.
 
 Requires Python3.8+ (3.9, 3.10, 3.11, 3.12)
 
-### From PyPI
+### With pipx (recommanded)
+
+```sh
+pipx run c-formatter-42
+```
+
+### With pip
 
 ```sh
 pip3 install c-formatter-42
