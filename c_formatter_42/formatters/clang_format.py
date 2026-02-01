@@ -6,14 +6,14 @@
 #    By: cacharle <me@cacharle.xyz>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 10:40:07 by cacharle          #+#    #+#              #
-#    Updated: 2021/02/25 20:46:18 by cacharle         ###   ########.fr        #
+#    Updated: 2026/01/11 23:14:21 by lrain            ###   ########.fr        #
 #                                                                              #
 # ############################################################################ #
 
 import contextlib
 import platform
+import shutil
 import subprocess
-import sys
 from pathlib import Path
 
 import c_formatter_42.data
@@ -45,19 +45,38 @@ def _config_context():
             CONFIG_FILENAME.write_text(previous_config)
 
 
-if sys.platform == "linux":
-    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-linux"
-elif sys.platform == "darwin":
-    if platform.machine() == "arm64":
-        # macOS M1 or Apple Silicon
-        CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin-arm64"
-    elif platform.machine() == "x86_64":
-        # macOS Intel
-        CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-darwin"
-elif sys.platform == "win32":
-    CLANG_FORMAT_EXEC = DATA_DIR / "clang-format-win32.exe"
-else:
-    raise NotImplementedError("Your platform is not supported")
+def get_clang_format_path() -> str:
+    """Finds the bundled binary or system clang-format, or raises an error."""
+    system_key = (platform.system().lower(), platform.machine().lower())
+
+    # officially supported binaries
+    BINARY_MAP = {
+        ("linux", "x86_64"): DATA_DIR / "clang-format-linux",
+        ("darwin", "arm64"): DATA_DIR / "clang-format-darwin-arm64",
+        ("darwin", "x86_64"): DATA_DIR / "clang-format-darwin",
+        ("win32", "AMD64"): DATA_DIR / "clang-format-win32.exe",
+        ("win32", "x86_64"): DATA_DIR / "clang-format-win32.exe",
+    }
+
+    # check for bundled binaries
+    bundled_path = BINARY_MAP.get(system_key)
+    if bundled_path:
+        return str(bundled_path)
+
+    # check system path
+    system_path = shutil.which("clang-format")
+    if system_path:
+        return system_path
+
+    # if neither, return
+    raise FileNotFoundError(
+        f"clang-format not found for {system_key}. "
+        "Please install it via your package manager."
+    )
+
+
+# Set var to result of search
+CLANG_FORMAT_EXEC = get_clang_format_path()
 
 
 def clang_format(content: str) -> str:
